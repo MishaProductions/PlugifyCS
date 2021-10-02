@@ -30,6 +30,7 @@ namespace PlugifyClient
             {
                 radClassic.Checked = true;
             }
+            lblVersion.Text = "Client version: " + Application.ProductVersion;
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
