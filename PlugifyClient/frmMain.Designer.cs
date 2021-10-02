@@ -46,7 +46,6 @@ namespace PlugifyClient
             this.lblNoChannel = new System.Windows.Forms.Label();
             this.messageSendArea = new System.Windows.Forms.Panel();
             this.btnSendMSG = new System.Windows.Forms.Button();
-            this.textboxControl1 = new PlugifyClient.TextboxControl();
             this.prgMessageLoading = new System.Windows.Forms.ProgressBar();
             this.pnlChannels = new System.Windows.Forms.FlowLayoutPanel();
             this.btnCreateChannel = new System.Windows.Forms.Button();
@@ -54,6 +53,7 @@ namespace PlugifyClient
             this.btnErrorClose = new System.Windows.Forms.Button();
             this.lblError = new System.Windows.Forms.Label();
             this.tmrPing = new System.Windows.Forms.Timer(this.components);
+            this.textboxControl1 = new PlugifyClient.TextboxControl();
             this.ServerArea.SuspendLayout();
             this.UserArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lblUserPFP)).BeginInit();
@@ -116,6 +116,7 @@ namespace PlugifyClient
             this.btnHome.TabIndex = 4;
             this.btnHome.Text = "Home";
             this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // btnSettings
             // 
@@ -154,7 +155,7 @@ namespace PlugifyClient
             // 
             this.lblUserPFP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.lblUserPFP.ImageLocation = "http://cds.plugify.cf/defaultAvatars/addictedtree";
-            this.lblUserPFP.Location = new System.Drawing.Point(0, 14);
+            this.lblUserPFP.Location = new System.Drawing.Point(6, 14);
             this.lblUserPFP.Name = "lblUserPFP";
             this.lblUserPFP.Size = new System.Drawing.Size(64, 64);
             this.lblUserPFP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -205,9 +206,9 @@ namespace PlugifyClient
             this.lblHome.ForeColor = System.Drawing.Color.White;
             this.lblHome.Location = new System.Drawing.Point(3, 0);
             this.lblHome.Name = "lblHome";
-            this.lblHome.Size = new System.Drawing.Size(436, 64);
+            this.lblHome.Size = new System.Drawing.Size(349, 32);
             this.lblHome.TabIndex = 0;
-            this.lblHome.Text = "Under construction.\r\n(Psst, check out the groups on the top!)";
+            this.lblHome.Text = "Home page under construction";
             // 
             // lblNoChannel
             // 
@@ -215,7 +216,7 @@ namespace PlugifyClient
             this.lblNoChannel.AutoSize = true;
             this.lblNoChannel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNoChannel.ForeColor = System.Drawing.Color.White;
-            this.lblNoChannel.Location = new System.Drawing.Point(104, 64);
+            this.lblNoChannel.Location = new System.Drawing.Point(61, 32);
             this.lblNoChannel.Name = "lblNoChannel";
             this.lblNoChannel.Size = new System.Drawing.Size(233, 32);
             this.lblNoChannel.TabIndex = 1;
@@ -243,22 +244,6 @@ namespace PlugifyClient
             this.btnSendMSG.Text = "Send";
             this.btnSendMSG.UseVisualStyleBackColor = true;
             this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
-            // 
-            // textboxControl1
-            // 
-            this.textboxControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textboxControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
-            this.textboxControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textboxControl1.Cue = "Enter a message...";
-            this.textboxControl1.ForeColor = System.Drawing.Color.White;
-            this.textboxControl1.Location = new System.Drawing.Point(9, 7);
-            this.textboxControl1.Multiline = true;
-            this.textboxControl1.Name = "textboxControl1";
-            this.textboxControl1.Size = new System.Drawing.Size(544, 46);
-            this.textboxControl1.TabIndex = 0;
-            this.textboxControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxControl1_KeyDown);
             // 
             // prgMessageLoading
             // 
@@ -288,7 +273,7 @@ namespace PlugifyClient
             this.btnCreateChannel.Name = "btnCreateChannel";
             this.btnCreateChannel.Size = new System.Drawing.Size(140, 23);
             this.btnCreateChannel.TabIndex = 0;
-            this.btnCreateChannel.Text = "+";
+            this.btnCreateChannel.Text = "Create channel";
             this.btnCreateChannel.UseVisualStyleBackColor = true;
             this.btnCreateChannel.Click += new System.EventHandler(this.btnCreateChannel_Click);
             // 
@@ -329,6 +314,22 @@ namespace PlugifyClient
             this.tmrPing.Enabled = true;
             this.tmrPing.Interval = 10000;
             this.tmrPing.Tick += new System.EventHandler(this.tmrPing_Tick);
+            // 
+            // textboxControl1
+            // 
+            this.textboxControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
+            this.textboxControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textboxControl1.Cue = "Enter a message...";
+            this.textboxControl1.ForeColor = System.Drawing.Color.White;
+            this.textboxControl1.Location = new System.Drawing.Point(9, 7);
+            this.textboxControl1.Multiline = true;
+            this.textboxControl1.Name = "textboxControl1";
+            this.textboxControl1.Size = new System.Drawing.Size(544, 46);
+            this.textboxControl1.TabIndex = 0;
+            this.textboxControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxControl1_KeyDown);
             // 
             // frmMain
             // 

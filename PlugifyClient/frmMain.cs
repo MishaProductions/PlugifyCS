@@ -16,14 +16,14 @@ namespace PlugifyClient
 {
     public partial class frmMain : Form
     {
-        WebSocket ws;
-        dynamic UserInfo;
-        dynamic Groups;
-        dynamic ChannelInfo;
-        dynamic ChannelDetails;
-        string CurrentChannelID = "";
-        string currentGroupID = "";
-        dynamic currentGroupObj = "";
+        private WebSocket ws;
+        private dynamic UserInfo;
+        private dynamic Groups;
+        private dynamic ChannelInfo;
+        private dynamic ChannelDetails;
+        private string CurrentChannelID = "";
+        private string currentGroupID = "";
+        private dynamic currentGroupObj = "";
         private static readonly HttpClient client = new HttpClient();
         public frmMain()
         {
@@ -69,8 +69,11 @@ namespace PlugifyClient
                 textboxControl1.ForeColor = Color.Black;
                 Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
             }
-        }
 
+            messageSendArea.Visible = false;
+            pnlChannels.Visible = false;
+            lblHome.Visible = true;
+        }
         private void Form1_Shown(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.token == "")
@@ -93,13 +96,11 @@ namespace PlugifyClient
 
             LoggedIn();
         }
-
         private void Ws_OnClose(object sender, CloseEventArgs e)
         {
             lblError.Text = "Connection closed: " + e.Reason;
             pnlError.Visible = false;
         }
-
         private void Ws_OnError(object sender, WebSocketSharp.ErrorEventArgs e)
         {
             pnlError.Invoke((MethodInvoker)delegate ()
@@ -108,7 +109,6 @@ namespace PlugifyClient
                 pnlError.Visible = true;
             });
         }
-
         private void Ws_OnMessage(object sender, MessageEventArgs e)
         {
             string s = "{\"event\": 1, \"data\": {\"token\": \"" + Properties.Settings.Default.token + "\"}}";
@@ -206,7 +206,6 @@ namespace PlugifyClient
                     throw new NotImplementedException();
             }
         }
-
         private void LoggedIn()
         {
             lblUserPFP.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + UserInfo.data.username;
@@ -236,7 +235,6 @@ namespace PlugifyClient
                 Severs.Controls.Add(theGroup);
             }
         }
-
         private void OpenGroup(dynamic group)
         {
             lblHome.Visible = false;
@@ -314,29 +312,14 @@ namespace PlugifyClient
             }
             pnlChannels.Controls.Add(btnCreateChannel);
             ChannelInfo = null;
+            messageSendArea.Visible = true;
+            pnlChannels.Visible = true;
+            lblHome.Visible = false;
         }
-
         private void btnErrorClose_Click(object sender, EventArgs e)
         {
             pnlError.Visible = false;
         }
-
-        private void frmMain_Resize(object sender, EventArgs e)
-        {
-            foreach (Control item in messagesPanel.Controls)
-            {
-                if (item is MessageControl c)
-                {
-                    c.Size = new Size(messagesPanel.Width - 10, c.Size.Height);
-                }
-            }
-        }
-
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            new frmSettings().ShowDialog();
-        }
-
         private void textboxControl1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -352,12 +335,6 @@ namespace PlugifyClient
             string s3 = "{\"event\":7,\"data\": {\"content\": \"" + messageContents.TrimStart('{').TrimEnd('}') + "\", \"channelID\": \"" + CurrentChannelID + "\"}}";
             ws.Send(s3);
         }
-
-        private void btnSendMSG_Click(object sender, EventArgs e)
-        {
-            SendMessage();
-        }
-
         private void tmrPing_Tick(object sender, EventArgs e)
         {
             if (ws != null)
@@ -369,7 +346,6 @@ namespace PlugifyClient
                 }
             }
         }
-
         private void btnCreateChannel_Click(object sender, EventArgs e)
         {
             var d = new CreateNewChannel();
@@ -386,7 +362,57 @@ namespace PlugifyClient
                 }
             }
         }
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            messageSendArea.Visible = false;
+            pnlChannels.Visible = false;
+            lblHome.Visible = true;
+            CurrentChannelID = "";
+            currentGroupID = "";
+        }
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            new frmSettings().ShowDialog();
+        }
+        private void btnSendMSG_Click(object sender, EventArgs e)
+        {
+            SendMessage();
+        }
+        private void frmMain_Resize(object sender, EventArgs e)
+        {
+            foreach (Control item in messagesPanel.Controls)
+            {
+                if (item is MessageControl c)
+                {
+                    c.Size = new Size(messagesPanel.Width - 10, c.Size.Height);
+                }
+            }
+        }
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            tmrPing.Stop();
+            if (ws != null)
+                ws.Close();
+            Application.Exit();
+            Environment.Exit(0);
+        }
 
+        //https://stackoverflow.com/a/77233/11250752
+        public static void SetDoubleBuffered(System.Windows.Forms.Control c)
+        {
+            //Taxes: Remote Desktop Connection and painting
+            //http://blogs.msdn.com/oldnewthing/archive/2006/01/03/508694.aspx
+            if (System.Windows.Forms.SystemInformation.TerminalServerSession)
+                return;
+
+            System.Reflection.PropertyInfo aProp =
+                  typeof(System.Windows.Forms.Control).GetProperty(
+                        "DoubleBuffered",
+                        System.Reflection.BindingFlags.NonPublic |
+                        System.Reflection.BindingFlags.Instance);
+
+            aProp.SetValue(c, true, null);
+        }
         private dynamic ApiPost(string url, string content)
         {
             var webRequest = System.Net.WebRequest.Create(url);
@@ -409,15 +435,6 @@ namespace PlugifyClient
                     return JObject.Parse(jsonResponse);
                 }
             }
-        }
-
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            tmrPing.Stop();
-            if (ws != null)
-                ws.Close();
-            Application.Exit();
-            Environment.Exit(0);
         }
     }
 }
