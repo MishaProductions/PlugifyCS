@@ -28,6 +28,15 @@ namespace PlugifyClient
         private dynamic currentGroupObj = "";
 
         private Loading loadingForm = new Loading();
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;    // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
         public frmMain()
         {
             InitializeComponent();

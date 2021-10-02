@@ -73,6 +73,7 @@ namespace PlugifyClient
             // 
             // pfp
             // 
+            this.pfp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pfp.InitialImage = global::PlugifyClient.Properties.Resources.plug;
             this.pfp.Location = new System.Drawing.Point(4, 4);
             this.pfp.Name = "pfp";
