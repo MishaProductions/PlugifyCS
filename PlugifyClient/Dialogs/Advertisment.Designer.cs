@@ -77,9 +77,9 @@ namespace PlugifyClient
             // pictureBox2
             // 
             this.pictureBox2.Image = global::PlugifyClient.Properties.Resources.IMG_20210916_183738;
-            this.pictureBox2.Location = new System.Drawing.Point(303, 263);
+            this.pictureBox2.Location = new System.Drawing.Point(18, 192);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(135, 85);
+            this.pictureBox2.Size = new System.Drawing.Size(251, 111);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
@@ -98,7 +98,7 @@ namespace PlugifyClient
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(275, 230);
+            this.label4.Location = new System.Drawing.Point(268, 223);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(182, 30);
             this.label4.TabIndex = 6;
@@ -124,9 +124,9 @@ namespace PlugifyClient
             // 
             this.btnBuyLater.Font = new System.Drawing.Font("Segoe UI Black", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuyLater.ForeColor = System.Drawing.Color.Black;
-            this.btnBuyLater.Location = new System.Drawing.Point(12, 206);
+            this.btnBuyLater.Location = new System.Drawing.Point(12, 309);
             this.btnBuyLater.Name = "btnBuyLater";
-            this.btnBuyLater.Size = new System.Drawing.Size(257, 254);
+            this.btnBuyLater.Size = new System.Drawing.Size(331, 151);
             this.btnBuyLater.TabIndex = 8;
             this.btnBuyLater.Text = "Never show me this ever again";
             this.btnBuyLater.UseVisualStyleBackColor = true;

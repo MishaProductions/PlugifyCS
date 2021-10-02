@@ -28,11 +28,7 @@ namespace PlugifyClient
                 this.ForeColor = Color.Black;
                 this.BackColor = SystemColors.Control;
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
+            cmbType.SelectedIndex = 0;
         }
 
         private void txtChannelName_TextChanged(object sender, EventArgs e)
@@ -57,6 +53,14 @@ namespace PlugifyClient
             {
                 Result = txtChannelName.Text;
                 DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void CreateNewChannel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.DialogResult = DialogResult.OK;
             }
         }
     }
