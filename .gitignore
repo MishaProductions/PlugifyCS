@@ -2,5 +2,5 @@
 .vs/
 
 # debug outputs
-PlugifyClient/bin/
-PlugifyClient/obj/
+PlugifyCS/bin/
+PlugifyCS/obj/
