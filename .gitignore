@@ -1,0 +1,6 @@
+# Visual studio garbage
+.vs/
+
+# debug outputs
+PlugifyClient/bin/
+PlugifyClient/obj/
