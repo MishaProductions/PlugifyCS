@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
 
-namespace PlugifyClient
+namespace PlugifyCS.Dialogs
 {
     public partial class LogonDialog : Form
     {

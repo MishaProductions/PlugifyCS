@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient.Dialogs
+namespace PlugifyCS.Dialogs
 {
     partial class Loading
     {
@@ -39,7 +39,7 @@ namespace PlugifyClient.Dialogs
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::PlugifyClient.Properties.Resources.plugifyLogo;
+            this.pictureBox1.BackgroundImage = global::PlugifyCS.Properties.Resources.plugifyLogo;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Location = new System.Drawing.Point(137, 12);
             this.pictureBox1.Name = "pictureBox1";

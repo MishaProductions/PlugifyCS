@@ -1,20 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
-using PlugifyClient.Dialogs;
+using PlugifyCS.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
 
-namespace PlugifyClient
+namespace PlugifyCS
 {
     public partial class frmMain : Form
     {

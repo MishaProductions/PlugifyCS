@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient
+namespace PlugifyCS.Dialogs
 {
     partial class LogonDialog
     {

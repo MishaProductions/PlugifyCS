@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient
+namespace PlugifyCS
 {
     partial class frmSettings
     {

@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PlugifyClient
+namespace PlugifyCS
 {
     public partial class Advertisment : Form
     {

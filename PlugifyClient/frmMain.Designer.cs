@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient
+namespace PlugifyCS
 {
     partial class frmMain
     {
@@ -56,7 +56,7 @@ namespace PlugifyClient
             this.lblUserPFP = new System.Windows.Forms.PictureBox();
             this.pnlGroupInfo = new System.Windows.Forms.Panel();
             this.lblGroupName = new System.Windows.Forms.Label();
-            this.txtMessage = new PlugifyClient.TextboxControl();
+            this.txtMessage = new PlugifyCS.TextboxControl();
             this.btnGroupSettings = new System.Windows.Forms.Button();
             this.btnLeaveGroup = new System.Windows.Forms.Button();
             this.pnlServerArea.SuspendLayout();

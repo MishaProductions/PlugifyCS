@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient.Dialogs
+namespace PlugifyCS.Dialogs
 {
     partial class InviteDialog
     {
@@ -38,8 +38,8 @@ namespace PlugifyClient.Dialogs
             this.label3 = new System.Windows.Forms.Label();
             this.btnDoJoinGroup = new System.Windows.Forms.Button();
             this.txtInviteCode = new System.Windows.Forms.TextBox();
-            this.btnJoinGroup = new PlugifyClient.CommandLink();
-            this.btnCreateNew = new PlugifyClient.CommandLink();
+            this.btnJoinGroup = new PlugifyCS.CommandLink();
+            this.btnCreateNew = new PlugifyCS.CommandLink();
             this.pnlCreateGroup.SuspendLayout();
             this.pnlJoinGroup.SuspendLayout();
             this.SuspendLayout();

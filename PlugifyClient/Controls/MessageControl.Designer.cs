@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient
+namespace PlugifyCS
 {
     partial class MessageControl
     {
@@ -74,7 +74,7 @@ namespace PlugifyClient
             // pfp
             // 
             this.pfp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pfp.InitialImage = global::PlugifyClient.Properties.Resources.plug;
+            this.pfp.InitialImage = global::PlugifyCS.Properties.Resources.plug;
             this.pfp.Location = new System.Drawing.Point(4, 4);
             this.pfp.Name = "pfp";
             this.pfp.Size = new System.Drawing.Size(48, 48);

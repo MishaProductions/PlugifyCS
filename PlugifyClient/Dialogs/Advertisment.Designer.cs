@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient
+namespace PlugifyCS
 {
     partial class Advertisment
     {
@@ -37,7 +37,7 @@ namespace PlugifyClient
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.btnBuyLater = new System.Windows.Forms.Button();
-            this.gradient1 = new PlugifyClient.Gradient();
+            this.gradient1 = new PlugifyCS.Gradient();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -76,7 +76,7 @@ namespace PlugifyClient
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::PlugifyClient.Properties.Resources.IMG_20210916_183738;
+            this.pictureBox2.Image = global::PlugifyCS.Properties.Resources.IMG_20210916_183738;
             this.pictureBox2.Location = new System.Drawing.Point(18, 192);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(251, 111);
@@ -86,7 +86,7 @@ namespace PlugifyClient
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::PlugifyClient.Properties.Resources.plug;
+            this.pictureBox1.Image = global::PlugifyCS.Properties.Resources.plug;
             this.pictureBox1.Location = new System.Drawing.Point(18, 64);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(118, 122);

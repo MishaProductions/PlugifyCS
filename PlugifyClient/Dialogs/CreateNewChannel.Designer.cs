@@ -1,5 +1,5 @@
 ﻿
-namespace PlugifyClient
+namespace PlugifyCS
 {
     partial class CreateNewChannel
     {
@@ -35,7 +35,7 @@ namespace PlugifyClient
             this.lblError = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbType = new System.Windows.Forms.ComboBox();
-            this.btnCreate = new PlugifyClient.CommandLink();
+            this.btnCreate = new PlugifyCS.CommandLink();
             this.SuspendLayout();
             // 
             // label1

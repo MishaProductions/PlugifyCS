@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PlugifyClient.Dialogs
+namespace PlugifyCS.Dialogs
 {
     public partial class InviteDialog : Form
     {
