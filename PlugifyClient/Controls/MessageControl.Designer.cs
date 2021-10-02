@@ -65,9 +65,9 @@ namespace PlugifyClient
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessageContent.ForeColor = System.Drawing.Color.White;
-            this.lblMessageContent.Location = new System.Drawing.Point(74, 35);
+            this.lblMessageContent.Location = new System.Drawing.Point(58, 35);
             this.lblMessageContent.Name = "lblMessageContent";
-            this.lblMessageContent.Size = new System.Drawing.Size(379, 40);
+            this.lblMessageContent.Size = new System.Drawing.Size(395, 40);
             this.lblMessageContent.TabIndex = 3;
             this.lblMessageContent.Text = "Loading the message content";
             // 
@@ -76,7 +76,7 @@ namespace PlugifyClient
             this.pfp.InitialImage = global::PlugifyClient.Properties.Resources.plug;
             this.pfp.Location = new System.Drawing.Point(4, 4);
             this.pfp.Name = "pfp";
-            this.pfp.Size = new System.Drawing.Size(64, 64);
+            this.pfp.Size = new System.Drawing.Size(48, 48);
             this.pfp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pfp.TabIndex = 0;
             this.pfp.TabStop = false;
@@ -85,9 +85,9 @@ namespace PlugifyClient
             // 
             this.flowLayoutPanel1.Controls.Add(this.lblAuthor);
             this.flowLayoutPanel1.Controls.Add(this.lblTime);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(75, 4);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(58, 4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(378, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(395, 23);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // MessageControl

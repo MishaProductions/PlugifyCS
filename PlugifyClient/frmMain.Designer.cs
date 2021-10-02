@@ -225,7 +225,7 @@ namespace PlugifyClient
             // 
             // messageSendArea
             // 
-            this.messageSendArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
+            this.messageSendArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
             this.messageSendArea.Controls.Add(this.btnSendMSG);
             this.messageSendArea.Controls.Add(this.textboxControl1);
             this.messageSendArea.Dock = System.Windows.Forms.DockStyle.Bottom;

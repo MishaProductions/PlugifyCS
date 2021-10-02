@@ -302,7 +302,7 @@ namespace PlugifyClient
                          string content = message.content;
 
                          ctl.SetSettings("https://cds.plugify.cf/defaultAvatars/" + name, name + " (@" + dispname + ")", content, "WIP");
-                         ctl.Size = new Size(messagesPanel.Width - 10, ctl.Height);
+                         ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
                          messagesPanel.Controls.Add(ctl);
                      }
                      ChannelDetails = null;
@@ -334,6 +334,7 @@ namespace PlugifyClient
 
             string s3 = "{\"event\":7,\"data\": {\"content\": \"" + messageContents.TrimStart('{').TrimEnd('}') + "\", \"channelID\": \"" + CurrentChannelID + "\"}}";
             ws.Send(s3);
+            textboxControl1.Text = "";
         }
         private void tmrPing_Tick(object sender, EventArgs e)
         {
@@ -384,7 +385,7 @@ namespace PlugifyClient
             {
                 if (item is MessageControl c)
                 {
-                    c.Size = new Size(messagesPanel.Width - 10, c.Size.Height);
+                    c.Size = new Size(messagesPanel.Width - 25, c.Size.Height);
                 }
             }
         }

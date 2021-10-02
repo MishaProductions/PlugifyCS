@@ -52,19 +52,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Advertisment.cs">
+    <Compile Include="Dialogs\Advertisment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Advertisment.Designer.cs">
+    <Compile Include="Dialogs\Advertisment.Designer.cs">
       <DependentUpon>Advertisment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Commandlink.cs">
+    <Compile Include="Controls\Commandlink.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CreateNewChannel.cs">
+    <Compile Include="Dialogs\CreateNewChannel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateNewChannel.Designer.cs">
+    <Compile Include="Dialogs\CreateNewChannel.Designer.cs">
       <DependentUpon>CreateNewChannel.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMain.cs">
@@ -79,30 +79,30 @@
     <Compile Include="frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gradient.cs">
+    <Compile Include="Controls\Gradient.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LogonDialog.cs">
+    <Compile Include="Dialogs\LogonDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LogonDialog.Designer.cs">
+    <Compile Include="Dialogs\LogonDialog.Designer.cs">
       <DependentUpon>LogonDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessageControl.cs">
+    <Compile Include="Controls\MessageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MessageControl.Designer.cs">
+    <Compile Include="Controls\MessageControl.Designer.cs">
       <DependentUpon>MessageControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextboxControl.cs">
+    <Compile Include="Controls\TextboxControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Include="Advertisment.resx">
+    <EmbeddedResource Include="Dialogs\Advertisment.resx">
       <DependentUpon>Advertisment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateNewChannel.resx">
+    <EmbeddedResource Include="Dialogs\CreateNewChannel.resx">
       <DependentUpon>CreateNewChannel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
@@ -111,10 +111,10 @@
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LogonDialog.resx">
+    <EmbeddedResource Include="Dialogs\LogonDialog.resx">
       <DependentUpon>LogonDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MessageControl.resx">
+    <EmbeddedResource Include="Controls\MessageControl.resx">
       <DependentUpon>MessageControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
