@@ -31,14 +31,13 @@ namespace PlugifyClient
         {
             this.components = new System.ComponentModel.Container();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.ServerArea = new System.Windows.Forms.Panel();
-            this.Severs = new System.Windows.Forms.FlowLayoutPanel();
-            this.UserArea = new System.Windows.Forms.Panel();
+            this.pnlServerArea = new System.Windows.Forms.Panel();
+            this.pnlServers = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlUserArea = new System.Windows.Forms.Panel();
             this.btnHome = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.lblPing = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
-            this.lblUserPFP = new System.Windows.Forms.PictureBox();
             this.ServerContent = new System.Windows.Forms.Panel();
             this.pnlMessageContainer = new System.Windows.Forms.Panel();
             this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -46,7 +45,6 @@ namespace PlugifyClient
             this.lblNoChannel = new System.Windows.Forms.Label();
             this.messageSendArea = new System.Windows.Forms.Panel();
             this.btnSendMSG = new System.Windows.Forms.Button();
-            this.textboxControl1 = new PlugifyClient.TextboxControl();
             this.prgMessageLoading = new System.Windows.Forms.ProgressBar();
             this.pnlChannels = new System.Windows.Forms.FlowLayoutPanel();
             this.btnCreateChannel = new System.Windows.Forms.Button();
@@ -54,15 +52,24 @@ namespace PlugifyClient
             this.btnErrorClose = new System.Windows.Forms.Button();
             this.lblError = new System.Windows.Forms.Label();
             this.tmrPing = new System.Windows.Forms.Timer(this.components);
-            this.ServerArea.SuspendLayout();
-            this.UserArea.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lblUserPFP)).BeginInit();
+            this.btnCreateOrJoinGroup = new System.Windows.Forms.Button();
+            this.lblUserPFP = new System.Windows.Forms.PictureBox();
+            this.pnlGroupInfo = new System.Windows.Forms.Panel();
+            this.lblGroupName = new System.Windows.Forms.Label();
+            this.txtMessage = new PlugifyClient.TextboxControl();
+            this.btnGroupSettings = new System.Windows.Forms.Button();
+            this.btnLeaveGroup = new System.Windows.Forms.Button();
+            this.pnlServerArea.SuspendLayout();
+            this.pnlServers.SuspendLayout();
+            this.pnlUserArea.SuspendLayout();
             this.ServerContent.SuspendLayout();
             this.pnlMessageContainer.SuspendLayout();
             this.messagesPanel.SuspendLayout();
             this.messageSendArea.SuspendLayout();
             this.pnlChannels.SuspendLayout();
             this.pnlError.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lblUserPFP)).BeginInit();
+            this.pnlGroupInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -75,42 +82,43 @@ namespace PlugifyClient
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBar1.TabIndex = 0;
             // 
-            // ServerArea
+            // pnlServerArea
             // 
-            this.ServerArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(29)))));
-            this.ServerArea.Controls.Add(this.Severs);
-            this.ServerArea.Controls.Add(this.UserArea);
-            this.ServerArea.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ServerArea.Location = new System.Drawing.Point(0, 57);
-            this.ServerArea.Name = "ServerArea";
-            this.ServerArea.Size = new System.Drawing.Size(800, 84);
-            this.ServerArea.TabIndex = 1;
+            this.pnlServerArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(29)))));
+            this.pnlServerArea.Controls.Add(this.pnlServers);
+            this.pnlServerArea.Controls.Add(this.pnlUserArea);
+            this.pnlServerArea.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlServerArea.Location = new System.Drawing.Point(0, 57);
+            this.pnlServerArea.Name = "pnlServerArea";
+            this.pnlServerArea.Size = new System.Drawing.Size(800, 58);
+            this.pnlServerArea.TabIndex = 1;
             // 
-            // Severs
+            // pnlServers
             // 
-            this.Severs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Severs.Location = new System.Drawing.Point(0, 0);
-            this.Severs.Name = "Severs";
-            this.Severs.Size = new System.Drawing.Size(545, 84);
-            this.Severs.TabIndex = 0;
+            this.pnlServers.Controls.Add(this.btnCreateOrJoinGroup);
+            this.pnlServers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlServers.Location = new System.Drawing.Point(0, 0);
+            this.pnlServers.Name = "pnlServers";
+            this.pnlServers.Size = new System.Drawing.Size(545, 58);
+            this.pnlServers.TabIndex = 0;
             // 
-            // UserArea
+            // pnlUserArea
             // 
-            this.UserArea.Controls.Add(this.btnHome);
-            this.UserArea.Controls.Add(this.btnSettings);
-            this.UserArea.Controls.Add(this.lblPing);
-            this.UserArea.Controls.Add(this.lblUserName);
-            this.UserArea.Controls.Add(this.lblUserPFP);
-            this.UserArea.Dock = System.Windows.Forms.DockStyle.Right;
-            this.UserArea.Location = new System.Drawing.Point(545, 0);
-            this.UserArea.Name = "UserArea";
-            this.UserArea.Size = new System.Drawing.Size(255, 84);
-            this.UserArea.TabIndex = 1;
+            this.pnlUserArea.Controls.Add(this.btnHome);
+            this.pnlUserArea.Controls.Add(this.btnSettings);
+            this.pnlUserArea.Controls.Add(this.lblPing);
+            this.pnlUserArea.Controls.Add(this.lblUserName);
+            this.pnlUserArea.Controls.Add(this.lblUserPFP);
+            this.pnlUserArea.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlUserArea.Location = new System.Drawing.Point(545, 0);
+            this.pnlUserArea.Name = "pnlUserArea";
+            this.pnlUserArea.Size = new System.Drawing.Size(255, 58);
+            this.pnlUserArea.TabIndex = 1;
             // 
             // btnHome
             // 
             this.btnHome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnHome.Location = new System.Drawing.Point(115, 55);
+            this.btnHome.Location = new System.Drawing.Point(191, 29);
             this.btnHome.Name = "btnHome";
             this.btnHome.Size = new System.Drawing.Size(61, 23);
             this.btnHome.TabIndex = 4;
@@ -121,7 +129,7 @@ namespace PlugifyClient
             // btnSettings
             // 
             this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSettings.Location = new System.Drawing.Point(182, 55);
+            this.btnSettings.Location = new System.Drawing.Point(191, 5);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(61, 23);
             this.btnSettings.TabIndex = 3;
@@ -134,7 +142,7 @@ namespace PlugifyClient
             this.lblPing.AutoSize = true;
             this.lblPing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPing.ForeColor = System.Drawing.Color.White;
-            this.lblPing.Location = new System.Drawing.Point(70, 35);
+            this.lblPing.Location = new System.Drawing.Point(70, 27);
             this.lblPing.Name = "lblPing";
             this.lblPing.Size = new System.Drawing.Size(58, 13);
             this.lblPing.TabIndex = 2;
@@ -145,23 +153,11 @@ namespace PlugifyClient
             this.lblUserName.AutoSize = true;
             this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.ForeColor = System.Drawing.Color.White;
-            this.lblUserName.Location = new System.Drawing.Point(70, 14);
+            this.lblUserName.Location = new System.Drawing.Point(69, 3);
             this.lblUserName.Name = "lblUserName";
             this.lblUserName.Size = new System.Drawing.Size(78, 21);
             this.lblUserName.TabIndex = 1;
             this.lblUserName.Text = "Loading....";
-            // 
-            // lblUserPFP
-            // 
-            this.lblUserPFP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.lblUserPFP.Image = global::PlugifyClient.Properties.Resources.plug;
-            this.lblUserPFP.ImageLocation = "http://cds.plugify.cf/defaultAvatars/addictedtree";
-            this.lblUserPFP.Location = new System.Drawing.Point(6, 14);
-            this.lblUserPFP.Name = "lblUserPFP";
-            this.lblUserPFP.Size = new System.Drawing.Size(64, 64);
-            this.lblUserPFP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.lblUserPFP.TabIndex = 0;
-            this.lblUserPFP.TabStop = false;
             // 
             // ServerContent
             // 
@@ -169,9 +165,9 @@ namespace PlugifyClient
             this.ServerContent.Controls.Add(this.pnlMessageContainer);
             this.ServerContent.Controls.Add(this.pnlChannels);
             this.ServerContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServerContent.Location = new System.Drawing.Point(0, 141);
+            this.ServerContent.Location = new System.Drawing.Point(0, 115);
             this.ServerContent.Name = "ServerContent";
-            this.ServerContent.Size = new System.Drawing.Size(800, 309);
+            this.ServerContent.Size = new System.Drawing.Size(800, 335);
             this.ServerContent.TabIndex = 2;
             // 
             // pnlMessageContainer
@@ -183,7 +179,7 @@ namespace PlugifyClient
             this.pnlMessageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMessageContainer.Location = new System.Drawing.Point(149, 0);
             this.pnlMessageContainer.Name = "pnlMessageContainer";
-            this.pnlMessageContainer.Size = new System.Drawing.Size(651, 309);
+            this.pnlMessageContainer.Size = new System.Drawing.Size(651, 335);
             this.pnlMessageContainer.TabIndex = 2;
             // 
             // messagesPanel
@@ -195,7 +191,7 @@ namespace PlugifyClient
             this.messagesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.messagesPanel.Location = new System.Drawing.Point(0, 23);
             this.messagesPanel.Name = "messagesPanel";
-            this.messagesPanel.Size = new System.Drawing.Size(651, 221);
+            this.messagesPanel.Size = new System.Drawing.Size(651, 247);
             this.messagesPanel.TabIndex = 3;
             this.messagesPanel.WrapContents = false;
             // 
@@ -228,9 +224,9 @@ namespace PlugifyClient
             // 
             this.messageSendArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
             this.messageSendArea.Controls.Add(this.btnSendMSG);
-            this.messageSendArea.Controls.Add(this.textboxControl1);
+            this.messageSendArea.Controls.Add(this.txtMessage);
             this.messageSendArea.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.messageSendArea.Location = new System.Drawing.Point(0, 244);
+            this.messageSendArea.Location = new System.Drawing.Point(0, 270);
             this.messageSendArea.Name = "messageSendArea";
             this.messageSendArea.Size = new System.Drawing.Size(651, 65);
             this.messageSendArea.TabIndex = 4;
@@ -246,22 +242,6 @@ namespace PlugifyClient
             this.btnSendMSG.UseVisualStyleBackColor = true;
             this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
             // 
-            // textboxControl1
-            // 
-            this.textboxControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textboxControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
-            this.textboxControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textboxControl1.Cue = "Enter a message...";
-            this.textboxControl1.ForeColor = System.Drawing.Color.White;
-            this.textboxControl1.Location = new System.Drawing.Point(9, 7);
-            this.textboxControl1.Multiline = true;
-            this.textboxControl1.Name = "textboxControl1";
-            this.textboxControl1.Size = new System.Drawing.Size(544, 46);
-            this.textboxControl1.TabIndex = 0;
-            this.textboxControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxControl1_KeyDown);
-            // 
             // prgMessageLoading
             // 
             this.prgMessageLoading.Dock = System.Windows.Forms.DockStyle.Top;
@@ -275,18 +255,19 @@ namespace PlugifyClient
             // 
             // pnlChannels
             // 
+            this.pnlChannels.Controls.Add(this.pnlGroupInfo);
             this.pnlChannels.Controls.Add(this.btnCreateChannel);
             this.pnlChannels.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlChannels.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.pnlChannels.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlChannels.Location = new System.Drawing.Point(0, 0);
             this.pnlChannels.Name = "pnlChannels";
-            this.pnlChannels.Size = new System.Drawing.Size(149, 309);
+            this.pnlChannels.Size = new System.Drawing.Size(149, 335);
             this.pnlChannels.TabIndex = 1;
             // 
             // btnCreateChannel
             // 
-            this.btnCreateChannel.Location = new System.Drawing.Point(3, 3);
+            this.btnCreateChannel.Location = new System.Drawing.Point(3, 61);
             this.btnCreateChannel.Name = "btnCreateChannel";
             this.btnCreateChannel.Size = new System.Drawing.Size(140, 23);
             this.btnCreateChannel.TabIndex = 0;
@@ -332,13 +313,92 @@ namespace PlugifyClient
             this.tmrPing.Interval = 10000;
             this.tmrPing.Tick += new System.EventHandler(this.tmrPing_Tick);
             // 
+            // btnCreateOrJoinGroup
+            // 
+            this.btnCreateOrJoinGroup.Location = new System.Drawing.Point(3, 3);
+            this.btnCreateOrJoinGroup.Name = "btnCreateOrJoinGroup";
+            this.btnCreateOrJoinGroup.Size = new System.Drawing.Size(56, 56);
+            this.btnCreateOrJoinGroup.TabIndex = 0;
+            this.btnCreateOrJoinGroup.Text = "+";
+            this.btnCreateOrJoinGroup.UseVisualStyleBackColor = true;
+            this.btnCreateOrJoinGroup.Click += new System.EventHandler(this.btnCreateOrJoinGroup_Click);
+            // 
+            // lblUserPFP
+            // 
+            this.lblUserPFP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.lblUserPFP.ImageLocation = "http://cds.plugify.cf/defaultAvatars/addictedtree";
+            this.lblUserPFP.Location = new System.Drawing.Point(6, 0);
+            this.lblUserPFP.Name = "lblUserPFP";
+            this.lblUserPFP.Size = new System.Drawing.Size(56, 56);
+            this.lblUserPFP.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.lblUserPFP.TabIndex = 0;
+            this.lblUserPFP.TabStop = false;
+            // 
+            // pnlGroupInfo
+            // 
+            this.pnlGroupInfo.Controls.Add(this.btnLeaveGroup);
+            this.pnlGroupInfo.Controls.Add(this.btnGroupSettings);
+            this.pnlGroupInfo.Controls.Add(this.lblGroupName);
+            this.pnlGroupInfo.Location = new System.Drawing.Point(3, 3);
+            this.pnlGroupInfo.Name = "pnlGroupInfo";
+            this.pnlGroupInfo.Size = new System.Drawing.Size(146, 52);
+            this.pnlGroupInfo.TabIndex = 1;
+            // 
+            // lblGroupName
+            // 
+            this.lblGroupName.AutoEllipsis = true;
+            this.lblGroupName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblGroupName.ForeColor = System.Drawing.Color.White;
+            this.lblGroupName.Location = new System.Drawing.Point(0, 0);
+            this.lblGroupName.Name = "lblGroupName";
+            this.lblGroupName.Size = new System.Drawing.Size(146, 17);
+            this.lblGroupName.TabIndex = 0;
+            this.lblGroupName.Text = "Group name";
+            // 
+            // txtMessage
+            // 
+            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
+            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMessage.Cue = "Enter a message...";
+            this.txtMessage.ForeColor = System.Drawing.Color.White;
+            this.txtMessage.Location = new System.Drawing.Point(9, 7);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(544, 46);
+            this.txtMessage.TabIndex = 0;
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxControl1_KeyDown);
+            // 
+            // btnGroupSettings
+            // 
+            this.btnGroupSettings.Location = new System.Drawing.Point(74, 20);
+            this.btnGroupSettings.Name = "btnGroupSettings";
+            this.btnGroupSettings.Size = new System.Drawing.Size(66, 29);
+            this.btnGroupSettings.TabIndex = 1;
+            this.btnGroupSettings.Text = "Settings";
+            this.btnGroupSettings.UseVisualStyleBackColor = true;
+            this.btnGroupSettings.Click += new System.EventHandler(this.btnGroupSettings_Click);
+            // 
+            // btnLeaveGroup
+            // 
+            this.btnLeaveGroup.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeaveGroup.Location = new System.Drawing.Point(3, 20);
+            this.btnLeaveGroup.Name = "btnLeaveGroup";
+            this.btnLeaveGroup.Size = new System.Drawing.Size(66, 29);
+            this.btnLeaveGroup.TabIndex = 2;
+            this.btnLeaveGroup.Text = "Leave group";
+            this.btnLeaveGroup.UseVisualStyleBackColor = true;
+            this.btnLeaveGroup.Click += new System.EventHandler(this.btnLeaveGroup_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.ServerContent);
-            this.Controls.Add(this.ServerArea);
+            this.Controls.Add(this.pnlServerArea);
             this.Controls.Add(this.pnlError);
             this.Controls.Add(this.progressBar1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -349,10 +409,10 @@ namespace PlugifyClient
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
-            this.ServerArea.ResumeLayout(false);
-            this.UserArea.ResumeLayout(false);
-            this.UserArea.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lblUserPFP)).EndInit();
+            this.pnlServerArea.ResumeLayout(false);
+            this.pnlServers.ResumeLayout(false);
+            this.pnlUserArea.ResumeLayout(false);
+            this.pnlUserArea.PerformLayout();
             this.ServerContent.ResumeLayout(false);
             this.pnlMessageContainer.ResumeLayout(false);
             this.messagesPanel.ResumeLayout(false);
@@ -362,6 +422,8 @@ namespace PlugifyClient
             this.pnlChannels.ResumeLayout(false);
             this.pnlError.ResumeLayout(false);
             this.pnlError.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lblUserPFP)).EndInit();
+            this.pnlGroupInfo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -369,10 +431,10 @@ namespace PlugifyClient
         #endregion
 
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Panel ServerArea;
+        private System.Windows.Forms.Panel pnlServerArea;
         private System.Windows.Forms.Panel ServerContent;
-        private System.Windows.Forms.FlowLayoutPanel Severs;
-        private System.Windows.Forms.Panel UserArea;
+        private System.Windows.Forms.FlowLayoutPanel pnlServers;
+        private System.Windows.Forms.Panel pnlUserArea;
         private System.Windows.Forms.PictureBox lblUserPFP;
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.Label lblPing;
@@ -388,10 +450,15 @@ namespace PlugifyClient
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Panel messageSendArea;
-        private TextboxControl textboxControl1;
+        private TextboxControl txtMessage;
         private System.Windows.Forms.Button btnSendMSG;
         private System.Windows.Forms.Timer tmrPing;
         private System.Windows.Forms.Button btnCreateChannel;
+        private System.Windows.Forms.Button btnCreateOrJoinGroup;
+        private System.Windows.Forms.Panel pnlGroupInfo;
+        private System.Windows.Forms.Label lblGroupName;
+        private System.Windows.Forms.Button btnLeaveGroup;
+        private System.Windows.Forms.Button btnGroupSettings;
     }
 }
 

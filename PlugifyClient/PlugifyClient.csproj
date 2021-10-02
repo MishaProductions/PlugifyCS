@@ -67,6 +67,18 @@
     <Compile Include="Dialogs\CreateNewChannel.Designer.cs">
       <DependentUpon>CreateNewChannel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\InviteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\InviteDialog.Designer.cs">
+      <DependentUpon>InviteDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\Loading.Designer.cs">
+      <DependentUpon>Loading.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +116,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\CreateNewChannel.resx">
       <DependentUpon>CreateNewChannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\InviteDialog.resx">
+      <DependentUpon>InviteDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\Loading.resx">
+      <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

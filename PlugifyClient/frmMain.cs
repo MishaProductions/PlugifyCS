@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using PlugifyClient.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,8 @@ namespace PlugifyClient
         private string CurrentChannelID = "";
         private string currentGroupID = "";
         private dynamic currentGroupObj = "";
+
+        private Loading loadingForm = new Loading();
         public frmMain()
         {
             InitializeComponent();
@@ -33,11 +37,11 @@ namespace PlugifyClient
             {
                 pnlChannels.BackColor = Color.White;
                 messagesPanel.BackColor = Color.White;
-                Severs.BackColor = Color.White;
-                UserArea.BackColor = Color.White;
+                pnlServers.BackColor = Color.White;
+                pnlUserArea.BackColor = Color.White;
                 pnlMessageContainer.BackColor = Color.White;
                 messageSendArea.BackColor = Color.White;
-                textboxControl1.BackColor = Color.White;
+                txtMessage.BackColor = Color.White;
 
                 lblUserName.ForeColor = Color.Black;
                 lblPing.ForeColor = Color.Black;
@@ -46,17 +50,18 @@ namespace PlugifyClient
 
                 lblHome.ForeColor = Color.Black;
                 lblNoChannel.ForeColor = Color.Black;
-                textboxControl1.ForeColor = Color.Black;
+                txtMessage.ForeColor = Color.Black;
+                lblGroupName.ForeColor = Color.Black;
             }
             else if (Properties.Settings.Default.Theme == "classic")
             {
                 pnlChannels.BackColor = SystemColors.Control;
                 messagesPanel.BackColor = SystemColors.Control;
-                Severs.BackColor = SystemColors.Control;
-                UserArea.BackColor = SystemColors.Control;
+                pnlServers.BackColor = SystemColors.Control;
+                pnlUserArea.BackColor = SystemColors.Control;
                 pnlMessageContainer.BackColor = SystemColors.Control;
                 messageSendArea.BackColor = SystemColors.Control;
-                textboxControl1.BackColor = SystemColors.Control;
+                txtMessage.BackColor = SystemColors.Control;
 
                 lblUserName.ForeColor = Color.Black;
                 lblPing.ForeColor = Color.Black;
@@ -65,7 +70,9 @@ namespace PlugifyClient
 
                 lblHome.ForeColor = Color.Black;
                 lblNoChannel.ForeColor = Color.Black;
-                textboxControl1.ForeColor = Color.Black;
+                txtMessage.ForeColor = Color.Black;
+                lblGroupName.ForeColor = Color.Black;
+
                 Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
             }
 
@@ -87,6 +94,8 @@ namespace PlugifyClient
             ws.OnClose += Ws_OnClose;
 
             ws.ConnectAsync();
+            loadingForm.Show();
+            BringToFront();
 
             while (UserInfo == null)
             {
@@ -135,6 +144,7 @@ namespace PlugifyClient
                 case 3:
                     this.Invoke((MethodInvoker)delegate ()
                     {
+                        loadingForm.Hide();
                         //We have an invaild token
                         ws.Close();
                         var login = new LogonDialog();
@@ -160,6 +170,7 @@ namespace PlugifyClient
                 case 10:
                     this.Invoke((MethodInvoker)delegate ()
                     {
+                        btnCreateOrJoinGroup.Visible = false;
                         var ctl = new MessageControl();
                         string dispname = d.data.author.displayName;
                         string name = d.data.author.name;
@@ -168,6 +179,7 @@ namespace PlugifyClient
                         ctl.SetSettings("https://cds.plugify.cf/defaultAvatars/" + name, name + " (@" + dispname + ")", content, "WIP");
                         ctl.Size = new Size(messagesPanel.Width - 10, ctl.Height);
                         messagesPanel.Controls.Add(ctl);
+                        btnCreateOrJoinGroup.Visible = true;
                     });
                     break;
                 //GROUP_GET_SUCCESS
@@ -180,18 +192,7 @@ namespace PlugifyClient
                     break;
                 //JOINED_NEW_GROUP
                 case 15:
-                    PictureBox theGroup = new PictureBox();
-                    theGroup.Size = new Size(64, 64);
-                    theGroup.InitialImage = Properties.Resources.plug;
-                    theGroup.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + d.data.name;
-                    theGroup.SizeMode = PictureBoxSizeMode.StretchImage;
-                    theGroup.Tag = d.data;
-                    theGroup.Click += delegate (object senderobj, EventArgs e2)
-                    {
-                        OpenGroup(d.data);
-                    };
-
-                    Severs.Controls.Add(theGroup);
+                    AddGroupToList(d.data);
                     break;
 
 
@@ -205,6 +206,22 @@ namespace PlugifyClient
                 default:
                     throw new NotImplementedException();
             }
+        }
+        private void AddGroupToList(dynamic group)
+        {
+            PictureBox theGroup = new PictureBox();
+            theGroup.Size = new Size(56, 56);
+            theGroup.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + group.name;
+            theGroup.SizeMode = PictureBoxSizeMode.StretchImage;
+            theGroup.Tag = group;
+            theGroup.InitialImage = Properties.Resources.plug;
+            pnlServers.Controls.Remove(btnCreateOrJoinGroup);
+            theGroup.Click += delegate (object sender, EventArgs e)
+            {
+                OpenGroup(group);
+            };
+            pnlServers.Controls.Add(theGroup);
+            pnlServers.Controls.Add(btnCreateOrJoinGroup);
         }
         private void LoggedIn()
         {
@@ -222,26 +239,19 @@ namespace PlugifyClient
 
             foreach (var item in Groups.data)
             {
-                PictureBox theGroup = new PictureBox();
-                theGroup.Size = new Size(64, 64);
-                theGroup.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + item.name;
-                theGroup.SizeMode = PictureBoxSizeMode.StretchImage;
-                theGroup.Tag = item;
-                theGroup.InitialImage = Properties.Resources.plug;
-                theGroup.Click += delegate (object sender, EventArgs e)
-                  {
-                      OpenGroup(item);
-                  };
-
-                Severs.Controls.Add(theGroup);
+                AddGroupToList(item);
             }
+            loadingForm.TopMost = false;
+            loadingForm.Hide();
         }
         private void OpenGroup(dynamic group)
         {
             lblHome.Visible = false;
-            progressBar1.Visible = true;
+            //progressBar1.Visible = true;
+            lblGroupName.Text = group.name;
             prgMessageLoading.Visible = false;
             pnlChannels.Controls.Clear();
+            pnlChannels.Controls.Add(pnlGroupInfo);
             messagesPanel.Controls.Clear();
             messagesPanel.Controls.Add(lblHome);
             messagesPanel.Controls.Add(lblNoChannel);
@@ -256,7 +266,7 @@ namespace PlugifyClient
             {
                 Application.DoEvents();
             }
-            progressBar1.Visible = false;
+            //progressBar1.Visible = false;
             lblNoChannel.Visible = true;
             foreach (var item in ChannelInfo.data)
             {
@@ -330,12 +340,12 @@ namespace PlugifyClient
         }
         private void SendMessage()
         {
-            string messageContents = textboxControl1.Text;
-            textboxControl1.Text = "";
+            string messageContents = txtMessage.Text;
+            txtMessage.Text = "";
 
             string s3 = "{\"event\":7,\"data\": {\"content\": \"" + messageContents.TrimStart('{').TrimEnd('}') + "\", \"channelID\": \"" + CurrentChannelID + "\"}}";
             ws.Send(s3);
-            textboxControl1.Text = "";
+            txtMessage.Text = "";
         }
         private void tmrPing_Tick(object sender, EventArgs e)
         {
@@ -432,8 +442,17 @@ namespace PlugifyClient
             Stream requestStream = webRequest.GetRequestStream();
             //write the post to the request stream
             requestStream.Write(requestBytes, 0, requestBytes.Length);
+            WebResponse r = null;
+            try
+            {
+                r = webRequest.GetResponse();
+            }
+            catch (WebException e)
+            {
+                r = e.Response;
+            }
 
-            using (System.IO.Stream s = webRequest.GetResponse().GetResponseStream())
+            using (System.IO.Stream s = r.GetResponseStream())
             {
                 using (System.IO.StreamReader sr = new System.IO.StreamReader(s))
                 {
@@ -441,6 +460,46 @@ namespace PlugifyClient
                     return JObject.Parse(jsonResponse);
                 }
             }
+        }
+
+        private void btnCreateOrJoinGroup_Click(object sender, EventArgs e)
+        {
+            var dlg = new InviteDialog();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (dlg.Result2)
+                {
+                    var result = ApiPost("https://api.plugify.cf/v2/invites/use", "{\"id\": \"" + dlg.Result1 + "\"}");
+                    if ((bool)result.error)
+                    {
+                        MessageBox.Show("Invaild invite or server error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    var result = ApiPost("https://api.plugify.cf/v2/groups/create", "{\"name\": \"" + dlg.Result1 + "\"}");
+                    if (!(bool)result.success)
+                    {
+                        MessageBox.Show("Unkown error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        result.name = dlg.Result1;
+                        result.id = result.data.id;
+                        AddGroupToList(result);
+                    }
+                }
+            }
+        }
+
+        private void btnLeaveGroup_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This feature is not implmented in plugify backend.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void btnGroupSettings_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Coming soon", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
