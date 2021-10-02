@@ -46,5 +46,17 @@ namespace PlugifyClient.Properties {
                 this["Theme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Ad {
+            get {
+                return ((bool)(this["Ad"]));
+            }
+            set {
+                this["Ad"] = value;
+            }
+        }
     }
 }

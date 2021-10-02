@@ -24,7 +24,6 @@ namespace PlugifyClient
         private string CurrentChannelID = "";
         private string currentGroupID = "";
         private dynamic currentGroupObj = "";
-        private static readonly HttpClient client = new HttpClient();
         public frmMain()
         {
             InitializeComponent();
@@ -183,6 +182,7 @@ namespace PlugifyClient
                 case 15:
                     PictureBox theGroup = new PictureBox();
                     theGroup.Size = new Size(64, 64);
+                    theGroup.InitialImage = Properties.Resources.plug;
                     theGroup.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + d.data.name;
                     theGroup.SizeMode = PictureBoxSizeMode.StretchImage;
                     theGroup.Tag = d.data;
@@ -227,6 +227,7 @@ namespace PlugifyClient
                 theGroup.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + item.name;
                 theGroup.SizeMode = PictureBoxSizeMode.StretchImage;
                 theGroup.Tag = item;
+                theGroup.InitialImage = Properties.Resources.plug;
                 theGroup.Click += delegate (object sender, EventArgs e)
                   {
                       OpenGroup(item);
@@ -349,6 +350,10 @@ namespace PlugifyClient
         }
         private void btnCreateChannel_Click(object sender, EventArgs e)
         {
+            if (new Random().Next(0, 3) == 1 && Properties.Settings.Default.Ad)
+            {
+                new Advertisment().ShowDialog();
+            }
             var d = new CreateNewChannel();
             if (d.ShowDialog() == DialogResult.OK)
             {

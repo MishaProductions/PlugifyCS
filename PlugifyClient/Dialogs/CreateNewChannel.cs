@@ -16,6 +16,18 @@ namespace PlugifyClient
         public CreateNewChannel()
         {
             InitializeComponent();
+
+            if (Properties.Settings.Default.Theme == "light")
+            {
+                this.ForeColor = Color.Black;
+                this.BackColor = Color.White;
+            }
+
+            if (Properties.Settings.Default.Theme == "classic")
+            {
+                this.ForeColor = Color.Black;
+                this.BackColor = SystemColors.Control;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -66,7 +66,6 @@ namespace PlugifyClient
                     lblToken.Invoke((MethodInvoker)delegate () { progressBar1.Visible = false;  lblToken.Text = d.data; lblToken.Visible = true; });
                     break;
                 default:
-                    throw new NotImplementedException();
                     break;
             }
         }
