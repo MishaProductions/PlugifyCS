@@ -26,15 +26,19 @@ namespace PlugifyCS
             {
                 this.ForeColor = Color.Black;
                 this.BackColor = Color.White;
-                //lblMessageContent.ForeColor = Color.Black;
+                htmlLabel1.BackColor = Color.White;
+
                 lblAuthor.ForeColor = Color.Black;
+                htmlLabel1.BackColor = Color.White;
             }
 
             if (Properties.Settings.Default.Theme == "classic")
             {
                 this.ForeColor = Color.Black;
                 this.BackColor = System.Drawing.SystemColors.Control;
-                //lblMessageContent.ForeColor = Color.Black;
+                htmlLabel1.BackColor = System.Drawing.SystemColors.Control;
+
+                htmlLabel1.ForeColor = Color.Black;
                 lblAuthor.ForeColor = Color.Black;
             }
         }
@@ -43,8 +47,10 @@ namespace PlugifyCS
         {
             pfp.SetURL(AuthorPFP);
             lblAuthor.Text = MessageTitle;
-
-            htmlLabel1.Text = "<html><head><style>body{color:white;}</style></head><body>" + Content+"</body></html>";
+            if (Properties.Settings.Default.Theme == "dark")
+                htmlLabel1.Text = "<html><head><style>body{color:white;}</style></head><body>" + Content+"</body></html>";
+        else
+                htmlLabel1.Text = "<html><head><style>body{color:black;}</style></head><body>" + Content + "</body></html>";
             lblTime.Text = TimeString;
 
             var h = htmlLabel1.Height;

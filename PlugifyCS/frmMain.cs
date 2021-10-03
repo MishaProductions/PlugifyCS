@@ -48,6 +48,7 @@ namespace PlugifyCS
                 pnlMessageContainer.BackColor = Color.White;
                 messageSendArea.BackColor = Color.White;
                 txtMessage.BackColor = Color.White;
+                pnlChannelTopBar.BackColor = Color.White;
 
                 lblUserName.ForeColor = Color.Black;
                 lblPing.ForeColor = Color.Black;
@@ -70,6 +71,7 @@ namespace PlugifyCS
                 pnlMessageContainer.BackColor = SystemColors.Control;
                 messageSendArea.BackColor = SystemColors.Control;
                 txtMessage.BackColor = SystemColors.Control;
+                pnlChannelTopBar.BackColor = SystemColors.Control;
 
                 lblUserName.ForeColor = Color.Black;
                 lblPing.ForeColor = Color.Black;
@@ -281,9 +283,9 @@ namespace PlugifyCS
             lblNoChannel.Visible = true;
             foreach (var item in ChannelInfo.data)
             {
-                Label lbl = new Label();
+                ChannelControl lbl = new ChannelControl();
                 if (item.type == "text")
-                    lbl.Text = "# - " + item.name;
+                    lbl.Text = "#"+item.name;
                 else
                 {
                     lbl.Text = "?? - " + item.name;
@@ -414,6 +416,9 @@ namespace PlugifyCS
             lblHome.Visible = true;
             CurrentChannelID = "";
             currentGroupID = "";
+            messagesPanel.Controls.Clear();
+            messagesPanel.Controls.Add(lblHome);
+            messagesPanel.Controls.Add(lblNoChannel);
         }
         private void btnSettings_Click(object sender, EventArgs e)
         {

@@ -93,6 +93,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ChannelControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\RoundButton.cs">
       <SubType>Component</SubType>
     </Compile>
