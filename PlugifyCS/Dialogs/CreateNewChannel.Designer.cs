@@ -98,7 +98,6 @@ namespace PlugifyCS
             // 
             // btnCreate
             // 
-            this.btnCreate.Enabled = false;
             this.btnCreate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCreate.Location = new System.Drawing.Point(12, 243);
             this.btnCreate.Name = "btnCreate";

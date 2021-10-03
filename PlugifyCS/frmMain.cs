@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Markdig;
+using Newtonsoft.Json.Linq;
+using PlugifyCS.Controls;
 using PlugifyCS.Dialogs;
 using System;
 using System.Drawing;
@@ -12,6 +14,7 @@ namespace PlugifyCS
 {
     public partial class frmMain : Form
     {
+        private static TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
         private WebSocket ws;
         private dynamic UserInfo;
         private dynamic Groups;
@@ -55,6 +58,8 @@ namespace PlugifyCS
                 lblNoChannel.ForeColor = Color.Black;
                 txtMessage.ForeColor = Color.Black;
                 lblGroupName.ForeColor = Color.Black;
+                btnCreateChannel.ForeColor = Color.Black;
+                btnSendMSG.ForeColor = Color.Black;
             }
             else if (Properties.Settings.Default.Theme == "classic")
             {
@@ -75,6 +80,8 @@ namespace PlugifyCS
                 lblNoChannel.ForeColor = Color.Black;
                 txtMessage.ForeColor = Color.Black;
                 lblGroupName.ForeColor = Color.Black;
+                btnCreateChannel.ForeColor = Color.Black;
+                btnSendMSG.ForeColor = Color.Black;
 
                 Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
             }
@@ -174,14 +181,15 @@ namespace PlugifyCS
                     this.Invoke((MethodInvoker)delegate ()
                     {
                         btnCreateOrJoinGroup.Visible = false;
-                        var ctl = new MessageControl();
-                        string dispname = d.data.author.displayName;
-                        string name = d.data.author.name;
-                        string content = d.data.content;
+                        AddMessage(d.data);
+                        //var ctl = new MessageControl();
+                        //string dispname = d.data.author.displayName;
+                        //string name = d.data.author.name;
+                        //string content = d.data.content;
 
-                        ctl.SetSettings("https://cds.plugify.cf/defaultAvatars/" + name, name + " (@" + dispname + ")", content, "WIP");
-                        ctl.Size = new Size(messagesPanel.Width - 10, ctl.Height);
-                        messagesPanel.Controls.Add(ctl);
+                        //ctl.SetSettings(name, name + " (@" + dispname + ")", content, "WIP");
+                        //ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
+                        //messagesPanel.Controls.Add(ctl);
                         btnCreateOrJoinGroup.Visible = true;
                     });
                     break;
@@ -212,12 +220,11 @@ namespace PlugifyCS
         }
         private void AddGroupToList(dynamic group)
         {
-            PictureBox theGroup = new PictureBox();
+            RoundPicture theGroup = new RoundPicture();
             theGroup.Size = new Size(56, 56);
-            theGroup.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + group.name;
-            theGroup.SizeMode = PictureBoxSizeMode.StretchImage;
+            theGroup.BackgroundImageLayout = ImageLayout.Stretch;
+            theGroup.SetURL((string)group.name);
             theGroup.Tag = group;
-            theGroup.InitialImage = Properties.Resources.plug;
             pnlServers.Controls.Remove(btnCreateOrJoinGroup);
             theGroup.Click += delegate (object sender, EventArgs e)
             {
@@ -228,7 +235,8 @@ namespace PlugifyCS
         }
         private void LoggedIn()
         {
-            lblUserPFP.ImageLocation = "https://cds.plugify.cf/defaultAvatars/" + UserInfo.data.username;
+            // we need to cast this to a string because c# is stupid
+            lblUserPFP.SetURL((string)UserInfo.data.username);
             lblUserName.Text = UserInfo.data.username;
             lblPing.Text = "@" + UserInfo.data.username;
 
@@ -285,6 +293,9 @@ namespace PlugifyCS
                     lbl.ForeColor = Color.Black;
                 else
                     lbl.ForeColor = Color.White;
+                lbl.AutoSize = false;
+                lbl.AutoEllipsis = true;
+                lbl.Size = new Size(pnlChannels.Width, lbl.Size.Height);
 
                 lbl.Click += delegate (object sender, EventArgs e)
                  {
@@ -308,16 +319,10 @@ namespace PlugifyCS
                      {
                          Application.DoEvents();
                      }
+                  
                      foreach (var message in ChannelDetails.data.history)
                      {
-                         var ctl = new MessageControl();
-                         string dispname = message.author.displayName;
-                         string name = message.author.name;
-                         string content = message.content;
-
-                         ctl.SetSettings("https://cds.plugify.cf/defaultAvatars/" + name, name + " (@" + dispname + ")", content, "WIP");
-                         ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
-                         messagesPanel.Controls.Add(ctl);
+                         AddMessage(message);
                      }
                      ChannelDetails = null;
                      prgMessageLoading.Visible = false;
@@ -329,6 +334,27 @@ namespace PlugifyCS
             messageSendArea.Visible = true;
             pnlChannels.Visible = true;
             lblHome.Visible = false;
+        }
+        private void AddMessage(dynamic message)
+        {
+            var pipeline = new MarkdownPipelineBuilder().UseListExtras().UseAutoLinks().UseTaskLists().Build();
+            var ctl = new MessageControl();
+            string dispname = message.author.displayName;
+            string name = message.author.name;
+            string content = message.content;
+            var properString = name + " (@" + dispname + ")";
+
+            var html = Markdown.ToHtml(content, pipeline);
+            if (html.Length != 0)
+                html = html.Remove(html.Length - 1); //remove \n
+
+
+
+            var Emotes = lib.Parse(html);
+
+            ctl.SetSettings(name, properString, Emotes, "WIP");
+            ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
+            messagesPanel.Controls.Add(ctl);
         }
         private void btnErrorClose_Click(object sender, EventArgs e)
         {
@@ -399,21 +425,23 @@ namespace PlugifyCS
         }
         private void frmMain_Resize(object sender, EventArgs e)
         {
-            foreach (Control item in messagesPanel.Controls)
-            {
-                if (item is MessageControl c)
-                {
-                    c.Size = new Size(messagesPanel.Width - 25, c.Size.Height);
-                }
-            }
+            //foreach (Control item in messagesPanel.Controls)
+            //{
+            //    if (item is MessageControl c)
+            //    {
+            //        c.Size = new Size(messagesPanel.Width - 25, c.Size.Height);
+            //    }
+            //}
         }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             tmrPing.Stop();
             if (ws != null)
+            {
                 ws.Close();
+            }
+
             Application.Exit();
-            Environment.Exit(0);
         }
 
         //https://stackoverflow.com/a/77233/11250752

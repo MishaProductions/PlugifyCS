@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Markdig;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,12 +9,15 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace PlugifyCS
 {
     public partial class MessageControl : UserControl
     {
+        private static TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
         public MessageControl()
         {
             InitializeComponent();
@@ -22,43 +26,31 @@ namespace PlugifyCS
             {
                 this.ForeColor = Color.Black;
                 this.BackColor = Color.White;
-                lblMessageContent.ForeColor = Color.Black;
+                //lblMessageContent.ForeColor = Color.Black;
                 lblAuthor.ForeColor = Color.Black;
             }
 
             if (Properties.Settings.Default.Theme == "classic")
             {
                 this.ForeColor = Color.Black;
-                this.BackColor = SystemColors.Control;
-                lblMessageContent.ForeColor = Color.Black;
+                this.BackColor = System.Drawing.SystemColors.Control;
+                //lblMessageContent.ForeColor = Color.Black;
                 lblAuthor.ForeColor = Color.Black;
             }
         }
 
-        public void SetSettings(string AuthorPFPURL, string MessageTitle, string Content, string TimeString)
+        public void SetSettings(string AuthorPFP, string MessageTitle, string Content, string TimeString)
         {
-            //this is too slow
-            //WebClient client = new WebClient();
-            //Stream stream = client.OpenRead(AuthorPFPURL);
-            //Bitmap bitmap = new Bitmap(stream);
-
-            //if (bitmap != null)
-            //{
-            //    pfp.BackgroundImage = bitmap;
-            //}
-
-            //stream.Flush();
-            //stream.Close();
-            //client.Dispose();
-
-             pfp.ImageLocation = AuthorPFPURL;
+            pfp.SetURL(AuthorPFP);
             lblAuthor.Text = MessageTitle;
-            lblMessageContent.Text = Content;
+
+            htmlLabel1.Text = "<html><head><style>body{color:white;}</style></head><body>" + Content+"</body></html>";
             lblTime.Text = TimeString;
-            var h = TextRenderer.MeasureText(Content, lblMessageContent.Font).Height;
-            if (h > 40)
+
+            var h = htmlLabel1.Height;
+            if (h > this.Height- 31)
             {
-                this.Size = new Size(this.Size.Width, this.Size.Height + (h - 20));
+                this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + (htmlLabel1.Height - 31));
             }
         }
     }

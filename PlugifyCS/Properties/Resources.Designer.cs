@@ -63,6 +63,36 @@ namespace PlugifyCS.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap door_1f6aa {
+            get {
+                object obj = ResourceManager.GetObject("door_1f6aa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gear_2699_fe0f {
+            get {
+                object obj = ResourceManager.GetObject("gear_2699-fe0f", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap house_1f3e0 {
+            get {
+                object obj = ResourceManager.GetObject("house_1f3e0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IMG_20210916_183738 {
             get {
                 object obj = ResourceManager.GetObject("IMG_20210916_183738", resourceCulture);
@@ -87,6 +117,16 @@ namespace PlugifyCS.Properties {
             get {
                 object obj = ResourceManager.GetObject("plugifyLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /*! Copyright Twitter Inc. and other contributors. Licensed under MIT */
+        ///var twemoji=function(){&quot;use strict&quot;;var twemoji={base:&quot;https://twemoji.maxcdn.com/v/13.0.1/&quot;,ext:&quot;.png&quot;,size:&quot;72x72&quot;,className:&quot;emoji&quot;,convert:{fromCodePoint:fromCodePoint,toCodePoint:toCodePoint},onerror:function onerror(){if(this.parentNode){this.parentNode.replaceChild(createText(this.alt,false),this)}},parse:parse,replace:replace,test:test},escaper={&quot;&amp;amp;&quot;:&quot;&amp;amp;amp;&quot;,&quot;&amp;lt;&quot;:&quot;&amp;amp;lt;&quot;,&quot;&amp;gt;&quot;:&quot;&amp;amp;gt;&quot;,&quot;&apos;&quot;:&quot;&amp;amp;#39;&quot;,&apos;&quot;&apos;:&quot;&amp;amp; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string twemoji {
+            get {
+                return ResourceManager.GetString("twemoji", resourceCulture);
             }
         }
     }

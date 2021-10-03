@@ -31,10 +31,9 @@ namespace PlugifyCS
         {
             this.lblAuthor = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
-            this.lblMessageContent = new System.Windows.Forms.Label();
-            this.pfp = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.pfp)).BeginInit();
+            this.pfp = new PlugifyCS.Controls.RoundPicture();
+            this.htmlLabel1 = new TheArtOfDev.HtmlRenderer.WinForms.HtmlLabel();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,29 +58,6 @@ namespace PlugifyCS
             this.lblTime.TabIndex = 2;
             this.lblTime.Text = "Tommorow at 3:00 AM";
             // 
-            // lblMessageContent
-            // 
-            this.lblMessageContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblMessageContent.ForeColor = System.Drawing.Color.White;
-            this.lblMessageContent.Location = new System.Drawing.Point(58, 35);
-            this.lblMessageContent.Name = "lblMessageContent";
-            this.lblMessageContent.Size = new System.Drawing.Size(395, 40);
-            this.lblMessageContent.TabIndex = 3;
-            this.lblMessageContent.Text = "Loading the message content";
-            // 
-            // pfp
-            // 
-            this.pfp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pfp.InitialImage = global::PlugifyCS.Properties.Resources.plug;
-            this.pfp.Location = new System.Drawing.Point(4, 4);
-            this.pfp.Name = "pfp";
-            this.pfp.Size = new System.Drawing.Size(48, 48);
-            this.pfp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pfp.TabIndex = 0;
-            this.pfp.TabStop = false;
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.lblAuthor);
@@ -91,18 +67,38 @@ namespace PlugifyCS
             this.flowLayoutPanel1.Size = new System.Drawing.Size(395, 23);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
+            // pfp
+            // 
+            this.pfp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pfp.Location = new System.Drawing.Point(4, 4);
+            this.pfp.Name = "pfp";
+            this.pfp.Size = new System.Drawing.Size(48, 48);
+            this.pfp.TabIndex = 5;
+            this.pfp.Text = "roundPicture1";
+            // 
+            // htmlLabel1
+            // 
+            this.htmlLabel1.AutoSize = false;
+            this.htmlLabel1.AutoSizeHeightOnly = true;
+            this.htmlLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
+            this.htmlLabel1.BaseStylesheet = null;
+            this.htmlLabel1.Location = new System.Drawing.Point(58, 31);
+            this.htmlLabel1.Name = "htmlLabel1";
+            this.htmlLabel1.Size = new System.Drawing.Size(395, 20);
+            this.htmlLabel1.TabIndex = 6;
+            this.htmlLabel1.Text = "Loading message";
+            // 
             // MessageControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
-            this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.lblMessageContent);
+            this.Controls.Add(this.htmlLabel1);
             this.Controls.Add(this.pfp);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MessageControl";
-            this.Size = new System.Drawing.Size(461, 75);
-            ((System.ComponentModel.ISupportInitialize)(this.pfp)).EndInit();
+            this.Size = new System.Drawing.Size(461, 116);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -110,11 +106,10 @@ namespace PlugifyCS
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pfp;
         private System.Windows.Forms.Label lblAuthor;
         private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Label lblMessageContent;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private Controls.RoundPicture pfp;
+        private TheArtOfDev.HtmlRenderer.WinForms.HtmlLabel htmlLabel1;
     }
 }

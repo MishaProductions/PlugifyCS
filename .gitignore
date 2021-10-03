@@ -4,3 +4,6 @@
 # debug outputs
 PlugifyCS/bin/
 PlugifyCS/obj/
+
+# NuGet Crap
+packages/
