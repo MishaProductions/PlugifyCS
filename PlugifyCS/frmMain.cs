@@ -3,9 +3,11 @@ using Newtonsoft.Json.Linq;
 using PlugifyCS.Controls;
 using PlugifyCS.Dialogs;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using WebSocketSharp;
@@ -88,12 +90,46 @@ namespace PlugifyCS
                 Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
             }
 
+
             messageSendArea.Visible = false;
             pnlChannels.Visible = false;
             lblHome.Visible = true;
         }
+        #region Native Windows apis
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, uint attr, ref uint attrValue, int attrSize);
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        public extern static int SetWindowTheme(IntPtr hWnd, string
+                                           pszSubAppName, string pszSubIdList);
+        #endregion
         private void Form1_Shown(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.Theme == "dark")
+            {
+                //Make sure we are using windows
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    try
+                    {
+                        uint a = 1;
+                        //19: DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1
+                        //20: DWMWA_USE_IMMERSIVE_DARK_MODE
+
+                        var ret = DwmSetWindowAttribute(this.Handle, 20, ref a, Marshal.SizeOf(typeof(bool)));
+                        if (ret != 0)
+                        {
+                            //older versions of windows 10
+                            ret = DwmSetWindowAttribute(this.Handle, 19, ref a, Marshal.SizeOf(typeof(bool)));
+                        }
+                        SetWindowTheme(messagesPanel.Handle, "DarkMode_Explorer", null);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+            }
+
             if (Properties.Settings.Default.token == "")
             {
                 var login = new LogonDialog();
@@ -116,6 +152,7 @@ namespace PlugifyCS
 
             LoggedIn();
         }
+
         private void Ws_OnClose(object sender, CloseEventArgs e)
         {
             lblError.Text = "Connection closed: " + e.Reason;
@@ -271,6 +308,8 @@ namespace PlugifyCS
             CurrentChannelID = "";
             currentGroupID = group.id;
             currentGroupObj = group;
+            pnlChannelTopBar.Visible = true;
+            pnlMemberList.Visible = false;
 
             //Get group detail
             string s2 = "{\"event\":13,\"data\": {\"groupID\": \"" + group.id + "\"}}";
@@ -285,7 +324,7 @@ namespace PlugifyCS
             {
                 ChannelControl lbl = new ChannelControl();
                 if (item.type == "text")
-                    lbl.Text = "#"+item.name;
+                    lbl.Text = "#" + item.name;
                 else
                 {
                     lbl.Text = "?? - " + item.name;
@@ -303,6 +342,7 @@ namespace PlugifyCS
                  {
                      lblNoChannel.Visible = false;
                      prgMessageLoading.Visible = true;
+                     pnlMemberList.Visible = true;
                      CurrentChannelID = item.id;
                      messagesPanel.Controls.Clear();
                      messagesPanel.Controls.Add(lblHome);
@@ -321,7 +361,7 @@ namespace PlugifyCS
                      {
                          Application.DoEvents();
                      }
-                  
+
                      foreach (var message in ChannelDetails.data.history)
                      {
                          AddMessage(message);
@@ -414,6 +454,8 @@ namespace PlugifyCS
             messageSendArea.Visible = false;
             pnlChannels.Visible = false;
             lblHome.Visible = true;
+            pnlChannelTopBar.Visible = false;
+            pnlMemberList.Visible = false;
             CurrentChannelID = "";
             currentGroupID = "";
             messagesPanel.Controls.Clear();

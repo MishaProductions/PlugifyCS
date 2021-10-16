@@ -66,7 +66,10 @@ namespace TwemojiSharp
                 if (i % 2 != 0)
                 {
                     var emote = EmojiByNames.GetValue(item);
-                    s += emote;
+                    if (item == "tm")
+                        s += "™";
+                    else
+                        s += emote;
                 }
                 else
                 {

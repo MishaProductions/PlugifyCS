@@ -33,18 +33,26 @@ namespace PlugifyCS
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.pnlServerArea = new System.Windows.Forms.Panel();
             this.pnlServers = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnCreateOrJoinGroup = new PlugifyCS.Controls.RoundButton();
             this.pnlUserArea = new System.Windows.Forms.Panel();
+            this.lblUserPFP = new PlugifyCS.Controls.RoundPicture();
             this.btnHome = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.lblPing = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
             this.ServerContent = new System.Windows.Forms.Panel();
             this.pnlMessageContainer = new System.Windows.Forms.Panel();
+            this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.lblHome = new System.Windows.Forms.Label();
             this.lblNoChannel = new System.Windows.Forms.Label();
+            this.pnlChannelTopBar = new System.Windows.Forms.Panel();
             this.messageSendArea = new System.Windows.Forms.Panel();
             this.btnSendMSG = new System.Windows.Forms.Button();
+            this.txtMessage = new PlugifyCS.TextboxControl();
             this.prgMessageLoading = new System.Windows.Forms.ProgressBar();
+            this.pnlMemberList = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlChannels = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlGroupInfo = new System.Windows.Forms.Panel();
             this.btnLeaveGroup = new System.Windows.Forms.Button();
@@ -56,21 +64,18 @@ namespace PlugifyCS
             this.lblError = new System.Windows.Forms.Label();
             this.tmrPing = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.pnlChannelTopBar = new System.Windows.Forms.Panel();
-            this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.txtMessage = new PlugifyCS.TextboxControl();
-            this.btnCreateOrJoinGroup = new PlugifyCS.Controls.RoundButton();
-            this.lblUserPFP = new PlugifyCS.Controls.RoundPicture();
             this.pnlServerArea.SuspendLayout();
             this.pnlServers.SuspendLayout();
             this.pnlUserArea.SuspendLayout();
             this.ServerContent.SuspendLayout();
             this.pnlMessageContainer.SuspendLayout();
+            this.messagesPanel.SuspendLayout();
             this.messageSendArea.SuspendLayout();
+            this.pnlMemberList.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.pnlChannels.SuspendLayout();
             this.pnlGroupInfo.SuspendLayout();
             this.pnlError.SuspendLayout();
-            this.messagesPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -103,6 +108,20 @@ namespace PlugifyCS
             this.pnlServers.Size = new System.Drawing.Size(545, 62);
             this.pnlServers.TabIndex = 0;
             // 
+            // btnCreateOrJoinGroup
+            // 
+            this.btnCreateOrJoinGroup.BackColor = System.Drawing.Color.Transparent;
+            this.btnCreateOrJoinGroup.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
+            this.btnCreateOrJoinGroup.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreateOrJoinGroup.ForeColor = System.Drawing.Color.White;
+            this.btnCreateOrJoinGroup.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(79)))), ((int)(((byte)(82)))));
+            this.btnCreateOrJoinGroup.Location = new System.Drawing.Point(3, 3);
+            this.btnCreateOrJoinGroup.Name = "btnCreateOrJoinGroup";
+            this.btnCreateOrJoinGroup.Size = new System.Drawing.Size(58, 58);
+            this.btnCreateOrJoinGroup.TabIndex = 2;
+            this.btnCreateOrJoinGroup.Text = "+";
+            this.btnCreateOrJoinGroup.Click += new System.EventHandler(this.btnCreateOrJoinGroup_Click);
+            // 
             // pnlUserArea
             // 
             this.pnlUserArea.Controls.Add(this.lblUserPFP);
@@ -115,6 +134,14 @@ namespace PlugifyCS
             this.pnlUserArea.Name = "pnlUserArea";
             this.pnlUserArea.Size = new System.Drawing.Size(255, 62);
             this.pnlUserArea.TabIndex = 1;
+            // 
+            // lblUserPFP
+            // 
+            this.lblUserPFP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.lblUserPFP.Location = new System.Drawing.Point(7, 0);
+            this.lblUserPFP.Name = "lblUserPFP";
+            this.lblUserPFP.Size = new System.Drawing.Size(56, 56);
+            this.lblUserPFP.TabIndex = 5;
             // 
             // btnHome
             // 
@@ -174,6 +201,7 @@ namespace PlugifyCS
             // 
             this.ServerContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
             this.ServerContent.Controls.Add(this.pnlMessageContainer);
+            this.ServerContent.Controls.Add(this.pnlMemberList);
             this.ServerContent.Controls.Add(this.pnlChannels);
             this.ServerContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ServerContent.Location = new System.Drawing.Point(0, 119);
@@ -191,8 +219,21 @@ namespace PlugifyCS
             this.pnlMessageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMessageContainer.Location = new System.Drawing.Point(149, 0);
             this.pnlMessageContainer.Name = "pnlMessageContainer";
-            this.pnlMessageContainer.Size = new System.Drawing.Size(651, 331);
+            this.pnlMessageContainer.Size = new System.Drawing.Size(502, 331);
             this.pnlMessageContainer.TabIndex = 2;
+            // 
+            // messagesPanel
+            // 
+            this.messagesPanel.AutoScroll = true;
+            this.messagesPanel.Controls.Add(this.lblHome);
+            this.messagesPanel.Controls.Add(this.lblNoChannel);
+            this.messagesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messagesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.messagesPanel.Location = new System.Drawing.Point(0, 75);
+            this.messagesPanel.Name = "messagesPanel";
+            this.messagesPanel.Size = new System.Drawing.Size(502, 191);
+            this.messagesPanel.TabIndex = 6;
+            this.messagesPanel.WrapContents = false;
             // 
             // lblHome
             // 
@@ -219,6 +260,16 @@ namespace PlugifyCS
             this.lblNoChannel.Text = "No channel selected";
             this.lblNoChannel.Visible = false;
             // 
+            // pnlChannelTopBar
+            // 
+            this.pnlChannelTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
+            this.pnlChannelTopBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlChannelTopBar.Location = new System.Drawing.Point(0, 23);
+            this.pnlChannelTopBar.Name = "pnlChannelTopBar";
+            this.pnlChannelTopBar.Size = new System.Drawing.Size(502, 52);
+            this.pnlChannelTopBar.TabIndex = 5;
+            this.pnlChannelTopBar.Visible = false;
+            // 
             // messageSendArea
             // 
             this.messageSendArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
@@ -227,7 +278,7 @@ namespace PlugifyCS
             this.messageSendArea.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.messageSendArea.Location = new System.Drawing.Point(0, 266);
             this.messageSendArea.Name = "messageSendArea";
-            this.messageSendArea.Size = new System.Drawing.Size(651, 65);
+            this.messageSendArea.Size = new System.Drawing.Size(502, 65);
             this.messageSendArea.TabIndex = 4;
             // 
             // btnSendMSG
@@ -236,7 +287,7 @@ namespace PlugifyCS
             this.btnSendMSG.FlatAppearance.BorderSize = 0;
             this.btnSendMSG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendMSG.ForeColor = System.Drawing.Color.White;
-            this.btnSendMSG.Location = new System.Drawing.Point(560, 7);
+            this.btnSendMSG.Location = new System.Drawing.Point(411, 7);
             this.btnSendMSG.Name = "btnSendMSG";
             this.btnSendMSG.Size = new System.Drawing.Size(88, 46);
             this.btnSendMSG.TabIndex = 1;
@@ -244,16 +295,63 @@ namespace PlugifyCS
             this.btnSendMSG.UseVisualStyleBackColor = true;
             this.btnSendMSG.Click += new System.EventHandler(this.btnSendMSG_Click);
             // 
+            // txtMessage
+            // 
+            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
+            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMessage.Cue = "Enter a message...";
+            this.txtMessage.ForeColor = System.Drawing.Color.White;
+            this.txtMessage.Location = new System.Drawing.Point(9, 7);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(395, 46);
+            this.txtMessage.TabIndex = 0;
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxControl1_KeyDown);
+            // 
             // prgMessageLoading
             // 
             this.prgMessageLoading.Dock = System.Windows.Forms.DockStyle.Top;
             this.prgMessageLoading.Location = new System.Drawing.Point(0, 0);
             this.prgMessageLoading.MarqueeAnimationSpeed = 10;
             this.prgMessageLoading.Name = "prgMessageLoading";
-            this.prgMessageLoading.Size = new System.Drawing.Size(651, 23);
+            this.prgMessageLoading.Size = new System.Drawing.Size(502, 23);
             this.prgMessageLoading.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.prgMessageLoading.TabIndex = 2;
             this.prgMessageLoading.Visible = false;
+            // 
+            // pnlMemberList
+            // 
+            this.pnlMemberList.Controls.Add(this.panel1);
+            this.pnlMemberList.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlMemberList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.pnlMemberList.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlMemberList.Location = new System.Drawing.Point(651, 0);
+            this.pnlMemberList.Name = "pnlMemberList";
+            this.pnlMemberList.Size = new System.Drawing.Size(149, 331);
+            this.pnlMemberList.TabIndex = 3;
+            this.pnlMemberList.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(146, 25);
+            this.panel1.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoEllipsis = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(146, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Members";
             // 
             // pnlChannels
             // 
@@ -371,66 +469,6 @@ namespace PlugifyCS
             this.tmrPing.Interval = 10000;
             this.tmrPing.Tick += new System.EventHandler(this.tmrPing_Tick);
             // 
-            // pnlChannelTopBar
-            // 
-            this.pnlChannelTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
-            this.pnlChannelTopBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlChannelTopBar.Location = new System.Drawing.Point(0, 23);
-            this.pnlChannelTopBar.Name = "pnlChannelTopBar";
-            this.pnlChannelTopBar.Size = new System.Drawing.Size(651, 52);
-            this.pnlChannelTopBar.TabIndex = 5;
-            // 
-            // messagesPanel
-            // 
-            this.messagesPanel.AutoScroll = true;
-            this.messagesPanel.Controls.Add(this.lblHome);
-            this.messagesPanel.Controls.Add(this.lblNoChannel);
-            this.messagesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.messagesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.messagesPanel.Location = new System.Drawing.Point(0, 75);
-            this.messagesPanel.Name = "messagesPanel";
-            this.messagesPanel.Size = new System.Drawing.Size(651, 191);
-            this.messagesPanel.TabIndex = 6;
-            this.messagesPanel.WrapContents = false;
-            // 
-            // txtMessage
-            // 
-            this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
-            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMessage.Cue = "Enter a message...";
-            this.txtMessage.ForeColor = System.Drawing.Color.White;
-            this.txtMessage.Location = new System.Drawing.Point(9, 7);
-            this.txtMessage.Multiline = true;
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(544, 46);
-            this.txtMessage.TabIndex = 0;
-            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxControl1_KeyDown);
-            // 
-            // btnCreateOrJoinGroup
-            // 
-            this.btnCreateOrJoinGroup.BackColor = System.Drawing.Color.Transparent;
-            this.btnCreateOrJoinGroup.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
-            this.btnCreateOrJoinGroup.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateOrJoinGroup.ForeColor = System.Drawing.Color.White;
-            this.btnCreateOrJoinGroup.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(79)))), ((int)(((byte)(82)))));
-            this.btnCreateOrJoinGroup.Location = new System.Drawing.Point(3, 3);
-            this.btnCreateOrJoinGroup.Name = "btnCreateOrJoinGroup";
-            this.btnCreateOrJoinGroup.Size = new System.Drawing.Size(58, 58);
-            this.btnCreateOrJoinGroup.TabIndex = 2;
-            this.btnCreateOrJoinGroup.Text = "+";
-            this.btnCreateOrJoinGroup.Click += new System.EventHandler(this.btnCreateOrJoinGroup_Click);
-            // 
-            // lblUserPFP
-            // 
-            this.lblUserPFP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.lblUserPFP.Location = new System.Drawing.Point(7, 0);
-            this.lblUserPFP.Name = "lblUserPFP";
-            this.lblUserPFP.Size = new System.Drawing.Size(56, 56);
-            this.lblUserPFP.TabIndex = 5;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -455,14 +493,16 @@ namespace PlugifyCS
             this.pnlUserArea.PerformLayout();
             this.ServerContent.ResumeLayout(false);
             this.pnlMessageContainer.ResumeLayout(false);
+            this.messagesPanel.ResumeLayout(false);
+            this.messagesPanel.PerformLayout();
             this.messageSendArea.ResumeLayout(false);
             this.messageSendArea.PerformLayout();
+            this.pnlMemberList.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.pnlChannels.ResumeLayout(false);
             this.pnlGroupInfo.ResumeLayout(false);
             this.pnlError.ResumeLayout(false);
             this.pnlError.PerformLayout();
-            this.messagesPanel.ResumeLayout(false);
-            this.messagesPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -500,6 +540,9 @@ namespace PlugifyCS
         private System.Windows.Forms.Button btnLeaveGroup;
         private System.Windows.Forms.Panel pnlChannelTopBar;
         private System.Windows.Forms.FlowLayoutPanel messagesPanel;
+        private System.Windows.Forms.FlowLayoutPanel pnlMemberList;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
     }
 }
 

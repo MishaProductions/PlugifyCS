@@ -81,12 +81,12 @@ namespace PlugifyCS
             this.htmlLabel1.AutoSize = false;
             this.htmlLabel1.AutoSizeHeightOnly = true;
             this.htmlLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
-            this.htmlLabel1.BaseStylesheet = null;
-            this.htmlLabel1.Location = new System.Drawing.Point(58, 31);
+            this.htmlLabel1.BaseStylesheet = "*{color:white} p { display: block;}";
+            this.htmlLabel1.Location = new System.Drawing.Point(58, 33);
             this.htmlLabel1.Name = "htmlLabel1";
-            this.htmlLabel1.Size = new System.Drawing.Size(395, 20);
+            this.htmlLabel1.Size = new System.Drawing.Size(395, 67);
             this.htmlLabel1.TabIndex = 6;
-            this.htmlLabel1.Text = "Loading message";
+            this.htmlLabel1.Text = "<h1>Loading</h1>";
             // 
             // MessageControl
             // 
