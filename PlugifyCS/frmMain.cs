@@ -51,6 +51,7 @@ namespace PlugifyCS
                 messageSendArea.BackColor = Color.White;
                 txtMessage.BackColor = Color.White;
                 pnlChannelTopBar.BackColor = Color.White;
+                pnlMemberList.BackColor = Color.White;
 
                 lblUserName.ForeColor = Color.Black;
                 lblPing.ForeColor = Color.Black;
@@ -63,6 +64,7 @@ namespace PlugifyCS
                 lblGroupName.ForeColor = Color.Black;
                 btnCreateChannel.ForeColor = Color.Black;
                 btnSendMSG.ForeColor = Color.Black;
+                lblMembersListTitle.ForeColor = Color.Black;
             }
             else if (Properties.Settings.Default.Theme == "classic")
             {
@@ -74,6 +76,7 @@ namespace PlugifyCS
                 messageSendArea.BackColor = SystemColors.Control;
                 txtMessage.BackColor = SystemColors.Control;
                 pnlChannelTopBar.BackColor = SystemColors.Control;
+                pnlMemberList.BackColor = SystemColors.Control;
 
                 lblUserName.ForeColor = Color.Black;
                 lblPing.ForeColor = Color.Black;
@@ -86,6 +89,7 @@ namespace PlugifyCS
                 lblGroupName.ForeColor = Color.Black;
                 btnCreateChannel.ForeColor = Color.Black;
                 btnSendMSG.ForeColor = Color.Black;
+                lblMembersListTitle.ForeColor = Color.Black;
 
                 Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
             }
@@ -122,6 +126,7 @@ namespace PlugifyCS
                             ret = DwmSetWindowAttribute(this.Handle, 19, ref a, Marshal.SizeOf(typeof(bool)));
                         }
                         SetWindowTheme(messagesPanel.Handle, "DarkMode_Explorer", null);
+                        SetWindowTheme(pnlMemberList.Handle, "DarkMode_Explorer", null);
                     }
                     catch
                     {
@@ -221,14 +226,6 @@ namespace PlugifyCS
                     {
                         btnCreateOrJoinGroup.Visible = false;
                         AddMessage(d.data);
-                        //var ctl = new MessageControl();
-                        //string dispname = d.data.author.displayName;
-                        //string name = d.data.author.name;
-                        //string content = d.data.content;
-
-                        //ctl.SetSettings(name, name + " (@" + dispname + ")", content, "WIP");
-                        //ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
-                        //messagesPanel.Controls.Add(ctl);
                         btnCreateOrJoinGroup.Visible = true;
                     });
                     break;
@@ -244,11 +241,6 @@ namespace PlugifyCS
                 case 15:
                     AddGroupToList(d.data);
                     break;
-
-
-
-
-
 
                 //PING
                 case 9001:

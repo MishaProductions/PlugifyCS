@@ -52,7 +52,7 @@ namespace PlugifyCS
             this.prgMessageLoading = new System.Windows.Forms.ProgressBar();
             this.pnlMemberList = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblMembersListTitle = new System.Windows.Forms.Label();
             this.pnlChannels = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlGroupInfo = new System.Windows.Forms.Panel();
             this.btnLeaveGroup = new System.Windows.Forms.Button();
@@ -336,22 +336,22 @@ namespace PlugifyCS
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.lblMembersListTitle);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(146, 25);
             this.panel1.TabIndex = 1;
             // 
-            // label1
+            // lblMembersListTitle
             // 
-            this.label1.AutoEllipsis = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(146, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Members";
+            this.lblMembersListTitle.AutoEllipsis = true;
+            this.lblMembersListTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMembersListTitle.ForeColor = System.Drawing.Color.White;
+            this.lblMembersListTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblMembersListTitle.Name = "lblMembersListTitle";
+            this.lblMembersListTitle.Size = new System.Drawing.Size(146, 17);
+            this.lblMembersListTitle.TabIndex = 0;
+            this.lblMembersListTitle.Text = "Members";
             // 
             // pnlChannels
             // 
@@ -542,7 +542,7 @@ namespace PlugifyCS
         private System.Windows.Forms.FlowLayoutPanel messagesPanel;
         private System.Windows.Forms.FlowLayoutPanel pnlMemberList;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblMembersListTitle;
     }
 }
 
