@@ -44,10 +44,9 @@ namespace PlugifyCS
             // 
             this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLogout.ForeColor = System.Drawing.Color.Red;
-            this.btnLogout.Location = new System.Drawing.Point(16, 465);
-            this.btnLogout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLogout.Location = new System.Drawing.Point(12, 378);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(100, 28);
+            this.btnLogout.Size = new System.Drawing.Size(75, 23);
             this.btnLogout.TabIndex = 0;
             this.btnLogout.Text = "LOG OUT";
             this.btnLogout.UseVisualStyleBackColor = true;
@@ -56,10 +55,9 @@ namespace PlugifyCS
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(464, 465);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOK.Location = new System.Drawing.Point(348, 378);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 28);
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -71,11 +69,9 @@ namespace PlugifyCS
             this.groupBox1.Controls.Add(this.radClassic);
             this.groupBox1.Controls.Add(this.radLightTheme);
             this.groupBox1.Controls.Add(this.radDarkTheme);
-            this.groupBox1.Location = new System.Drawing.Point(16, 16);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(548, 130);
+            this.groupBox1.Size = new System.Drawing.Size(411, 106);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Theme settings:";
@@ -83,20 +79,18 @@ namespace PlugifyCS
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(-4, 114);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(0, 86);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(379, 16);
+            this.label2.Size = new System.Drawing.Size(313, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Note: you have to restart the client for the changes to take affect";
             // 
             // radClassic
             // 
             this.radClassic.AutoSize = true;
-            this.radClassic.Location = new System.Drawing.Point(8, 81);
-            this.radClassic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radClassic.Location = new System.Drawing.Point(6, 66);
             this.radClassic.Name = "radClassic";
-            this.radClassic.Size = new System.Drawing.Size(126, 20);
+            this.radClassic.Size = new System.Drawing.Size(104, 17);
             this.radClassic.TabIndex = 3;
             this.radClassic.TabStop = true;
             this.radClassic.Text = "Windows classic";
@@ -106,10 +100,9 @@ namespace PlugifyCS
             // radLightTheme
             // 
             this.radLightTheme.AutoSize = true;
-            this.radLightTheme.Location = new System.Drawing.Point(8, 53);
-            this.radLightTheme.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radLightTheme.Location = new System.Drawing.Point(6, 43);
             this.radLightTheme.Name = "radLightTheme";
-            this.radLightTheme.Size = new System.Drawing.Size(54, 20);
+            this.radLightTheme.Size = new System.Drawing.Size(48, 17);
             this.radLightTheme.TabIndex = 2;
             this.radLightTheme.TabStop = true;
             this.radLightTheme.Text = "Light";
@@ -120,10 +113,9 @@ namespace PlugifyCS
             // 
             this.radDarkTheme.AutoSize = true;
             this.radDarkTheme.Checked = true;
-            this.radDarkTheme.Location = new System.Drawing.Point(8, 23);
-            this.radDarkTheme.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radDarkTheme.Location = new System.Drawing.Point(6, 19);
             this.radDarkTheme.Name = "radDarkTheme";
-            this.radDarkTheme.Size = new System.Drawing.Size(55, 20);
+            this.radDarkTheme.Size = new System.Drawing.Size(48, 17);
             this.radDarkTheme.TabIndex = 0;
             this.radDarkTheme.TabStop = true;
             this.radDarkTheme.Text = "Dark";
@@ -134,23 +126,23 @@ namespace PlugifyCS
             // 
             this.lblVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(13, 445);
+            this.lblVersion.Location = new System.Drawing.Point(10, 362);
+            this.lblVersion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(111, 16);
+            this.lblVersion.Size = new System.Drawing.Size(91, 13);
             this.lblVersion.TabIndex = 3;
             this.lblVersion.Text = "Client version: 1.1";
             // 
             // frmSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 508);
+            this.ClientSize = new System.Drawing.Size(435, 413);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnLogout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmSettings";

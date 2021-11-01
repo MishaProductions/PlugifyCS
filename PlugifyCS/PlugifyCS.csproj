@@ -99,6 +99,12 @@
     <Compile Include="Controls\ChannelControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MemberListItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MemberListItem.Designer.cs">
+      <DependentUpon>MemberListItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RoundButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -169,6 +175,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Controls\MemberListItem.resx">
+      <DependentUpon>MemberListItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Advertisment.resx">
       <DependentUpon>Advertisment.cs</DependentUpon>
     </EmbeddedResource>

@@ -303,6 +303,9 @@ namespace PlugifyCS
             pnlChannelTopBar.Visible = true;
             pnlMemberList.Visible = false;
 
+            pnlMemberList.Controls.Clear();
+            pnlMemberList.Controls.Add(panel1);
+
             //Get group detail
             string s2 = "{\"event\":13,\"data\": {\"groupID\": \"" + group.id + "\"}}";
             ws.Send(s2);
@@ -357,6 +360,13 @@ namespace PlugifyCS
                      foreach (var message in ChannelDetails.data.history)
                      {
                          AddMessage(message);
+                     }
+                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/info/"+ currentGroupID,"");
+                     foreach (var member in groupInfo.data.members)
+                     {
+                         var ctl2 = new MemberListItem();
+                         ctl2.ApplyProperties((string)member.username, (string)member.displayName);
+                         pnlMemberList.Controls.Add(ctl2);
                      }
                      ChannelDetails = null;
                      prgMessageLoading.Visible = false;
@@ -512,7 +522,7 @@ namespace PlugifyCS
             Stream requestStream = webRequest.GetRequestStream();
             //write the post to the request stream
             requestStream.Write(requestBytes, 0, requestBytes.Length);
-            WebResponse r = null;
+            WebResponse r;
             try
             {
                 r = webRequest.GetResponse();
@@ -522,9 +532,40 @@ namespace PlugifyCS
                 r = e.Response;
             }
 
-            using (System.IO.Stream s = r.GetResponseStream())
+            using (Stream s = r.GetResponseStream())
             {
-                using (System.IO.StreamReader sr = new System.IO.StreamReader(s))
+                using (StreamReader sr = new StreamReader(s))
+                {
+                    var jsonResponse = sr.ReadToEnd();
+                    return JObject.Parse(jsonResponse);
+                }
+            }
+        }
+        private dynamic ApiGet(string url, string content)
+        {
+            var webRequest = System.Net.WebRequest.Create(url);
+            webRequest.Method = "GET";
+            webRequest.ContentType = "application/json";
+            webRequest.Headers.Add("Authorization", Properties.Settings.Default.token);
+
+            //write the input data (aka post) to a byte array
+            byte[] requestBytes = new ASCIIEncoding().GetBytes(content);
+          
+            //write the post to the request stream
+            //requestStream.Write(requestBytes, 0, requestBytes.Length);
+            WebResponse r;
+            try
+            {
+                r = webRequest.GetResponse();
+            }
+            catch (WebException e)
+            {
+                r = e.Response;
+            }
+
+            using (Stream s = r.GetResponseStream())
+            {
+                using (StreamReader sr = new StreamReader(s))
                 {
                     var jsonResponse = sr.ReadToEnd();
                     return JObject.Parse(jsonResponse);

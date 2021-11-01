@@ -48,13 +48,13 @@ namespace PlugifyCS
             pfp.SetURL(AuthorPFP);
             lblAuthor.Text = MessageTitle;
             if (Properties.Settings.Default.Theme == "dark")
-                htmlLabel1.Text = "<html><head><style>body{color:white;}</style></head><body>" + Content+"</body></html>";
-        else
+                htmlLabel1.Text = "<html><head><style>body{color:white;}</style></head><body>" + Content + "</body></html>";
+            else
                 htmlLabel1.Text = "<html><head><style>body{color:black;}</style></head><body>" + Content + "</body></html>";
             lblTime.Text = TimeString;
 
             var h = htmlLabel1.Height;
-            if (h > this.Height- 31)
+            if (h > this.Height - 31)
             {
                 this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + (htmlLabel1.Height - 31));
             }
