@@ -366,6 +366,7 @@ namespace PlugifyCS
                      {
                          var ctl2 = new MemberListItem();
                          ctl2.ApplyProperties((string)member.username, (string)member.displayName);
+                         ctl2.Size = new Size(pnlMemberList.Width - 35, ctl2.Height);
                          pnlMemberList.Controls.Add(ctl2);
                      }
                      ChannelDetails = null;

@@ -74,7 +74,7 @@ namespace PlugifyCS.Controls
             this.Controls.Add(this.pfp);
             this.Controls.Add(this.lblUserDisplayName);
             this.Name = "MemberListItem";
-            this.Size = new System.Drawing.Size(207, 44);
+            this.Size = new System.Drawing.Size(187, 44);
             this.ResumeLayout(false);
             this.PerformLayout();
 
