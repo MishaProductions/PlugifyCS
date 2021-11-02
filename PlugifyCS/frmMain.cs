@@ -16,7 +16,9 @@ namespace PlugifyCS
 {
     public partial class frmMain : Form
     {
-        private static TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
+        private static readonly TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
+        private readonly Loading loadingForm = new Loading();
+
         private WebSocket ws;
         private dynamic UserInfo;
         private dynamic Groups;
@@ -25,8 +27,6 @@ namespace PlugifyCS
         private string CurrentChannelID = "";
         private string currentGroupID = "";
         private dynamic currentGroupObj = "";
-
-        private Loading loadingForm = new Loading();
         protected override CreateParams CreateParams
         {
             get
@@ -255,6 +255,7 @@ namespace PlugifyCS
             theGroup.BackgroundImageLayout = ImageLayout.Stretch;
             theGroup.SetURL((string)group.name);
             theGroup.Tag = group;
+
             pnlServers.Controls.Remove(btnCreateOrJoinGroup);
             theGroup.Click += delegate (object sender, EventArgs e)
             {
@@ -360,7 +361,7 @@ namespace PlugifyCS
                      {
                          AddMessage(message);
                      }
-                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/info/"+ currentGroupID,"");
+                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/info/"+ currentGroupID);
                      foreach (var member in groupInfo.data.members)
                      {
                          var ctl2 = new MemberListItem();
@@ -541,18 +542,13 @@ namespace PlugifyCS
                 }
             }
         }
-        private dynamic ApiGet(string url, string content)
+        private dynamic ApiGet(string url)
         {
             var webRequest = System.Net.WebRequest.Create(url);
             webRequest.Method = "GET";
             webRequest.ContentType = "application/json";
             webRequest.Headers.Add("Authorization", Properties.Settings.Default.token);
 
-            //write the input data (aka post) to a byte array
-            byte[] requestBytes = new ASCIIEncoding().GetBytes(content);
-          
-            //write the post to the request stream
-            //requestStream.Write(requestBytes, 0, requestBytes.Length);
             WebResponse r;
             try
             {

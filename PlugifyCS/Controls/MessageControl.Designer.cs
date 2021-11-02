@@ -32,19 +32,19 @@ namespace PlugifyCS
             this.lblAuthor = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.pfp = new PlugifyCS.Controls.RoundPicture();
             this.htmlLabel1 = new TheArtOfDev.HtmlRenderer.WinForms.HtmlLabel();
+            this.pfp = new PlugifyCS.Controls.RoundPicture();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblAuthor
             // 
             this.lblAuthor.AutoSize = true;
-            this.lblAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAuthor.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAuthor.ForeColor = System.Drawing.Color.White;
             this.lblAuthor.Location = new System.Drawing.Point(3, 0);
             this.lblAuthor.Name = "lblAuthor";
-            this.lblAuthor.Size = new System.Drawing.Size(153, 20);
+            this.lblAuthor.Size = new System.Drawing.Size(165, 21);
             this.lblAuthor.TabIndex = 1;
             this.lblAuthor.Text = "Loading (@Loading)";
             // 
@@ -52,7 +52,7 @@ namespace PlugifyCS
             // 
             this.lblTime.AutoSize = true;
             this.lblTime.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            this.lblTime.Location = new System.Drawing.Point(162, 0);
+            this.lblTime.Location = new System.Drawing.Point(174, 0);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(121, 13);
             this.lblTime.TabIndex = 2;
@@ -64,8 +64,21 @@ namespace PlugifyCS
             this.flowLayoutPanel1.Controls.Add(this.lblTime);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(58, 4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(395, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(400, 23);
             this.flowLayoutPanel1.TabIndex = 4;
+            // 
+            // htmlLabel1
+            // 
+            this.htmlLabel1.AutoSize = false;
+            this.htmlLabel1.AutoSizeHeightOnly = true;
+            this.htmlLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
+            this.htmlLabel1.BaseStylesheet = "*{color:white; margin:0;} body,html,h1,h2,h3,h4,p,figure,blockquote,dl,dd{ displa" +
+    "y: block; margin: 0; } img{margin: 2px;}";
+            this.htmlLabel1.Location = new System.Drawing.Point(58, 32);
+            this.htmlLabel1.Name = "htmlLabel1";
+            this.htmlLabel1.Size = new System.Drawing.Size(400, 20);
+            this.htmlLabel1.TabIndex = 6;
+            this.htmlLabel1.Text = "<p>Loading message</p>";
             // 
             // pfp
             // 
@@ -75,18 +88,6 @@ namespace PlugifyCS
             this.pfp.Size = new System.Drawing.Size(48, 48);
             this.pfp.TabIndex = 5;
             this.pfp.Text = "roundPicture1";
-            // 
-            // htmlLabel1
-            // 
-            this.htmlLabel1.AutoSize = false;
-            this.htmlLabel1.AutoSizeHeightOnly = true;
-            this.htmlLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
-            this.htmlLabel1.BaseStylesheet = "*{color:white} p { display: block;}";
-            this.htmlLabel1.Location = new System.Drawing.Point(58, 33);
-            this.htmlLabel1.Name = "htmlLabel1";
-            this.htmlLabel1.Size = new System.Drawing.Size(395, 67);
-            this.htmlLabel1.TabIndex = 6;
-            this.htmlLabel1.Text = "<h1>Loading</h1>";
             // 
             // MessageControl
             // 
@@ -98,7 +99,7 @@ namespace PlugifyCS
             this.Controls.Add(this.flowLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MessageControl";
-            this.Size = new System.Drawing.Size(461, 116);
+            this.Size = new System.Drawing.Size(461, 60);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

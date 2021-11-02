@@ -17,7 +17,6 @@ namespace PlugifyCS
 {
     public partial class MessageControl : UserControl
     {
-        private static TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
         public MessageControl()
         {
             InitializeComponent();
@@ -45,18 +44,23 @@ namespace PlugifyCS
 
         public void SetSettings(string AuthorPFP, string MessageTitle, string Content, string TimeString)
         {
+            if (Properties.Settings.Default.Theme == "dark")
+            {
+                htmlLabel1.BaseStylesheet = @"*{color:white; margin:0;} body,html,h1,h2,h3,h4,p,figure,blockquote,dl,dd{ margin: 0; } img{margin: 2px;}";
+            }
+            else
+            {
+                htmlLabel1.BaseStylesheet = @"*{color:black; margin:0;} body,html,h1,h2,h3,h4,p,figure,blockquote,dl,dd{ margin: 0; } img{margin: 2px;}";
+            }
             pfp.SetURL(AuthorPFP);
             lblAuthor.Text = MessageTitle;
-            if (Properties.Settings.Default.Theme == "dark")
-                htmlLabel1.Text = "<html><head><style>body{color:white;}</style></head><body>" + Content + "</body></html>";
-            else
-                htmlLabel1.Text = "<html><head><style>body{color:black;}</style></head><body>" + Content + "</body></html>";
+            htmlLabel1.Text = Content.Replace("\n", "<br>");
             lblTime.Text = TimeString;
 
             var h = htmlLabel1.Height;
-            if (h > this.Height - 31)
+            if (h > this.Height - 30)
             {
-                this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + (htmlLabel1.Height - 31));
+                this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + (htmlLabel1.Height - 30));
             }
         }
     }
