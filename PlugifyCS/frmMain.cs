@@ -40,7 +40,6 @@ namespace PlugifyCS
         {
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw, true);
-
             if (Properties.Settings.Default.Theme == "light")
             {
                 pnlChannels.BackColor = Color.White;
@@ -366,7 +365,7 @@ namespace PlugifyCS
                      {
                          var ctl2 = new MemberListItem();
                          ctl2.ApplyProperties((string)member.username, (string)member.displayName);
-                         ctl2.Size = new Size(pnlMemberList.Width - 35, ctl2.Height);
+                         ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
                          pnlMemberList.Controls.Add(ctl2);
                      }
                      ChannelDetails = null;
