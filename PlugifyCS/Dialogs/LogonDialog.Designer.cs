@@ -43,7 +43,7 @@ namespace PlugifyCS.Dialogs
             // 
             this.pictureBox1.BackgroundImage = global::PlugifyCS.Properties.Resources.plugifyLogo;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(51, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(64, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(349, 100);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

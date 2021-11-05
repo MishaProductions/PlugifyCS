@@ -24,9 +24,10 @@ namespace PlugifyCS
         private dynamic Groups;
         private dynamic ChannelInfo;
         private dynamic ChannelDetails;
+        private dynamic currentGroupObj = "";
+
         private string CurrentChannelID = "";
         private string currentGroupID = "";
-        private dynamic currentGroupObj = "";
         protected override CreateParams CreateParams
         {
             get
@@ -510,7 +511,7 @@ namespace PlugifyCS
 
             aProp.SetValue(c, true, null);
         }
-        private dynamic ApiPost(string url, string content)
+        public static dynamic ApiPost(string url, string content)
         {
             var webRequest = System.Net.WebRequest.Create(url);
             webRequest.Method = "POST";
@@ -542,7 +543,7 @@ namespace PlugifyCS
                 }
             }
         }
-        private dynamic ApiGet(string url)
+        public static dynamic ApiGet(string url)
         {
             var webRequest = System.Net.WebRequest.Create(url);
             webRequest.Method = "GET";
@@ -606,7 +607,35 @@ namespace PlugifyCS
 
         private void btnGroupSettings_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Coming soon", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DisplayServerSettings(currentGroupID);
+        }
+
+        private void lblGroupName_Click(object sender, EventArgs e)
+        {
+            Label btnSender = (Label)sender;
+            Point ptLowerLeft = new Point(0, btnSender.Height);
+            ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
+            contextMenuStrip1.Show(ptLowerLeft);
+        }
+
+        private void leaveGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnLeaveGroup_Click(null, null);
+        }
+
+        private void serverSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisplayServerSettings(currentGroupID);
+        }
+        private void DisplayServerSettings(string GroupID)
+        {
+            var dlg = new ServerSettingsDialog(GroupID, this);
+            dlg.ShowDialog();
+        }
+
+        private void invitePeopleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new CreateInviteDialog(currentGroupID).ShowDialog();
         }
     }
 }

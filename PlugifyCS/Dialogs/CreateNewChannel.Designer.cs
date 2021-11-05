@@ -101,7 +101,7 @@ namespace PlugifyCS
             this.btnCreate.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCreate.Location = new System.Drawing.Point(12, 243);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(385, 81);
+            this.btnCreate.Size = new System.Drawing.Size(377, 81);
             this.btnCreate.TabIndex = 3;
             this.btnCreate.Text = "Create channel";
             this.btnCreate.UseVisualStyleBackColor = true;

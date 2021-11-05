@@ -64,6 +64,10 @@ namespace PlugifyCS
             this.lblError = new System.Windows.Forms.Label();
             this.tmrPing = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.leaveGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.invitePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serverSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlServerArea.SuspendLayout();
             this.pnlServers.SuspendLayout();
             this.pnlUserArea.SuspendLayout();
@@ -76,6 +80,7 @@ namespace PlugifyCS
             this.pnlChannels.SuspendLayout();
             this.pnlGroupInfo.SuspendLayout();
             this.pnlError.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -419,6 +424,7 @@ namespace PlugifyCS
             this.lblGroupName.Size = new System.Drawing.Size(146, 17);
             this.lblGroupName.TabIndex = 0;
             this.lblGroupName.Text = "Group name";
+            this.lblGroupName.Click += new System.EventHandler(this.lblGroupName_Click);
             // 
             // btnCreateChannel
             // 
@@ -471,6 +477,36 @@ namespace PlugifyCS
             this.tmrPing.Interval = 10000;
             this.tmrPing.Tick += new System.EventHandler(this.tmrPing_Tick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.leaveGroupToolStripMenuItem,
+            this.invitePeopleToolStripMenuItem,
+            this.serverSettingsToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            // 
+            // leaveGroupToolStripMenuItem
+            // 
+            this.leaveGroupToolStripMenuItem.Name = "leaveGroupToolStripMenuItem";
+            this.leaveGroupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.leaveGroupToolStripMenuItem.Text = "Leave group";
+            this.leaveGroupToolStripMenuItem.Click += new System.EventHandler(this.leaveGroupToolStripMenuItem_Click);
+            // 
+            // invitePeopleToolStripMenuItem
+            // 
+            this.invitePeopleToolStripMenuItem.Name = "invitePeopleToolStripMenuItem";
+            this.invitePeopleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.invitePeopleToolStripMenuItem.Text = "Invite people";
+            this.invitePeopleToolStripMenuItem.Click += new System.EventHandler(this.invitePeopleToolStripMenuItem_Click);
+            // 
+            // serverSettingsToolStripMenuItem
+            // 
+            this.serverSettingsToolStripMenuItem.Name = "serverSettingsToolStripMenuItem";
+            this.serverSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.serverSettingsToolStripMenuItem.Text = "Server settings";
+            this.serverSettingsToolStripMenuItem.Click += new System.EventHandler(this.serverSettingsToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -505,6 +541,7 @@ namespace PlugifyCS
             this.pnlGroupInfo.ResumeLayout(false);
             this.pnlError.ResumeLayout(false);
             this.pnlError.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -545,6 +582,10 @@ namespace PlugifyCS
         private System.Windows.Forms.FlowLayoutPanel pnlMemberList;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblMembersListTitle;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem leaveGroupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem invitePeopleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serverSettingsToolStripMenuItem;
     }
 }
 

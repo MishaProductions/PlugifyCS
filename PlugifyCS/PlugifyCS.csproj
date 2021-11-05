@@ -126,6 +126,12 @@
     <Compile Include="Dialogs\CreateNewChannel.Designer.cs">
       <DependentUpon>CreateNewChannel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\CreateInviteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\CreateInviteDialog.Designer.cs">
+      <DependentUpon>CreateInviteDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\InviteDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,19 @@
     <Compile Include="Dialogs\Loading.Designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ServerSettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ServerSettingsDialog.Designer.cs">
+      <DependentUpon>ServerSettingsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\UserInfoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\UserInfoDialog.Designer.cs">
+      <DependentUpon>UserInfoDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="lib\PlugifyUserFlags.cs" />
     <Compile Include="lib\TwemojiImg.cs" />
     <Compile Include="lib\TwemojiLib.cs" />
     <Compile Include="lib\TwemojiLibraryLoader.cs" />
@@ -184,11 +203,20 @@
     <EmbeddedResource Include="Dialogs\CreateNewChannel.resx">
       <DependentUpon>CreateNewChannel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\CreateInviteDialog.resx">
+      <DependentUpon>CreateInviteDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\InviteDialog.resx">
       <DependentUpon>InviteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ServerSettingsDialog.resx">
+      <DependentUpon>ServerSettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UserInfoDialog.resx">
+      <DependentUpon>UserInfoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
