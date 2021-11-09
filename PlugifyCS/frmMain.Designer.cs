@@ -142,7 +142,11 @@ namespace PlugifyCS
             // 
             // lblUserPFP
             // 
+            this.lblUserPFP.BackgroundImage = global::PlugifyCS.Properties.Resources.plug;
             this.lblUserPFP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.lblUserPFP.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
+            this.lblUserPFP.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(79)))), ((int)(((byte)(82)))));
+            this.lblUserPFP.IsGoodLookingButton = false;
             this.lblUserPFP.Location = new System.Drawing.Point(7, 0);
             this.lblUserPFP.Name = "lblUserPFP";
             this.lblUserPFP.Size = new System.Drawing.Size(56, 56);
@@ -484,26 +488,26 @@ namespace PlugifyCS
             this.invitePeopleToolStripMenuItem,
             this.serverSettingsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(151, 70);
             // 
             // leaveGroupToolStripMenuItem
             // 
             this.leaveGroupToolStripMenuItem.Name = "leaveGroupToolStripMenuItem";
-            this.leaveGroupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.leaveGroupToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.leaveGroupToolStripMenuItem.Text = "Leave group";
             this.leaveGroupToolStripMenuItem.Click += new System.EventHandler(this.leaveGroupToolStripMenuItem_Click);
             // 
             // invitePeopleToolStripMenuItem
             // 
             this.invitePeopleToolStripMenuItem.Name = "invitePeopleToolStripMenuItem";
-            this.invitePeopleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.invitePeopleToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.invitePeopleToolStripMenuItem.Text = "Invite people";
             this.invitePeopleToolStripMenuItem.Click += new System.EventHandler(this.invitePeopleToolStripMenuItem_Click);
             // 
             // serverSettingsToolStripMenuItem
             // 
             this.serverSettingsToolStripMenuItem.Name = "serverSettingsToolStripMenuItem";
-            this.serverSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.serverSettingsToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.serverSettingsToolStripMenuItem.Text = "Server settings";
             this.serverSettingsToolStripMenuItem.Click += new System.EventHandler(this.serverSettingsToolStripMenuItem_Click);
             // 
