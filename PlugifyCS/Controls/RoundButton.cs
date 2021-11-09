@@ -11,19 +11,19 @@ namespace PlugifyCS.Controls
 {
     public class RoundButton : Control
     {
-        private Color btncolor;
+        private bool hover = false;
+        private Color btncolor = Color.FromArgb(44, 44, 57);
+        private Color btnHover = Color.FromArgb(79, 79, 82);
         public Color ButtonColor
         {
             get { return btncolor; }
             set { btncolor = value; Invalidate(); }
         }
-        private Color btnHover;
         public Color HoverColor
         {
             get { return btnHover; }
             set { btnHover = value; Invalidate(); }
         }
-        bool hover = false;
 
         public RoundButton()
         {

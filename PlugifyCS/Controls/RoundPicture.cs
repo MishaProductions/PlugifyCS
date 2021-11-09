@@ -14,6 +14,32 @@ namespace PlugifyCS.Controls
 {
     public class RoundPicture : Control
     {
+        private bool hover;
+        private bool NiceButton = false;
+        private Color btncolor = Color.FromArgb(44, 44, 57);
+        private Color btnHover = Color.FromArgb(79, 79, 82);
+        public Color ButtonColor
+        {
+            get { return btncolor; }
+            set { btncolor = value; Invalidate(); }
+        }
+        public Color HoverColor
+        {
+            get { return btnHover; }
+            set { btnHover = value; Invalidate(); }
+        }
+        public bool IsGoodLookingButton
+        {
+            get
+            {
+                return NiceButton;
+            }
+            set
+            {
+                NiceButton = value;
+                Invalidate();
+            }
+        }
         public RoundPicture()
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw, true);
@@ -56,6 +82,30 @@ namespace PlugifyCS.Controls
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 e.Graphics.DrawEllipse(new Pen(new SolidBrush(this.BackColor), 1), 0, 0, this.Width - 1, this.Height - 1);
             }
+
+            if (IsGoodLookingButton)
+            {
+                var rect = new Rectangle(0, 0, Width - 1, Height - 1);
+
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+                if (hover)
+                {
+                    e.Graphics.DrawEllipse(new Pen(this.HoverColor, 5f), rect);
+                }
+            }
+        }
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            hover = true;
+            Invalidate();
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            hover = false;
+            Invalidate();
         }
     }
 }

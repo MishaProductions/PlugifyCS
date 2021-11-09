@@ -107,7 +107,7 @@ namespace PlugifyCS.Dialogs
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "UserInfoDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "User information";
+            this.Text = "-";
             this.Shown += new System.EventHandler(this.UserInfoDialog_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UserInfoDialog_KeyDown);
             this.ResumeLayout(false);

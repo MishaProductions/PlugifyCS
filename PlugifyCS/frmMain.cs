@@ -157,7 +157,6 @@ namespace PlugifyCS
 
             LoggedIn();
         }
-
         private void Ws_OnClose(object sender, CloseEventArgs e)
         {
             lblError.Text = "Connection closed: " + e.Reason;
@@ -256,6 +255,7 @@ namespace PlugifyCS
             theGroup.BackgroundImageLayout = ImageLayout.Stretch;
             theGroup.SetURL((string)group.name);
             theGroup.Tag = group;
+            theGroup.IsGoodLookingButton = true;
 
             pnlServers.Controls.Remove(btnCreateOrJoinGroup);
             theGroup.Click += delegate (object sender, EventArgs e)
@@ -362,7 +362,7 @@ namespace PlugifyCS
                      {
                          AddMessage(message);
                      }
-                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/info/"+ currentGroupID);
+                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/"+ currentGroupID);
                      foreach (var member in groupInfo.data.members)
                      {
                          var ctl2 = new MemberListItem();
