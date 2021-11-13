@@ -410,6 +410,9 @@ namespace PlugifyCS
         {
             if (e.KeyCode == Keys.Enter)
             {
+                txtMessage.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
                 SendMessage();
             }
         }
@@ -420,7 +423,7 @@ namespace PlugifyCS
 
             string s3 = "{\"event\":7,\"data\": {\"content\": \"" + messageContents.TrimStart('{').TrimEnd('}') + "\", \"channelID\": \"" + CurrentChannelID + "\"}}";
             ws.Send(s3);
-            txtMessage.Text = "";
+            txtMessage.Clear();
         }
         private void tmrPing_Tick(object sender, EventArgs e)
         {
