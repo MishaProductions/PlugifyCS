@@ -42,7 +42,7 @@ namespace PlugifyCS
             }
         }
 
-        public void SetSettings(string AuthorPFP, string MessageTitle, string Content, string TimeString)
+        public void SetSettings(string AuthorPFP, string MessageTitle, string Content, string TimeString, string pfpUrl)
         {
             if (Properties.Settings.Default.Theme == "dark")
             {
@@ -52,7 +52,7 @@ namespace PlugifyCS
             {
                 htmlLabel1.BaseStylesheet = @"*{color:black; margin:0;} body,html,h1,h2,h3,h4,p,figure,blockquote,dl,dd{ margin: 0; } img{margin: 2px;}";
             }
-            pfp.SetURL(AuthorPFP);
+            pfp.SetURL(AuthorPFP, pfpUrl);
             lblAuthor.Text = MessageTitle;
             htmlLabel1.Text = Content.Replace("\n", "<br>");
             lblTime.Text = TimeString;

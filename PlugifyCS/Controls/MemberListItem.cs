@@ -43,14 +43,14 @@ namespace PlugifyCS.Controls
             lblUserName.Click += delegate { HandleClick(); };
         }
 
-        public void ApplyProperties(string username, string displayname)
+        public void ApplyProperties(string username, string displayname, string pfpUrl)
         {
             this.UserName = username;
             this.DisplayName = displayname;
 
             lblUserDisplayName.Text = displayname;
             lblUserName.Text = "@"+username;
-            pfp.SetURL(username);
+            pfp.SetURL(username, pfpUrl);
         }
         protected override void OnMouseEnter(EventArgs e)
         {

@@ -70,7 +70,7 @@ namespace PlugifyCS.Dialogs
                 lblDisplayName.Text = (string)user.displayName;
             }
             lblUserName.Text = (string)"@" + user.name;
-            roundPicture1.SetURL(username);
+            roundPicture1.SetURL(username, (string)user.avatarURL);
 
             StringBuilder sb = new StringBuilder();
             if ((flags2 & (1 << 0)) == (1 << 0))

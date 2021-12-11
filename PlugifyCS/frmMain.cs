@@ -253,7 +253,7 @@ namespace PlugifyCS
             RoundPicture theGroup = new RoundPicture();
             theGroup.Size = new Size(56, 56);
             theGroup.BackgroundImageLayout = ImageLayout.Stretch;
-            theGroup.SetURL((string)group.name);
+            theGroup.SetURL((string)group.name, (string)group.avatarURL);
             theGroup.Tag = group;
             theGroup.IsGoodLookingButton = true;
 
@@ -268,7 +268,7 @@ namespace PlugifyCS
         private void LoggedIn()
         {
             // we need to cast this to a string because c# is stupid
-            lblUserPFP.SetURL((string)UserInfo.data.username);
+            lblUserPFP.SetURL((string)UserInfo.data.username, (string)UserInfo.data.avatarURL);
             lblUserName.Text = UserInfo.data.username;
             lblPing.Text = "@" + UserInfo.data.username;
 
@@ -366,7 +366,7 @@ namespace PlugifyCS
                      foreach (var member in groupInfo.data.members)
                      {
                          var ctl2 = new MemberListItem();
-                         ctl2.ApplyProperties((string)member.username, (string)member.displayName);
+                         ctl2.ApplyProperties((string)member.username, (string)member.displayName, (string)member.avatarURL);
                          ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
                          pnlMemberList.Controls.Add(ctl2);
                      }
@@ -398,7 +398,7 @@ namespace PlugifyCS
 
             var Emotes = lib.Parse(html);
 
-            ctl.SetSettings(name, properString, Emotes, "WIP");
+            ctl.SetSettings(name, properString, Emotes, "WIP", (string)message.author.avatarURL);
             ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
             messagesPanel.Controls.Add(ctl);
         }

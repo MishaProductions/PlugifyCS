@@ -44,7 +44,7 @@ namespace PlugifyCS.Controls
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw, true);
         }
-        public void SetURL(string avatorName)
+        public void SetURL(string avatorName, string url="")
         {
             string cachePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\temp\PlugifyCS";
             string cacheImage = cachePath + @"\" + avatorName + ".png";
@@ -59,8 +59,10 @@ namespace PlugifyCS.Controls
                 return;
             }
 
-
-            var request = WebRequest.Create("https://cds.plugify.cf/defaultAvatars/" + avatorName);
+            string url2 = "https://cds.plugify.cf/defaultAvatars/" + avatorName;
+            if (url != "https://cds.plugify.cf/avatars/default_avatar.png" && url != "")
+                url2 = url;
+            var request = WebRequest.Create(url2);
 
             using (var response = request.GetResponse())
             using (var stream = response.GetResponseStream())
