@@ -44,7 +44,7 @@ namespace PlugifyCS.Controls
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw, true);
         }
-        public void SetURL(string avatorName, string url="")
+        public void SetURL(string avatorName, string url = "")
         {
             string cachePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\temp\PlugifyCS";
             string cacheImage = cachePath + @"\" + avatorName + ".png";
@@ -63,6 +63,33 @@ namespace PlugifyCS.Controls
             if (url != "https://cds.plugify.cf/avatars/default_avatar.png" && url != "")
                 url2 = url;
             var request = WebRequest.Create(url2);
+
+            using (var response = request.GetResponse())
+            using (var stream = response.GetResponseStream())
+            {
+                var b = Bitmap.FromStream(stream);
+                BackgroundImage = b;
+                if (!cacheImage.Contains("|"))
+                    b.Save(cacheImage, ImageFormat.Png);
+            }
+            request = null;
+        }
+        public void SetURL(string url, string display, int a = 0)
+        {
+            string cachePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\temp\PlugifyCS";
+            string cacheImage = cachePath + @"\" + display + ".png";
+
+            if (!Directory.Exists(cachePath))
+            {
+                Directory.CreateDirectory(cachePath);
+            }
+            if (File.Exists(cacheImage))
+            {
+                BackgroundImage = Bitmap.FromFile(cacheImage);
+                return;
+            }
+
+            var request = WebRequest.Create(url);
 
             using (var response = request.GetResponse())
             using (var stream = response.GetResponseStream())

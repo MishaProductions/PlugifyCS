@@ -1,9 +1,13 @@
 # Visual studio garbage
 .vs/
+*.user
 
 # debug outputs
 PlugifyCS/bin/
 PlugifyCS/obj/
+
+LibPlugifyCS/bin/
+LibPlugifyCS/obj/
 
 # NuGet Crap
 packages/

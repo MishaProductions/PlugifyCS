@@ -1,4 +1,5 @@
-﻿using Markdig;
+﻿using LibPlugifyCS;
+using Markdig;
 using Newtonsoft.Json.Linq;
 using PlugifyCS.Controls;
 using PlugifyCS.Dialogs;
@@ -19,15 +20,15 @@ namespace PlugifyCS
         private static readonly TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
         private readonly Loading loadingForm = new Loading();
 
-        private WebSocket ws;
         private dynamic UserInfo;
         private dynamic Groups;
         private dynamic ChannelInfo;
         private dynamic ChannelDetails;
-        private dynamic currentGroupObj = "";
+        private PlugifyGroup currentGroupObj;
 
         private string CurrentChannelID = "";
         private string currentGroupID = "";
+        private PlugifyCSClient client = new PlugifyCSClient();
         protected override CreateParams CreateParams
         {
             get
@@ -134,126 +135,26 @@ namespace PlugifyCS
                     }
                 }
             }
-
             if (Properties.Settings.Default.token == "")
             {
                 var login = new LogonDialog();
                 login.ShowDialog();
             }
-            progressBar1.Visible = true;
-            ws = new WebSocket("wss://api.plugify.cf/");
-            ws.OnMessage += Ws_OnMessage;
-            ws.OnError += Ws_OnError;
-            ws.OnClose += Ws_OnClose;
 
-            ws.ConnectAsync();
+
+            progressBar1.Visible = true;
+
+            client.Start(Properties.Settings.Default.token);
             loadingForm.Show();
             BringToFront();
-
-            while (UserInfo == null)
-            {
-                Application.DoEvents();
-            }
-
             LoggedIn();
         }
-        private void Ws_OnClose(object sender, CloseEventArgs e)
-        {
-            lblError.Text = "Connection closed: " + e.Reason;
-            pnlError.Visible = false;
-        }
-        private void Ws_OnError(object sender, WebSocketSharp.ErrorEventArgs e)
-        {
-            pnlError.Invoke((MethodInvoker)delegate ()
-            {
-                lblError.Text = e.Message;
-                pnlError.Visible = true;
-            });
-        }
-        private void Ws_OnMessage(object sender, MessageEventArgs e)
-        {
-            string s = "{\"event\": 1, \"data\": {\"token\": \"" + Properties.Settings.Default.token + "\"}}";
-            Console.WriteLine(e.Data);
-            var obj = JObject.Parse(e.Data);
-            dynamic d = obj;
-            var eventID = obj.Value<int>("event");
-            switch (eventID)
-            {
-                //WELCOME
-                case 0:
-                    ws.Send(s);
-                    break;
-                //AUTHENTICATE_SUCCESS
-                case 2:
-                    // vaild token
-
-                    //Get groups
-                    string s2 = "{\"event\":11,\"data\":null}";
-                    ws.Send(s2);
-
-                    UserInfo = d;
-                    break;
-                //AUTHENTICATE_ERROR
-                case 3:
-                    this.Invoke((MethodInvoker)delegate ()
-                    {
-                        loadingForm.Hide();
-                        //We have an invaild token
-                        ws.Close();
-                        var login = new LogonDialog();
-                        login.ShowDialog();
-                    });
-                    break;
-                //CHANNEL_JOIN_SUCCESS
-                case 5:
-                    ChannelDetails = d;
-                    break;
-                //CHANNEL_JOIN_ERROR 
-                case 6:
-                    lblError.Text = "Error while joining channel";
-                    pnlError.Visible = true;
-                    break;
-                //MESSAGE_SEND_SUCCESS
-                case 8:
-                    break;
-                //MESSAGE_SEND_ERROR
-                case 9:
-                    break;
-                //MESSAGE_NEW
-                case 10:
-                    this.Invoke((MethodInvoker)delegate ()
-                    {
-                        btnCreateOrJoinGroup.Visible = false;
-                        AddMessage(d.data);
-                        btnCreateOrJoinGroup.Visible = true;
-                    });
-                    break;
-                //GROUP_GET_SUCCESS
-                case 12:
-                    Groups = d;
-                    break;
-                //CHANNELS_GET_SUCCESS 
-                case 14:
-                    ChannelInfo = d;
-                    break;
-                //JOINED_NEW_GROUP
-                case 15:
-                    AddGroupToList(d.data);
-                    break;
-
-                //PING
-                case 9001:
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-        private void AddGroupToList(dynamic group)
+        private void AddGroupToList(PlugifyGroup group)
         {
             RoundPicture theGroup = new RoundPicture();
             theGroup.Size = new Size(56, 56);
             theGroup.BackgroundImageLayout = ImageLayout.Stretch;
-            theGroup.SetURL((string)group.name, (string)group.avatarURL);
+            theGroup.SetURL((string)group.Name, (string)group.ImageURL);
             theGroup.Tag = group;
             theGroup.IsGoodLookingButton = true;
 
@@ -268,30 +169,23 @@ namespace PlugifyCS
         private void LoggedIn()
         {
             // we need to cast this to a string because c# is stupid
-            lblUserPFP.SetURL((string)UserInfo.data.username, (string)UserInfo.data.avatarURL);
-            lblUserName.Text = UserInfo.data.username;
-            lblPing.Text = "@" + UserInfo.data.username;
-
-            //Get groups
-            while (Groups == null)
-            {
-                Application.DoEvents();
-            }
-
+            lblUserPFP.SetURL(client.CurrentUser.PFPUrl, client.CurrentUser.UserName, 0);
+            lblUserName.Text = client.CurrentUser.UserName;
+            lblPing.Text = "@" + client.CurrentUser.UserName;
             progressBar1.Visible = false;
 
-            foreach (var item in Groups.data)
+            foreach (var item in client.Groups)
             {
                 AddGroupToList(item);
             }
             loadingForm.TopMost = false;
             loadingForm.Hide();
         }
-        private void OpenGroup(dynamic group)
+        private async void OpenGroup(PlugifyGroup group)
         {
             lblHome.Visible = false;
             //progressBar1.Visible = true;
-            lblGroupName.Text = group.name;
+            lblGroupName.Text = group.Name;
             prgMessageLoading.Visible = false;
             pnlChannels.Controls.Clear();
             pnlChannels.Controls.Add(pnlGroupInfo);
@@ -299,7 +193,7 @@ namespace PlugifyCS
             messagesPanel.Controls.Add(lblHome);
             messagesPanel.Controls.Add(lblNoChannel);
             CurrentChannelID = "";
-            currentGroupID = group.id;
+            currentGroupID = group.ID;
             currentGroupObj = group;
             pnlChannelTopBar.Visible = true;
             pnlMemberList.Visible = false;
@@ -307,13 +201,7 @@ namespace PlugifyCS
             pnlMemberList.Controls.Clear();
             pnlMemberList.Controls.Add(panel1);
 
-            //Get group detail
-            string s2 = "{\"event\":13,\"data\": {\"groupID\": \"" + group.id + "\"}}";
-            ws.Send(s2);
-            while (ChannelInfo == null)
-            {
-                Application.DoEvents();
-            }
+            ChannelInfo = await client.GetGroupInfo(group.ID);
             //progressBar1.Visible = false;
             lblNoChannel.Visible = true;
             foreach (var item in ChannelInfo.data)
@@ -334,7 +222,7 @@ namespace PlugifyCS
                 lbl.AutoEllipsis = true;
                 lbl.Size = new Size(pnlChannels.Width, lbl.Size.Height);
 
-                lbl.Click += delegate (object sender, EventArgs e)
+                lbl.Click += async delegate(object? sender, EventArgs e)
                  {
                      lblNoChannel.Visible = false;
                      prgMessageLoading.Visible = true;
@@ -349,34 +237,27 @@ namespace PlugifyCS
                      }
                      lbl.BackColor = Color.DodgerBlue;
 
-                     //Get channel details
-                     string s3 = "{\"event\":4,\"data\": {\"id\": \"" + ((string)item.id).TrimStart('{').TrimEnd('}') + "\"}}";
-                     ws.Send(s3);
 
-                     while (ChannelDetails == null)
-                     {
-                         Application.DoEvents();
-                     }
+                     ChannelDetails = await client.GetChannelDetails(((string)item.id));
+
 
                      foreach (var message in ChannelDetails.data.history)
                      {
                          AddMessage(message);
                      }
                      var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/"+ currentGroupID);
-                     foreach (var member in groupInfo.data.members)
-                     {
-                         var ctl2 = new MemberListItem();
-                         ctl2.ApplyProperties((string)member.username, (string)member.displayName, (string)member.avatarURL);
-                         ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
-                         pnlMemberList.Controls.Add(ctl2);
-                     }
-                     ChannelDetails = null;
+                     //foreach (var member in groupInfo.data.members)
+                     //{
+                     //    var ctl2 = new MemberListItem();
+                     //    ctl2.ApplyProperties((string)member.username, (string)member.displayName, (string)member.avatarURL);
+                     //    ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
+                     //    pnlMemberList.Controls.Add(ctl2);
+                     //}
                      prgMessageLoading.Visible = false;
                  };
                 pnlChannels.Controls.Add(lbl);
             }
             pnlChannels.Controls.Add(btnCreateChannel);
-            ChannelInfo = null;
             messageSendArea.Visible = true;
             pnlChannels.Visible = true;
             lblHome.Visible = false;
@@ -416,24 +297,20 @@ namespace PlugifyCS
                 SendMessage();
             }
         }
-        private void SendMessage()
+        private async void SendMessage()
         {
             string messageContents = txtMessage.Text;
             txtMessage.Text = "";
 
-            string s3 = "{\"event\":7,\"data\": {\"content\": \"" + messageContents.TrimStart('{').TrimEnd('}') + "\", \"channelID\": \"" + CurrentChannelID + "\"}}";
-            ws.Send(s3);
+
+            await client.SendMessage(messageContents.TrimStart('{').TrimEnd('}'), CurrentChannelID);
             txtMessage.Clear();
         }
         private void tmrPing_Tick(object sender, EventArgs e)
         {
-            if (ws != null)
+            if (client != null)
             {
-                if (ws.IsAlive)
-                {
-                    string s3 = "{\"event\":9001}";
-                    ws.Send(s3);
-                }
+                client.SendPing();
             }
         }
         private void btnCreateChannel_Click(object sender, EventArgs e)
@@ -445,7 +322,7 @@ namespace PlugifyCS
             var d = new CreateNewChannel();
             if (d.ShowDialog() == DialogResult.OK)
             {
-                var json = ApiPost("https://api.plugify.cf/v2/channels/create", "{\"name\": \"" + d.Result + "\", \"groupID\": \"" + currentGroupID + "\", \"type\": \"text\"}");
+                var json = ApiPost("https://api.plugify.cf/v2/channels/" + currentGroupID, "{\"name\": \"" + d.Result + "\", \"description\": null, \"type\": \"text\"}");
                 if ((bool)json.success)
                 {
                     OpenGroup(currentGroupObj); //refresh group list
@@ -490,10 +367,7 @@ namespace PlugifyCS
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             tmrPing.Stop();
-            if (ws != null)
-            {
-                ws.Close();
-            }
+            client.Close();
 
             Application.Exit();
         }

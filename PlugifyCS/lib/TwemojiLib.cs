@@ -27,7 +27,7 @@ namespace TwemojiSharp
 
             // Jint.Engine.Invoke() invokes only functions,
             // so we make a parse() function out of a twemoji.parse() method
-            jsRuntime.Execute("const parse = twemoji.parse");
+            jsRuntime.Execute("var parse = twemoji.parse;");
 
             return jsRuntime;
         });
@@ -78,18 +78,18 @@ namespace TwemojiSharp
                 i++;
             }
             str = s;
-              // invoke original parse() function from the twemoji.js
-              var result = _jsRuntime
-                .Value
-                .Invoke("parse", str, new
-                {
-                    callback = DefaultOptions.ImageSourceGenerator,
-                    DefaultOptions.Base,
-                    ext = DefaultOptions.Ext,
-                    size = DefaultOptions.Size,
-                    className = DefaultOptions.ClassName,
-                })
-                .AsString();
+            // invoke original parse() function from the twemoji.js
+            var result = _jsRuntime
+           .Value
+           .Invoke("parse", str, new
+           {
+               callback = DefaultOptions.ImageSourceGenerator,
+               DefaultOptions.Base,
+               ext = DefaultOptions.Ext,
+               size = DefaultOptions.Size,
+               className = DefaultOptions.ClassName,
+           })
+           .AsString();
 
             return result;
         }
@@ -150,7 +150,7 @@ namespace TwemojiSharp
         /// <param name="parsedString">A string with &lt;img&gt; tags</param>
         private List<TwemojiImg> GetImgObjectsFromString(string parsedString)
         {
-            var html = HtmlDocument.FromHtml(parsedString);
+            var html = SoftCircuits.HtmlMonkey.HtmlDocument.FromHtml(parsedString);
             var imgs = html.Find("img").Select(n => new TwemojiImg()
             {
                 Emoji = n.Attributes["alt"].Value,

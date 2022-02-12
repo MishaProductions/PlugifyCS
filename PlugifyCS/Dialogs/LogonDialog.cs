@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using LibPlugifyCS;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +23,7 @@ namespace PlugifyCS.Dialogs
         }
         WebSocket ws;
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtToken.Text))
             {
@@ -31,45 +32,31 @@ namespace PlugifyCS.Dialogs
             }
             else
             {
-                // Log in
-                ws = new WebSocket("wss://api.plugify.cf/");
-                ws.OnMessage += Ws_OnMessage;
-                ws.ConnectAsync();
+                var client = new PlugifyCSClient();
                 progressBar1.Visible = true;
+                try
+                {
+                    client.Start(txtToken.Text);
+                    progressBar1.Visible = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    progressBar1.Visible = false;
+
+                    return;
+                }
+
+                Properties.Settings.Default.token = txtToken.Text;
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+                client.Close();
+                lblToken.Invoke((MethodInvoker)delegate ()
+                {
+                    Close();
+                });
             }
         }
-
-        private void Ws_OnMessage(object sender, MessageEventArgs e)
-        {
-            string s = "{\"event\": 1, \"data\": {\"token\": \"" + txtToken.Text + "\"}}";
-            Console.WriteLine(e.Data);
-            var obj = JObject.Parse(e.Data);
-            dynamic d = obj;
-            switch (obj.Value<int>("event"))
-            {
-                case 0:
-                    ws.Send(s);
-                    break;
-                case 2:
-                    // vaild token
-                    Properties.Settings.Default.token = txtToken.Text;
-                    Properties.Settings.Default.Save();
-                    Properties.Settings.Default.Reload();
-                    ws.Close();
-                    lblToken.Invoke((MethodInvoker)delegate ()
-                    {
-                        Close();
-                    });
-                    break;
-                case 3:
-                    ws.Close();
-                    lblToken.Invoke((MethodInvoker)delegate () { progressBar1.Visible = false;  lblToken.Text = d.data; lblToken.Visible = true; });
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
