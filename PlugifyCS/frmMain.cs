@@ -20,8 +20,6 @@ namespace PlugifyCS
         private static readonly TwemojiSharp.TwemojiLib lib = new TwemojiSharp.TwemojiLib();
         private readonly Loading loadingForm = new Loading();
 
-        private dynamic UserInfo;
-        private dynamic Groups;
         private dynamic ChannelInfo;
         private dynamic ChannelDetails;
         private PlugifyGroup currentGroupObj;
@@ -144,17 +142,50 @@ namespace PlugifyCS
 
             progressBar1.Visible = true;
 
+            //register events
+            client.OnGroupRemoved += Client_OnGroupRemoved;
+            client.OnGroupJoin += Client_OnGroupJoin;
+
             client.Start(Properties.Settings.Default.token);
             loadingForm.Show();
             BringToFront();
             LoggedIn();
         }
+
+        private void Client_OnGroupJoin(dynamic data)
+        {
+            AddGroupToList(PlugifyCSClient.GroupFromStructure(data.group));
+        }
+
+        private void Client_OnGroupRemoved(dynamic data)
+        {
+            foreach (var item in pnlServers.Controls)
+            {
+                if (item is RoundPicture p)
+                {
+                    if (p.Tag is PlugifyGroup g)
+                    {
+                        if (g.ID == (string)data.id)
+                        {
+                            p.Dispose();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ((string)data.id == currentGroupID)
+            {
+                btnHome_Click(null, null);
+            }
+        }
+
         private void AddGroupToList(PlugifyGroup group)
         {
             RoundPicture theGroup = new RoundPicture();
             theGroup.Size = new Size(56, 56);
             theGroup.BackgroundImageLayout = ImageLayout.Stretch;
-            theGroup.SetURL((string)group.Name, (string)group.ImageURL);
+            theGroup.SetURL((string)group.ID, (string)group.ImageURL);
             theGroup.Tag = group;
             theGroup.IsGoodLookingButton = true;
 
@@ -202,6 +233,9 @@ namespace PlugifyCS
             pnlMemberList.Controls.Add(panel1);
 
             ChannelInfo = await client.GetGroupInfo(group.ID);
+
+            btnLeaveGroup.Visible = group.OwnerUsername != client.CurrentUser?.UserName;
+
             //progressBar1.Visible = false;
             lblNoChannel.Visible = true;
             foreach (var item in ChannelInfo.data)
@@ -222,7 +256,7 @@ namespace PlugifyCS
                 lbl.AutoEllipsis = true;
                 lbl.Size = new Size(pnlChannels.Width, lbl.Size.Height);
 
-                lbl.Click += async delegate(object? sender, EventArgs e)
+                lbl.Click += async delegate (object? sender, EventArgs e)
                  {
                      lblNoChannel.Visible = false;
                      prgMessageLoading.Visible = true;
@@ -245,7 +279,7 @@ namespace PlugifyCS
                      {
                          AddMessage(message);
                      }
-                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/"+ currentGroupID);
+                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/" + currentGroupID);
                      //foreach (var member in groupInfo.data.members)
                      //{
                      //    var ctl2 = new MemberListItem();
@@ -447,6 +481,34 @@ namespace PlugifyCS
             }
         }
 
+        public static dynamic ApiDelete(string url)
+        {
+            var webRequest = System.Net.WebRequest.Create(url);
+            webRequest.Method = "DELETE";
+            webRequest.ContentType = "application/json";
+            webRequest.Headers.Add("Authorization", Properties.Settings.Default.token);
+
+            WebResponse r;
+            try
+            {
+                r = webRequest.GetResponse();
+            }
+            catch (WebException e)
+            {
+                r = e.Response;
+            }
+
+            using (Stream s = r.GetResponseStream())
+            {
+                using (StreamReader sr = new StreamReader(s))
+                {
+                    var jsonResponse = sr.ReadToEnd();
+                    return JObject.Parse(jsonResponse);
+                }
+            }
+        }
+
+
         private void btnCreateOrJoinGroup_Click(object sender, EventArgs e)
         {
             var dlg = new InviteDialog();
@@ -479,7 +541,15 @@ namespace PlugifyCS
 
         private void btnLeaveGroup_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This feature is not implmented in plugify backend.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            var h = MessageBox.Show("Are you sure you want to leave this group?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (h == DialogResult.Yes)
+            {
+                var i = ApiDelete("https://api.plugify.cf/v2/members/" + currentGroupID + "/" + client.CurrentUser.UserName);
+                if (!(bool)i.success)
+                {
+                    MessageBox.Show("A error occured while leaving this group. Error Code: " + PlugifyErrorCode.Tostring((int)i.error), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         private void btnGroupSettings_Click(object sender, EventArgs e)

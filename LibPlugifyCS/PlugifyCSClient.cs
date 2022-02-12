@@ -15,17 +15,20 @@ namespace LibPlugifyCS
 
         public delegate void PlugifyEvent(dynamic data);
 
+        public event PlugifyEvent? OnGroupJoin;
         public event PlugifyEvent? OnChannelCreated;
+        public event PlugifyEvent? OnGroupRemoved;
 
         public PlugifyUser? CurrentUser { get; private set; }
 
         public List<PlugifyGroup> Groups = new List<PlugifyGroup>();
-        private Control dispatch;
+        private Control? dispatch;
         public void Start(string token)
         {
             this.Token = token;
             ws.OnMessage += Ws_OnMessage;
             dispatch = new Control(); //hack to jump back to UI thread
+            dispatch.CreateControl();
 
             ws.Start();
 
@@ -70,23 +73,27 @@ namespace LibPlugifyCS
             return user;
         }
 
-        internal static PlugifyGroup? GroupFromStructure(dynamic data)
+        public static PlugifyGroup? GroupFromStructure(dynamic data)
         {
             var group = new PlugifyGroup();
             group.Name = data.name;
             if (data.avatarURL == "https://cds.plugify.cf/avatars/default_avatar.png")
             {
-                group.ImageURL = "https://cds.plugify.cf/defaultAvatars/" + (string)data.name;
+                group.ImageURL = "https://cds.plugify.cf/defaultAvatars/" + ((string)data.id).Replace("{","").Replace("}","");
             }
             else
             {
                 group.ImageURL = (string)data.avatarURL;
             }
-            foreach (var item in data.members)
+            if (data.members != null)
             {
-                group.Members.Add(UserFromStructure(item));
+                foreach (var item in data.members)
+                {
+                    group.Members.Add(UserFromStructure(item));
+                }
             }
             group.ID = data.id;
+            group.OwnerUsername = data.owner;
             return group;
         }
 
@@ -124,6 +131,9 @@ namespace LibPlugifyCS
                 case 14: //CHANNELS_GET_SUCCESS
                     tmp = d;
                     break;
+                case 15: //JOINED_NEW_GROUP
+                    dispatch.Invoke(() => { if (OnGroupJoin != null) OnGroupJoin(d.data); });
+                    break;
                 case 10: //MESSAGE_NEW
                     tmp = d;
 
@@ -135,14 +145,19 @@ namespace LibPlugifyCS
                     break;
                 case 9: //MESSAGE_SEND_ERROR 
                     throw new Exception("Failed to send message");
-
-                case 9001:
-                    //ping responce
+                case 22:
+                    //Group removed
+                    dispatch.Invoke(() => { if (OnGroupRemoved != null) OnGroupRemoved(d.data); });
                     break;
-
                 case 30:
                     //New channel
                     dispatch.Invoke(() => { if (OnChannelCreated != null) OnChannelCreated(d.data); });
+                    break;
+                case 31:
+                    //When currently joined channel is unavailable
+                    break;
+                case 9001:
+                    //ping responce
                     break;
                 default:
                     throw new NotImplementedException("Message ID: " + eventID);

@@ -12,5 +12,6 @@ namespace LibPlugifyCS
         public string? ImageURL { get; internal set; }
         public List<PlugifyUser> Members { get; internal set; } = new List<PlugifyUser>();
         public string? ID { get; internal set; }
+        public string? OwnerUsername { get; internal set; }
     }
 }
