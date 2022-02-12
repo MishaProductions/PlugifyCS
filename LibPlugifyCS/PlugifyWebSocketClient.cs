@@ -37,10 +37,17 @@ namespace LibPlugifyCS
         {
             while (true)
             {
-                var message = await Receive();
-                if (message != null)
+                if (client.State == WebSocketState.Open | client.State == WebSocketState.CloseSent)
                 {
-                    dummy?.BeginInvoke(new Action(() => OnMessage.Invoke(this, message)));
+                    var message = await Receive();
+                    if (message != null)
+                    {
+                        dummy?.BeginInvoke(new Action(() => OnMessage.Invoke(this, message)));
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
         }

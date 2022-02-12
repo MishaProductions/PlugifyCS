@@ -512,7 +512,14 @@ namespace PlugifyCS
 
         private void invitePeopleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new CreateInviteDialog(currentGroupID).ShowDialog();
+            if (Properties.Settings.Default.EnableXAML)
+            {
+                new XAML.CreateInviteWindow(currentGroupID).ShowDialog();
+            }
+            else
+            {
+                new CreateInviteDialog(currentGroupID).ShowDialog();
+            }
         }
     }
 }

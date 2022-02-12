@@ -16,6 +16,7 @@ namespace PlugifyCS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            XAML.Init.InitXAMLUI();
             Application.Run(new frmMain());
            
         }

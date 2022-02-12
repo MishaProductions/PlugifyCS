@@ -30,15 +30,21 @@ namespace PlugifyCS
             {
                 radClassic.Checked = true;
             }
+            radEnableXAML.Checked = Properties.Settings.Default.EnableXAML;
             lblVersion.Text = "Client version: " + Application.ProductVersion;
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.token = "";
+            SaveSettings();
+            Application.Restart();
+        }
+
+        private void SaveSettings()
+        {
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();
-            Application.Restart();
         }
 
         private void radDarkTheme_CheckedChanged(object sender, EventArgs e)
@@ -46,8 +52,7 @@ namespace PlugifyCS
             if (radDarkTheme.Checked)
             {
                 Properties.Settings.Default.Theme = "dark";
-                Properties.Settings.Default.Save();
-                Properties.Settings.Default.Reload();
+                SaveSettings();
             }
         }
 
@@ -56,8 +61,7 @@ namespace PlugifyCS
             if (radLightTheme.Checked)
             {
                 Properties.Settings.Default.Theme = "light";
-                Properties.Settings.Default.Save();
-                Properties.Settings.Default.Reload();
+                SaveSettings();
             }
         }
 
@@ -66,14 +70,18 @@ namespace PlugifyCS
             if (radClassic.Checked)
             {
                 Properties.Settings.Default.Theme = "classic";
-                Properties.Settings.Default.Save();
-                Properties.Settings.Default.Reload();
+                SaveSettings();
             }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void radEnableXAML_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EnableXAML = radEnableXAML.Checked;
         }
     }
 }
