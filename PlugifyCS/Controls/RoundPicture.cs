@@ -62,7 +62,7 @@ namespace PlugifyCS.Controls
             }
 
             string url2 = "https://cds.plugify.cf/defaultAvatars/" + channelID;
-            if (url != "https://cds.plugify.cf/avatars/default_avatar.png" && url != "")
+            if (url != "https://cds.plugify.cf/avatars/default_avatar.png" && url != "" && url!=null)
                 url2 = url;
             var request = WebRequest.Create(url2);
 

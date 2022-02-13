@@ -10,6 +10,7 @@ namespace LibPlugifyCS
         private dynamic? UserInfo;
         private dynamic? _groups;
         private dynamic? tmp;
+        private dynamic? _GetChannelDetails;
 
         private bool LoginError = false;
 
@@ -79,7 +80,7 @@ namespace LibPlugifyCS
             group.Name = data.name;
             if (data.avatarURL == "https://cds.plugify.cf/avatars/default_avatar.png")
             {
-                group.ImageURL = "https://cds.plugify.cf/defaultAvatars/" + ((string)data.id).Replace("{","").Replace("}","");
+                group.ImageURL = "https://cds.plugify.cf/defaultAvatars/" + ((string)data.id).Replace("{", "").Replace("}", "");
             }
             else
             {
@@ -123,7 +124,7 @@ namespace LibPlugifyCS
                     LoginError = true;
                     break;
                 case 5: //CHANNEL_JOIN_SUCCESS 
-                    tmp = d;
+                    _GetChannelDetails = d;
                     break;
                 case 12: //GROUP_GET_SUCCESS 
                     _groups = d;
@@ -169,20 +170,26 @@ namespace LibPlugifyCS
             tmp = null;
             await ws.Send("{\"event\":13,\"data\": {\"groupID\": \"" + id + "\"}}");
 
-            while(tmp == null) { await Task.Delay(10); }
+            while (tmp == null)
+            {
+                await Task.Delay(5);
+            }
             return tmp;
         }
 
         public async Task<dynamic> GetChannelDetails(string id)
         {
-            tmp = null;
+            _GetChannelDetails = null;
 
             //Get channel details
             string s3 = "{\"event\":4,\"data\":{\"id\":\"" + id.TrimStart('{').TrimEnd('}') + "\"}}";
             await ws.Send(s3);
 
-            while (tmp == null) { await Task.Delay(10); }
-            return tmp;
+            while (_GetChannelDetails == null)
+            {
+                await Task.Delay(5);
+            }
+            return _GetChannelDetails;
         }
 
         public async Task<dynamic> SendMessage(string content, string channelId)
@@ -193,7 +200,10 @@ namespace LibPlugifyCS
             string s3 = "{\"event\":7,\"data\": {\"content\": \"" + content + "\", \"channelID\": \"" + channelId + "\"}}";
             await ws.Send(s3);
 
-            while (tmp == null) { await Task.Delay(10); }
+            while (tmp == null)
+            {
+                await Task.Delay(5);
+            }
             return tmp;
         }
 
@@ -204,7 +214,10 @@ namespace LibPlugifyCS
             //Get groups
             await ws.Send("{\"event\":11,\"data\":null}");
 
-            while (tmp == null) { await Task.Delay(10); }
+            while (tmp == null)
+            {
+                await Task.Delay(5);
+            }
             return tmp;
         }
 

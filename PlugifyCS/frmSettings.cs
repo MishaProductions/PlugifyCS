@@ -82,6 +82,7 @@ namespace PlugifyCS
         private void radEnableXAML_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.EnableXAML = radEnableXAML.Checked;
+            SaveSettings();
         }
     }
 }

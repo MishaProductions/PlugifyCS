@@ -140,9 +140,6 @@ namespace PlugifyCS
                 login.ShowDialog();
             }
 
-
-            progressBar1.Visible = true;
-
             //register events
             client.OnGroupRemoved += Client_OnGroupRemoved;
             client.OnGroupJoin += Client_OnGroupJoin;
@@ -204,7 +201,6 @@ namespace PlugifyCS
             lblUserPFP.SetURL(client.CurrentUser.PFPUrl, client.CurrentUser.UserName, 0);
             lblUserName.Text = client.CurrentUser.UserName;
             lblPing.Text = "@" + client.CurrentUser.UserName;
-            progressBar1.Visible = false;
 
             foreach (var item in client.Groups)
             {
@@ -280,14 +276,23 @@ namespace PlugifyCS
                      {
                          AddMessage(message);
                      }
-                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/" + currentGroupID);
-                     //foreach (var member in groupInfo.data.members)
-                     //{
-                     //    var ctl2 = new MemberListItem();
-                     //    ctl2.ApplyProperties((string)member.username, (string)member.displayName, (string)member.avatarURL);
-                     //    ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
-                     //    pnlMemberList.Controls.Add(ctl2);
-                     //}
+                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/" + currentGroupID + "/members");
+
+                     if (!(bool)groupInfo.success)
+                     {
+                         pnlMemberList.Visible = false;
+                         MessageBox.Show("Error while loading member list: "+PlugifyErrorCode.Tostring((int)groupInfo.error));
+                     }
+                     else
+                     {
+                         foreach (var member in groupInfo.data.members)
+                         {
+                             var ctl2 = new MemberListItem();
+                             ctl2.ApplyProperties((string)member.user, (string)member.nickname, (string)member.avatarURL);
+                             ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
+                             pnlMemberList.Controls.Add(ctl2);
+                         }
+                     }
                      prgMessageLoading.Visible = false;
                  };
                 pnlChannels.Controls.Add(lbl);
@@ -319,10 +324,6 @@ namespace PlugifyCS
             ctl.SetSettings(name, properString, Emotes, "WIP", (string)message.author.avatarURL);
             ctl.Size = new Size(messagesPanel.Width - 25, ctl.Height);
             messagesPanel.Controls.Add(ctl);
-        }
-        private void btnErrorClose_Click(object sender, EventArgs e)
-        {
-            pnlError.Visible = false;
         }
         private void textboxControl1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -376,15 +377,19 @@ namespace PlugifyCS
         }
         private void ShowHomeView()
         {
+            ShowPage(new XAML.HomePG());
+        }
+        private void ShowPage(System.Windows.Controls.Page p, bool showChannelView = false)
+        {
             HomeView = new ElementHost();
             HomeView.Dock = DockStyle.Fill;
-            var f= new System.Windows.Controls.Frame();
-            f.Navigate(new XAML.HomePG());
+            var f = new System.Windows.Controls.Frame();
+            f.Navigate(p);
             HomeView.Child = f;
 
             messageSendArea.Visible = false;
-            pnlChannels.Visible = false;
-            pnlChannelTopBar.Visible = false;
+            pnlChannels.Visible = showChannelView;
+            pnlChannelTopBar.Visible = showChannelView;
             pnlMemberList.Visible = false;
             lblNoChannel.Visible = false;
             CurrentChannelID = "";
@@ -428,6 +433,7 @@ namespace PlugifyCS
             Application.Exit();
         }
 
+        #region Utils
         //https://stackoverflow.com/a/77233/11250752
         public static void SetDoubleBuffered(System.Windows.Forms.Control c)
         {
@@ -502,7 +508,6 @@ namespace PlugifyCS
                 }
             }
         }
-
         public static dynamic ApiDelete(string url)
         {
             var webRequest = System.Net.WebRequest.Create(url);
@@ -529,7 +534,7 @@ namespace PlugifyCS
                 }
             }
         }
-
+        #endregion
 
         private void btnCreateOrJoinGroup_Click(object sender, EventArgs e)
         {
@@ -576,6 +581,7 @@ namespace PlugifyCS
 
         private void btnGroupSettings_Click(object sender, EventArgs e)
         {
+
             DisplayServerSettings(currentGroupID);
         }
 
@@ -598,8 +604,15 @@ namespace PlugifyCS
         }
         private void DisplayServerSettings(string GroupID)
         {
-            var dlg = new ServerSettingsDialog(GroupID, this);
-            dlg.ShowDialog();
+            if (Properties.Settings.Default.EnableXAML)
+            {
+                ShowPage(new XAML.ServerSettings(GroupID), true);
+            }
+            else
+            {
+                var dlg = new ServerSettingsDialog(GroupID, this);
+                dlg.ShowDialog();
+            }
         }
 
         private void invitePeopleToolStripMenuItem_Click(object sender, EventArgs e)

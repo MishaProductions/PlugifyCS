@@ -56,7 +56,7 @@ namespace PlugifyCS.Dialogs
 
         private void UserInfoDialog_Shown(object sender, EventArgs e)
         {
-            var d = frmMain.ApiGet("https://api.plugify.cf/v2/users/info/" + username);
+            var d = frmMain.ApiGet("https://api.plugify.cf/v2/users/" + username);
             var user = d.data;
             var displayName = (string)user.displayName;
             var flags = (PlugifyUserFlags)user.flags;

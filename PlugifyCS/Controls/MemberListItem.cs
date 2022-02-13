@@ -49,6 +49,9 @@ namespace PlugifyCS.Controls
             this.DisplayName = displayname;
 
             lblUserDisplayName.Text = displayname;
+            if (displayname == null)
+                lblUserDisplayName.Text = username;
+
             lblUserName.Text = "@"+username;
             pfp.SetURL(username, pfpUrl);
         }
