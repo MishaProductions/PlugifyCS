@@ -169,7 +169,7 @@ namespace PlugifyCS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(507, 477);
             this.Controls.Add(this.radEnableXAML);
             this.Controls.Add(this.label1);

@@ -543,10 +543,10 @@ namespace PlugifyCS
             {
                 if (dlg.Result2)
                 {
-                    var result = ApiPost("https://api.plugify.cf/v2/invites/use", "{\"id\": \"" + dlg.Result1 + "\"}");
-                    if ((bool)result.error)
+                    var result = ApiPost("https://api.plugify.cf/v2/invites/use/"+dlg.Result1, "{\"id\": \"" + dlg.Result1 + "\"}");
+                    if (!(bool)result.success)
                     {
-                        MessageBox.Show("Invaild invite or server error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error: "+ PlugifyErrorCode.Tostring((int)result.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
