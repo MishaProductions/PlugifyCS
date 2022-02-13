@@ -71,6 +71,7 @@ namespace PlugifyCS
             this.pnlMessageContainer.SuspendLayout();
             this.pnlMainView.SuspendLayout();
             this.messagesPanel.SuspendLayout();
+            this.pnlChannelTopBar.SuspendLayout();
             this.messageSendArea.SuspendLayout();
             this.pnlMemberList.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -210,7 +211,6 @@ namespace PlugifyCS
             this.pnlMessageContainer.Controls.Add(this.pnlMainView);
             this.pnlMessageContainer.Controls.Add(this.pnlChannelTopBar);
             this.pnlMessageContainer.Controls.Add(this.messageSendArea);
-            this.pnlMessageContainer.Controls.Add(this.prgMessageLoading);
             this.pnlMessageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMessageContainer.Location = new System.Drawing.Point(149, 0);
             this.pnlMessageContainer.Name = "pnlMessageContainer";
@@ -221,9 +221,9 @@ namespace PlugifyCS
             // 
             this.pnlMainView.Controls.Add(this.messagesPanel);
             this.pnlMainView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMainView.Location = new System.Drawing.Point(0, 75);
+            this.pnlMainView.Location = new System.Drawing.Point(0, 52);
             this.pnlMainView.Name = "pnlMainView";
-            this.pnlMainView.Size = new System.Drawing.Size(439, 248);
+            this.pnlMainView.Size = new System.Drawing.Size(439, 271);
             this.pnlMainView.TabIndex = 7;
             // 
             // messagesPanel
@@ -234,7 +234,7 @@ namespace PlugifyCS
             this.messagesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.messagesPanel.Location = new System.Drawing.Point(0, 0);
             this.messagesPanel.Name = "messagesPanel";
-            this.messagesPanel.Size = new System.Drawing.Size(439, 248);
+            this.messagesPanel.Size = new System.Drawing.Size(439, 271);
             this.messagesPanel.TabIndex = 6;
             this.messagesPanel.WrapContents = false;
             // 
@@ -254,8 +254,9 @@ namespace PlugifyCS
             // pnlChannelTopBar
             // 
             this.pnlChannelTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(44)))));
+            this.pnlChannelTopBar.Controls.Add(this.prgMessageLoading);
             this.pnlChannelTopBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlChannelTopBar.Location = new System.Drawing.Point(0, 23);
+            this.pnlChannelTopBar.Location = new System.Drawing.Point(0, 0);
             this.pnlChannelTopBar.Name = "pnlChannelTopBar";
             this.pnlChannelTopBar.Size = new System.Drawing.Size(439, 52);
             this.pnlChannelTopBar.TabIndex = 5;
@@ -304,11 +305,10 @@ namespace PlugifyCS
             // 
             // prgMessageLoading
             // 
-            this.prgMessageLoading.Dock = System.Windows.Forms.DockStyle.Top;
-            this.prgMessageLoading.Location = new System.Drawing.Point(0, 0);
+            this.prgMessageLoading.Location = new System.Drawing.Point(3, 6);
             this.prgMessageLoading.MarqueeAnimationSpeed = 10;
             this.prgMessageLoading.Name = "prgMessageLoading";
-            this.prgMessageLoading.Size = new System.Drawing.Size(439, 23);
+            this.prgMessageLoading.Size = new System.Drawing.Size(430, 23);
             this.prgMessageLoading.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.prgMessageLoading.TabIndex = 2;
             this.prgMessageLoading.Visible = false;
@@ -486,6 +486,7 @@ namespace PlugifyCS
             this.pnlMainView.ResumeLayout(false);
             this.messagesPanel.ResumeLayout(false);
             this.messagesPanel.PerformLayout();
+            this.pnlChannelTopBar.ResumeLayout(false);
             this.messageSendArea.ResumeLayout(false);
             this.messageSendArea.PerformLayout();
             this.pnlMemberList.ResumeLayout(false);

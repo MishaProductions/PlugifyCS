@@ -11,7 +11,14 @@
       Style="{StaticResource UiPage}">
 
     <TabControl>
-        <TabItem Header="General settings"></TabItem>
+        <TabItem Header="General settings">
+            <Grid HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnDeleteServer" Foreground="Red" Grid.Row="0" Width="200" Click="btnDeleteServer_Click">Delete server</Button>
+            </Grid>
+        </TabItem>
         <TabItem Header="Invites"></TabItem>
     </TabControl>
 </Page>

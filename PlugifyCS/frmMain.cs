@@ -27,7 +27,7 @@ namespace PlugifyCS
 
         private string CurrentChannelID = "";
         private string currentGroupID = "";
-        private PlugifyCSClient client = new PlugifyCSClient();
+        internal PlugifyCSClient client = new PlugifyCSClient();
         ElementHost HomeView;
         protected override CreateParams CreateParams
         {
@@ -106,7 +106,7 @@ namespace PlugifyCS
         public extern static int SetWindowTheme(IntPtr hWnd, string
                                            pszSubAppName, string pszSubIdList);
         #endregion
-        private void Form1_Shown(object sender, EventArgs e)
+        private async void Form1_Shown(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.Theme == "dark")
             {
@@ -144,7 +144,7 @@ namespace PlugifyCS
             client.OnGroupRemoved += Client_OnGroupRemoved;
             client.OnGroupJoin += Client_OnGroupJoin;
 
-            client.Start(Properties.Settings.Default.token);
+            await client.Start(Properties.Settings.Default.token);
             loadingForm.Show();
             BringToFront();
             LoggedIn();
@@ -201,7 +201,8 @@ namespace PlugifyCS
             lblUserPFP.SetURL(client.CurrentUser.PFPUrl, client.CurrentUser.UserName, 0);
             lblUserName.Text = client.CurrentUser.UserName;
             lblPing.Text = "@" + client.CurrentUser.UserName;
-
+            pnlServers.Controls.Clear();
+            pnlServers.Controls.Add(btnCreateOrJoinGroup);
             foreach (var item in client.Groups)
             {
                 AddGroupToList(item);
@@ -262,6 +263,7 @@ namespace PlugifyCS
                      messagesPanel.Controls.Clear();
                      messagesPanel.Controls.Add(HomeView);
                      messagesPanel.Controls.Add(lblNoChannel);
+                     pnlMemberList.Controls.Clear();
                      foreach (Control c in pnlChannels.Controls)
                      {
                          c.BackColor = Color.Transparent;
@@ -281,7 +283,7 @@ namespace PlugifyCS
                      if (!(bool)groupInfo.success)
                      {
                          pnlMemberList.Visible = false;
-                         MessageBox.Show("Error while loading member list: "+PlugifyErrorCode.Tostring((int)groupInfo.error));
+                         MessageBox.Show("Error while loading member list: " + PlugifyErrorCode.Tostring((int)groupInfo.error));
                      }
                      else
                      {
@@ -392,8 +394,11 @@ namespace PlugifyCS
             pnlChannelTopBar.Visible = showChannelView;
             pnlMemberList.Visible = false;
             lblNoChannel.Visible = false;
-            CurrentChannelID = "";
-            currentGroupID = "";
+            if (!showChannelView)
+            {
+                CurrentChannelID = "";
+                currentGroupID = "";
+            }
 
             //hide messages view
             messagesPanel.Visible = false;
@@ -536,31 +541,31 @@ namespace PlugifyCS
         }
         #endregion
 
-        private void btnCreateOrJoinGroup_Click(object sender, EventArgs e)
+        private async void btnCreateOrJoinGroup_Click(object sender, EventArgs e)
         {
             var dlg = new InviteDialog();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 if (dlg.Result2)
                 {
-                    var result = ApiPost("https://api.plugify.cf/v2/invites/use/"+dlg.Result1, "{\"id\": \"" + dlg.Result1 + "\"}");
+                    var result = ApiPost("https://api.plugify.cf/v2/invites/use/" + dlg.Result1, "{\"id\": \"" + dlg.Result1 + "\"}");
                     if (!(bool)result.success)
                     {
-                        MessageBox.Show("Error: "+ PlugifyErrorCode.Tostring((int)result.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error: " + PlugifyErrorCode.Tostring((int)result.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    var result = ApiPost("https://api.plugify.cf/v2/groups/create", "{\"name\": \"" + dlg.Result1 + "\"}");
+                    var result = ApiPost("https://api.plugify.cf/v2/groups/", "{\"name\": \"" + dlg.Result1 + "\"}");
                     if (!(bool)result.success)
                     {
-                        MessageBox.Show("Unkown error.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error: " + PlugifyErrorCode.Tostring((int)result.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        result.name = dlg.Result1;
-                        result.id = result.data.id;
-                        AddGroupToList(result);
+                        //Refresh server list
+                        await client.RefreshGroupsArray();
+                        LoggedIn();
                     }
                 }
             }
@@ -606,7 +611,7 @@ namespace PlugifyCS
         {
             if (Properties.Settings.Default.EnableXAML)
             {
-                ShowPage(new XAML.ServerSettings(GroupID), true);
+                ShowPage(new XAML.ServerSettings(GroupID, this), true);
             }
             else
             {

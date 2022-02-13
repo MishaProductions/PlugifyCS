@@ -11,6 +11,7 @@ namespace LibPlugifyCS
         private dynamic? _groups;
         private dynamic? tmp;
         private dynamic? _GetChannelDetails;
+        private dynamic? _GetGroups;
 
         private bool LoginError = false;
 
@@ -24,7 +25,7 @@ namespace LibPlugifyCS
 
         public List<PlugifyGroup> Groups = new List<PlugifyGroup>();
         private Control? dispatch;
-        public void Start(string token)
+        public async Task Start(string token)
         {
             this.Token = token;
             ws.OnMessage += Ws_OnMessage;
@@ -35,7 +36,7 @@ namespace LibPlugifyCS
 
             while (true)
             {
-                Application.DoEvents();
+                await Task.Delay(5);
                 if (LoginError)
                 {
                     throw new Exception("Invaild token.");
@@ -48,12 +49,7 @@ namespace LibPlugifyCS
             }
 
             CurrentUser = UserFromStructure(UserInfo.data);
-            while (_groups == null) Application.DoEvents();
-            foreach (var group in _groups.data)
-            {
-                Groups.Add(GroupFromStructure(group));
-            }
-            _groups = null;
+            await RefreshGroupsArray();
         }
 
         internal static PlugifyUser? UserFromStructure(dynamic data)
@@ -118,7 +114,6 @@ namespace LibPlugifyCS
                 case 2: //AUTHENTICATE_SUCCESS
                     //vaild token
                     UserInfo = d;
-                    await ws.Send("{\"event\":11,\"data\":null}"); //Get groups
                     break;
                 case 3: //AUTHENTICATE_ERROR
                     LoginError = true;
@@ -127,7 +122,7 @@ namespace LibPlugifyCS
                     _GetChannelDetails = d;
                     break;
                 case 12: //GROUP_GET_SUCCESS 
-                    _groups = d;
+                    _GetGroups = d;
                     break;
                 case 14: //CHANNELS_GET_SUCCESS
                     tmp = d;
@@ -209,21 +204,31 @@ namespace LibPlugifyCS
 
         public async Task<dynamic> GetGroups()
         {
-            tmp = null;
+            _GetGroups = null;
 
             //Get groups
             await ws.Send("{\"event\":11,\"data\":null}");
 
-            while (tmp == null)
+            while (_GetGroups == null)
             {
                 await Task.Delay(5);
             }
-            return tmp;
+            return _GetGroups;
         }
 
         public async Task SendPing()
         {
             await ws.Send("{\"event\":9001}");
+        }
+
+        public async Task RefreshGroupsArray()
+        {
+            Groups = new List<PlugifyGroup>();
+            var g = await GetGroups();
+            foreach (var group in g.data)
+            {
+                Groups.Add(GroupFromStructure(group));
+            }
         }
     }
 }

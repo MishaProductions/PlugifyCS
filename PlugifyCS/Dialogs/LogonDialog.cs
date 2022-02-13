@@ -21,7 +21,6 @@ namespace PlugifyCS.Dialogs
             this.MinimumSize = this.Size;
             this.MaximumSize = this.Size;
         }
-        WebSocket ws;
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
@@ -36,7 +35,7 @@ namespace PlugifyCS.Dialogs
                 progressBar1.Visible = true;
                 try
                 {
-                    client.Start(txtToken.Text);
+                    await client.Start(txtToken.Text);
                     progressBar1.Visible = false;
                 }
                 catch (Exception ex)

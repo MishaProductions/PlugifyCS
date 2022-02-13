@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibPlugifyCS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,59 @@ namespace PlugifyCS.XAML
     public partial class ServerSettings : Page
     {
         public string GroupID { get; set; }
-        public ServerSettings(string groupId)
+        private frmMain instance { get; set; }
+
+        bool isOwner = false;
+        dynamic? groupInfo;
+        public ServerSettings(string groupId, frmMain instance)
         {
-            this.GroupID= groupId;
+            this.GroupID = groupId;
+            this.instance = instance;
             InitializeComponent();
+            Loaded += ServerSettings_Loaded;
+        }
+
+        private void ServerSettings_Loaded(object sender, RoutedEventArgs e)
+        {
+            groupInfo = frmMain.ApiGet("https://api.plugify.cf/v2/groups/" + this.GroupID);
+
+            if ((bool)groupInfo.success)
+            {
+                isOwner = groupInfo.data.owner == instance.client.CurrentUser?.UserName;
+                if (!isOwner)
+                {
+                    btnDeleteServer.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Error while getting group info: " + PlugifyErrorCode.Tostring((int)groupInfo.error));
+            }
+        }
+
+        private void btnDeleteServer_Click(object sender, RoutedEventArgs e)
+        {
+            if (groupInfo != null)
+            {
+                if ((bool)groupInfo.success)
+                {
+                    var hr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete the group \"" + (string)groupInfo.data.name + "\". This operation cannot be ", "Question or and warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (hr == DialogResult.Yes)
+                    {
+                        var hResult = frmMain.ApiDelete("https://api.plugify.cf/v2/groups/" + this.GroupID);
+
+                        if ((bool)hResult.success)
+                        {
+
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Error while deleting group: " + PlugifyErrorCode.Tostring((int)hResult.error));
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
