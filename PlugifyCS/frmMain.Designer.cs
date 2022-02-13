@@ -42,9 +42,6 @@ namespace PlugifyCS
             this.lblUserName = new System.Windows.Forms.Label();
             this.ServerContent = new System.Windows.Forms.Panel();
             this.pnlMessageContainer = new System.Windows.Forms.Panel();
-            this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblHome = new System.Windows.Forms.Label();
-            this.lblNoChannel = new System.Windows.Forms.Label();
             this.pnlChannelTopBar = new System.Windows.Forms.Panel();
             this.messageSendArea = new System.Windows.Forms.Panel();
             this.btnSendMSG = new System.Windows.Forms.Button();
@@ -68,12 +65,14 @@ namespace PlugifyCS
             this.leaveGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invitePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblNoChannel = new System.Windows.Forms.Label();
+            this.messagesPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlMainView = new System.Windows.Forms.Panel();
             this.pnlServerArea.SuspendLayout();
             this.pnlServers.SuspendLayout();
             this.pnlUserArea.SuspendLayout();
             this.ServerContent.SuspendLayout();
             this.pnlMessageContainer.SuspendLayout();
-            this.messagesPanel.SuspendLayout();
             this.messageSendArea.SuspendLayout();
             this.pnlMemberList.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -81,6 +80,8 @@ namespace PlugifyCS
             this.pnlGroupInfo.SuspendLayout();
             this.pnlError.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.messagesPanel.SuspendLayout();
+            this.pnlMainView.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar1
@@ -117,7 +118,7 @@ namespace PlugifyCS
             // 
             this.btnCreateOrJoinGroup.BackColor = System.Drawing.Color.Transparent;
             this.btnCreateOrJoinGroup.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
-            this.btnCreateOrJoinGroup.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCreateOrJoinGroup.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnCreateOrJoinGroup.ForeColor = System.Drawing.Color.White;
             this.btnCreateOrJoinGroup.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(79)))), ((int)(((byte)(82)))));
             this.btnCreateOrJoinGroup.Location = new System.Drawing.Point(3, 3);
@@ -159,7 +160,7 @@ namespace PlugifyCS
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnHome.FlatAppearance.BorderSize = 0;
             this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnHome.Location = new System.Drawing.Point(226, 22);
             this.btnHome.Name = "btnHome";
             this.btnHome.Size = new System.Drawing.Size(24, 24);
@@ -175,7 +176,7 @@ namespace PlugifyCS
             this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSettings.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnSettings.Location = new System.Drawing.Point(196, 22);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(24, 24);
@@ -187,7 +188,7 @@ namespace PlugifyCS
             // lblPing
             // 
             this.lblPing.AutoSize = true;
-            this.lblPing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblPing.ForeColor = System.Drawing.Color.White;
             this.lblPing.Location = new System.Drawing.Point(70, 27);
             this.lblPing.Name = "lblPing";
@@ -198,7 +199,7 @@ namespace PlugifyCS
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblUserName.ForeColor = System.Drawing.Color.White;
             this.lblUserName.Location = new System.Drawing.Point(69, 3);
             this.lblUserName.Name = "lblUserName";
@@ -221,7 +222,7 @@ namespace PlugifyCS
             // pnlMessageContainer
             // 
             this.pnlMessageContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(57)))));
-            this.pnlMessageContainer.Controls.Add(this.messagesPanel);
+            this.pnlMessageContainer.Controls.Add(this.pnlMainView);
             this.pnlMessageContainer.Controls.Add(this.pnlChannelTopBar);
             this.pnlMessageContainer.Controls.Add(this.messageSendArea);
             this.pnlMessageContainer.Controls.Add(this.prgMessageLoading);
@@ -230,44 +231,6 @@ namespace PlugifyCS
             this.pnlMessageContainer.Name = "pnlMessageContainer";
             this.pnlMessageContainer.Size = new System.Drawing.Size(439, 331);
             this.pnlMessageContainer.TabIndex = 2;
-            // 
-            // messagesPanel
-            // 
-            this.messagesPanel.AutoScroll = true;
-            this.messagesPanel.Controls.Add(this.lblHome);
-            this.messagesPanel.Controls.Add(this.lblNoChannel);
-            this.messagesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.messagesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.messagesPanel.Location = new System.Drawing.Point(0, 75);
-            this.messagesPanel.Name = "messagesPanel";
-            this.messagesPanel.Size = new System.Drawing.Size(439, 191);
-            this.messagesPanel.TabIndex = 6;
-            this.messagesPanel.WrapContents = false;
-            // 
-            // lblHome
-            // 
-            this.lblHome.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHome.AutoSize = true;
-            this.lblHome.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHome.ForeColor = System.Drawing.Color.White;
-            this.lblHome.Location = new System.Drawing.Point(3, 0);
-            this.lblHome.Name = "lblHome";
-            this.lblHome.Size = new System.Drawing.Size(349, 32);
-            this.lblHome.TabIndex = 0;
-            this.lblHome.Text = "Home page under construction";
-            // 
-            // lblNoChannel
-            // 
-            this.lblNoChannel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblNoChannel.AutoSize = true;
-            this.lblNoChannel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNoChannel.ForeColor = System.Drawing.Color.White;
-            this.lblNoChannel.Location = new System.Drawing.Point(61, 32);
-            this.lblNoChannel.Name = "lblNoChannel";
-            this.lblNoChannel.Size = new System.Drawing.Size(233, 32);
-            this.lblNoChannel.TabIndex = 1;
-            this.lblNoChannel.Text = "No channel selected";
-            this.lblNoChannel.Visible = false;
             // 
             // pnlChannelTopBar
             // 
@@ -337,7 +300,7 @@ namespace PlugifyCS
             this.pnlMemberList.Controls.Add(this.panel1);
             this.pnlMemberList.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlMemberList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.pnlMemberList.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlMemberList.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.pnlMemberList.Location = new System.Drawing.Point(588, 0);
             this.pnlMemberList.Name = "pnlMemberList";
             this.pnlMemberList.Size = new System.Drawing.Size(212, 331);
@@ -370,7 +333,7 @@ namespace PlugifyCS
             this.pnlChannels.Controls.Add(this.btnCreateChannel);
             this.pnlChannels.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlChannels.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.pnlChannels.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlChannels.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.pnlChannels.Location = new System.Drawing.Point(0, 0);
             this.pnlChannels.Name = "pnlChannels";
             this.pnlChannels.Size = new System.Drawing.Size(149, 331);
@@ -393,7 +356,7 @@ namespace PlugifyCS
             this.btnLeaveGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnLeaveGroup.FlatAppearance.BorderSize = 0;
             this.btnLeaveGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLeaveGroup.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeaveGroup.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnLeaveGroup.Location = new System.Drawing.Point(86, 21);
             this.btnLeaveGroup.Name = "btnLeaveGroup";
             this.btnLeaveGroup.Size = new System.Drawing.Size(24, 24);
@@ -409,7 +372,7 @@ namespace PlugifyCS
             this.btnGroupSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnGroupSettings.FlatAppearance.BorderSize = 0;
             this.btnGroupSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGroupSettings.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGroupSettings.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnGroupSettings.Location = new System.Drawing.Point(116, 21);
             this.btnGroupSettings.Name = "btnGroupSettings";
             this.btnGroupSettings.Size = new System.Drawing.Size(24, 24);
@@ -511,6 +474,40 @@ namespace PlugifyCS
             this.serverSettingsToolStripMenuItem.Text = "Server settings";
             this.serverSettingsToolStripMenuItem.Click += new System.EventHandler(this.serverSettingsToolStripMenuItem_Click);
             // 
+            // lblNoChannel
+            // 
+            this.lblNoChannel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblNoChannel.AutoSize = true;
+            this.lblNoChannel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblNoChannel.ForeColor = System.Drawing.Color.White;
+            this.lblNoChannel.Location = new System.Drawing.Point(3, 0);
+            this.lblNoChannel.Name = "lblNoChannel";
+            this.lblNoChannel.Size = new System.Drawing.Size(232, 32);
+            this.lblNoChannel.TabIndex = 1;
+            this.lblNoChannel.Text = "No channel selected";
+            this.lblNoChannel.Visible = false;
+            // 
+            // messagesPanel
+            // 
+            this.messagesPanel.AutoScroll = true;
+            this.messagesPanel.Controls.Add(this.lblNoChannel);
+            this.messagesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messagesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.messagesPanel.Location = new System.Drawing.Point(0, 0);
+            this.messagesPanel.Name = "messagesPanel";
+            this.messagesPanel.Size = new System.Drawing.Size(439, 191);
+            this.messagesPanel.TabIndex = 6;
+            this.messagesPanel.WrapContents = false;
+            // 
+            // pnlMainView
+            // 
+            this.pnlMainView.Controls.Add(this.messagesPanel);
+            this.pnlMainView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMainView.Location = new System.Drawing.Point(0, 75);
+            this.pnlMainView.Name = "pnlMainView";
+            this.pnlMainView.Size = new System.Drawing.Size(439, 191);
+            this.pnlMainView.TabIndex = 7;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -520,7 +517,7 @@ namespace PlugifyCS
             this.Controls.Add(this.pnlServerArea);
             this.Controls.Add(this.pnlError);
             this.Controls.Add(this.progressBar1);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "frmMain";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -535,8 +532,6 @@ namespace PlugifyCS
             this.pnlUserArea.PerformLayout();
             this.ServerContent.ResumeLayout(false);
             this.pnlMessageContainer.ResumeLayout(false);
-            this.messagesPanel.ResumeLayout(false);
-            this.messagesPanel.PerformLayout();
             this.messageSendArea.ResumeLayout(false);
             this.messageSendArea.PerformLayout();
             this.pnlMemberList.ResumeLayout(false);
@@ -546,6 +541,9 @@ namespace PlugifyCS
             this.pnlError.ResumeLayout(false);
             this.pnlError.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.messagesPanel.ResumeLayout(false);
+            this.messagesPanel.PerformLayout();
+            this.pnlMainView.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -562,10 +560,8 @@ namespace PlugifyCS
         private System.Windows.Forms.Panel pnlError;
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Button btnErrorClose;
-        private System.Windows.Forms.Label lblHome;
         private System.Windows.Forms.Panel pnlMessageContainer;
         private System.Windows.Forms.FlowLayoutPanel pnlChannels;
-        private System.Windows.Forms.Label lblNoChannel;
         private System.Windows.Forms.ProgressBar prgMessageLoading;
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnSettings;
@@ -582,7 +578,6 @@ namespace PlugifyCS
         private System.Windows.Forms.Button btnGroupSettings;
         private System.Windows.Forms.Button btnLeaveGroup;
         private System.Windows.Forms.Panel pnlChannelTopBar;
-        private System.Windows.Forms.FlowLayoutPanel messagesPanel;
         private System.Windows.Forms.FlowLayoutPanel pnlMemberList;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblMembersListTitle;
@@ -590,6 +585,9 @@ namespace PlugifyCS
         private System.Windows.Forms.ToolStripMenuItem leaveGroupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem invitePeopleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serverSettingsToolStripMenuItem;
+        private Panel pnlMainView;
+        private FlowLayoutPanel messagesPanel;
+        private Label lblNoChannel;
     }
 }
 

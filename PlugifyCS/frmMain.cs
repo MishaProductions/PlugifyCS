@@ -11,6 +11,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using WebSocketSharp;
 
 namespace PlugifyCS
@@ -27,6 +28,7 @@ namespace PlugifyCS
         private string CurrentChannelID = "";
         private string currentGroupID = "";
         private PlugifyCSClient client = new PlugifyCSClient();
+        ElementHost HomeView;
         protected override CreateParams CreateParams
         {
             get
@@ -40,6 +42,7 @@ namespace PlugifyCS
         {
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw, true);
+
             if (Properties.Settings.Default.Theme == "light")
             {
                 pnlChannels.BackColor = Color.White;
@@ -57,7 +60,6 @@ namespace PlugifyCS
                 messagesPanel.ForeColor = Color.Black;
                 pnlMessageContainer.ForeColor = Color.Black;
 
-                lblHome.ForeColor = Color.Black;
                 lblNoChannel.ForeColor = Color.Black;
                 txtMessage.ForeColor = Color.Black;
                 lblGroupName.ForeColor = Color.Black;
@@ -82,7 +84,6 @@ namespace PlugifyCS
                 messagesPanel.ForeColor = Color.Black;
                 pnlMessageContainer.ForeColor = Color.Black;
 
-                lblHome.ForeColor = Color.Black;
                 lblNoChannel.ForeColor = Color.Black;
                 txtMessage.ForeColor = Color.Black;
                 lblGroupName.ForeColor = Color.Black;
@@ -96,7 +97,7 @@ namespace PlugifyCS
 
             messageSendArea.Visible = false;
             pnlChannels.Visible = false;
-            lblHome.Visible = true;
+            btnHome_Click(null, null);
         }
         #region Native Windows apis
         [DllImport("dwmapi.dll", PreserveSig = true)]
@@ -214,14 +215,14 @@ namespace PlugifyCS
         }
         private async void OpenGroup(PlugifyGroup group)
         {
-            lblHome.Visible = false;
+            HomeView.Visible = false;
             //progressBar1.Visible = true;
             lblGroupName.Text = group.Name;
             prgMessageLoading.Visible = false;
             pnlChannels.Controls.Clear();
             pnlChannels.Controls.Add(pnlGroupInfo);
             messagesPanel.Controls.Clear();
-            messagesPanel.Controls.Add(lblHome);
+            messagesPanel.Controls.Add(HomeView);
             messagesPanel.Controls.Add(lblNoChannel);
             CurrentChannelID = "";
             currentGroupID = group.ID;
@@ -263,7 +264,7 @@ namespace PlugifyCS
                      pnlMemberList.Visible = true;
                      CurrentChannelID = item.id;
                      messagesPanel.Controls.Clear();
-                     messagesPanel.Controls.Add(lblHome);
+                     messagesPanel.Controls.Add(HomeView);
                      messagesPanel.Controls.Add(lblNoChannel);
                      foreach (Control c in pnlChannels.Controls)
                      {
@@ -294,7 +295,9 @@ namespace PlugifyCS
             pnlChannels.Controls.Add(btnCreateChannel);
             messageSendArea.Visible = true;
             pnlChannels.Visible = true;
-            lblHome.Visible = false;
+            HomeView.Visible = false;
+
+            messagesPanel.Visible = true;
         }
         private void AddMessage(dynamic message)
         {
@@ -369,15 +372,34 @@ namespace PlugifyCS
         }
         private void btnHome_Click(object sender, EventArgs e)
         {
+            ShowHomeView();
+        }
+        private void ShowHomeView()
+        {
+            HomeView = new ElementHost();
+            HomeView.Dock = DockStyle.Fill;
+            var f= new System.Windows.Controls.Frame();
+            f.Navigate(new XAML.HomePG());
+            HomeView.Child = f;
+
             messageSendArea.Visible = false;
             pnlChannels.Visible = false;
-            lblHome.Visible = true;
             pnlChannelTopBar.Visible = false;
             pnlMemberList.Visible = false;
+            lblNoChannel.Visible = false;
             CurrentChannelID = "";
             currentGroupID = "";
+
+            //hide messages view
+            messagesPanel.Visible = false;
+
+            pnlMainView.Controls.Clear();
+            pnlMainView.Controls.Add(messagesPanel);
+            pnlMainView.Controls.Add(HomeView);
+
+
+
             messagesPanel.Controls.Clear();
-            messagesPanel.Controls.Add(lblHome);
             messagesPanel.Controls.Add(lblNoChannel);
         }
         private void btnSettings_Click(object sender, EventArgs e)
@@ -544,7 +566,7 @@ namespace PlugifyCS
             var h = MessageBox.Show("Are you sure you want to leave this group?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (h == DialogResult.Yes)
             {
-                var i = ApiDelete("https://api.plugify.cf/v2/members/" + currentGroupID + "/" + client.CurrentUser.UserName);
+                var i = ApiDelete("https://api.plugify.cf/v2/members/" + currentGroupID + "/" + client.CurrentUser?.UserName);
                 if (!(bool)i.success)
                 {
                     MessageBox.Show("A error occured while leaving this group. Error Code: " + PlugifyErrorCode.Tostring((int)i.error), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
