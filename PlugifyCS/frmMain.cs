@@ -108,6 +108,7 @@ namespace PlugifyCS
         #endregion
         private async void Form1_Shown(object sender, EventArgs e)
         {
+            Application.DoEvents();
             if (Properties.Settings.Default.Theme == "dark")
             {
                 //Make sure we are using windows
@@ -143,9 +144,10 @@ namespace PlugifyCS
             //register events
             client.OnGroupRemoved += Client_OnGroupRemoved;
             client.OnGroupJoin += Client_OnGroupJoin;
-
-            await client.Start(Properties.Settings.Default.token);
             loadingForm.Show();
+            this.Enabled = false;
+            await client.Start(Properties.Settings.Default.token);
+            this.Enabled = true;
             BringToFront();
             LoggedIn();
         }
@@ -369,7 +371,7 @@ namespace PlugifyCS
                 }
                 else
                 {
-                    MessageBox.Show("Error while creating channel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error while creating channel: "+ PlugifyErrorCode.Tostring((int)json.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -36,7 +36,7 @@ namespace LibPlugifyCS
 
             while (true)
             {
-                await Task.Delay(5);
+                Application.DoEvents();
                 if (LoginError)
                 {
                     throw new Exception("Invaild token.");

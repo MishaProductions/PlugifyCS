@@ -19,7 +19,7 @@ namespace LibPlugifyCS
         public PlugifyWebSocketClient(string url)
         {
             this.URL = url;
-            
+
         }
         Control? dummy;
         public void Start()
@@ -28,7 +28,10 @@ namespace LibPlugifyCS
             IsOpen = true;
             dummy = new Control();
             dummy.CreateControl();
-            while (client.State != WebSocketState.Open) ;
+            while (client.State != WebSocketState.Open)
+            {
+                Application.DoEvents();
+            }
             Thread bgThread = new Thread(new ThreadStart(BackgroundThread));
             bgThread.Start();
         }
@@ -81,7 +84,16 @@ namespace LibPlugifyCS
 
         public void Close()
         {
-            client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Normal closure", CancellationToken.None);
+            if (client != null)
+            {
+                try
+                {
+                    client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Normal closure", CancellationToken.None);
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+            }
         }
     }
 }
