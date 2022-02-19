@@ -14,7 +14,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Text="Welcome to Plugify CS!" FontSize="30" Grid.Row="0"></TextBlock>
+            <TextBlock Text="Welcome to Impulse CS!" FontSize="30" Grid.Row="0"></TextBlock>
             <TextBlock Text="View your groups at the top, and change settings by clicking on the gear by your profile picture" FontSize="20" Grid.Row="1"></TextBlock>
         </Grid>
     </Viewbox>

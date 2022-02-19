@@ -5,7 +5,7 @@ namespace LibPlugifyCS
 {
     public class PlugifyCSClient
     {
-        private PlugifyWebSocketClient ws = new PlugifyWebSocketClient("wss://api.plugify.cf/");
+        private PlugifyWebSocketClient ws = new PlugifyWebSocketClient("wss://api.impulse.chat/");
         private string? Token;
         private dynamic? UserInfo;
         private dynamic? _groups;
