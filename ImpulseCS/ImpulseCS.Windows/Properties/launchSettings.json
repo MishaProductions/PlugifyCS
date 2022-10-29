@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "ImpulseCS.Windows": {
+      "commandName": "MsixPackage"
+    }
+  }
+}

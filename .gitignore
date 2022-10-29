@@ -3,8 +3,16 @@
 *.user
 
 # debug outputs
-PlugifyCS/bin/
-PlugifyCS/obj/
+ImpulseCS/ImpulseCS.Windows/bin/
+ImpulseCS/ImpulseCS.Windows/obj/
+ImpulseCS/ImpulseCS.Wasm/bin/
+ImpulseCS/ImpulseCS.Wasm/obj/
+ImpulseCS/ImpulseCS.Mobile/bin/
+ImpulseCS/ImpulseCS.Mobile/obj/
+ImpulseCS/ImpulseCS.Skia.Gtk/bin/
+ImpulseCS/ImpulseCS.Skia.Gtk/obj/
+ImpulseCS/ImpulseCS.Skia.Wpf/bin/
+ImpulseCS/ImpulseCS.Skia.Wpf/obj/
 
 LibPlugifyCS/bin/
 LibPlugifyCS/obj/

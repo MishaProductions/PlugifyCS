@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="ImpulseCS.Pages.LoginUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ImpulseCS.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Border BorderBrush="#FF000000" BorderThickness="1" CornerRadius="8" Background="Gray" VerticalAlignment="Center" HorizontalAlignment="Center"> 
+            <Grid Padding="50,50,50,50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition> <!--logo-->
+                    <RowDefinition Height="50"></RowDefinition> <!--spacing-->
+                    <RowDefinition Height="auto"></RowDefinition> <!--token label-->
+                    <RowDefinition Height="auto"></RowDefinition> <!--token textbox-->
+                    <RowDefinition Height="50"></RowDefinition>  <!--login button-->
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontSize="32" Padding="5,5,5,5">ImpulseCS Login</TextBlock>
+                <TextBlock Grid.Row="2">Token: </TextBlock>
+                <TextBox Grid.Row="3"></TextBox>
+
+                <Grid  Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0">Quit</Button>
+                    <Button Grid.Column="2" Click="{x:Bind LoginButtonClicked}">Login</Button>
+                </Grid>
+                
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
