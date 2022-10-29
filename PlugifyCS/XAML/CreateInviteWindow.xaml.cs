@@ -12,13 +12,14 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace PlugifyCS.XAML
 {
     /// <summary>
     /// Interaction logic for InviteWindow.xaml
     /// </summary>
-    public partial class CreateInviteWindow : Window
+    public partial class CreateInviteWindow : UiWindow
     {
         public string GroupID { get; set; }
         public CreateInviteWindow(string groupID)
@@ -30,9 +31,9 @@ namespace PlugifyCS.XAML
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-            WPFUI.Background.Manager.Apply(WPFUI.Background.BackgroundType.Tabbed, windowHandle);
+            //Manager.Apply(WPFUI.Background.BackgroundType.Tabbed, windowHandle);
 
-            var invites = frmMain.ApiPost("https://api.plugify.cf/v2/invites/" + GroupID,
+            var invites = frmMain.ApiPost("https://api.impulse.chat/v2/invites/" + GroupID,
                 "{\"uses\": null, \"expires\": null}");
 
             txtInvite.Text = (string)invites.data.id;

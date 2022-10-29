@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Server Settings"
-      xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       Style="{StaticResource UiPage}">
 
     <TabControl>

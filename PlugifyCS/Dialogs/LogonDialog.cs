@@ -35,7 +35,7 @@ namespace PlugifyCS.Dialogs
                 progressBar1.Visible = true;
                 try
                 {
-                    await client.Start(txtToken.Text);
+                    await client.Start(txtToken.Text, true);
                     progressBar1.Visible = false;
                 }
                 catch (Exception ex)

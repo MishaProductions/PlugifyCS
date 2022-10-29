@@ -36,7 +36,7 @@ namespace PlugifyCS.XAML
 
         private void ServerSettings_Loaded(object sender, RoutedEventArgs e)
         {
-            groupInfo = frmMain.ApiGet("https://api.plugify.cf/v2/groups/" + this.GroupID);
+            groupInfo = frmMain.ApiGet("https://api.impulse.chat/v2/groups/" + this.GroupID);
 
             if ((bool)groupInfo.success)
             {
@@ -61,7 +61,7 @@ namespace PlugifyCS.XAML
                     var hr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete the group \"" + (string)groupInfo.data.name + "\". This operation cannot be ", "Question or and warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (hr == DialogResult.Yes)
                     {
-                        var hResult = frmMain.ApiDelete("https://api.plugify.cf/v2/groups/" + this.GroupID);
+                        var hResult = frmMain.ApiDelete("https://api.impulse.chat/v2/groups/" + this.GroupID);
 
                         if ((bool)hResult.success)
                         {

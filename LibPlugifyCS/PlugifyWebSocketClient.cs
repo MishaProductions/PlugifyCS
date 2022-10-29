@@ -54,8 +54,12 @@ namespace LibPlugifyCS
                 }
             }
         }
-        public async Task Send(string data) =>
-    await client.SendAsync(Encoding.UTF8.GetBytes(data), WebSocketMessageType.Text, true, CancellationToken.None);
+        public async Task Send(string data)
+        {
+            Console.WriteLine("TX: "+data);
+            await client.SendAsync(Encoding.UTF8.GetBytes(data), WebSocketMessageType.Text, true, CancellationToken.None);
+
+        }
         public async Task<string?> Receive()
         {
             var buffer = new ArraySegment<byte>(new byte[2048]);

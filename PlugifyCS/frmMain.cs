@@ -199,16 +199,19 @@ namespace PlugifyCS
         }
         private void LoggedIn()
         {
+            Console.WriteLine("ui: initialize");
             // we need to cast this to a string because c# is stupid
             lblUserPFP.SetURL(client.CurrentUser.PFPUrl, client.CurrentUser.UserName, 0);
             lblUserName.Text = client.CurrentUser.UserName;
             lblPing.Text = "@" + client.CurrentUser.UserName;
             pnlServers.Controls.Clear();
             pnlServers.Controls.Add(btnCreateOrJoinGroup);
+            Console.WriteLine("ui: populate group list");
             foreach (var item in client.Groups)
             {
                 AddGroupToList(item);
             }
+            Console.WriteLine("ui: hide splash");
             loadingForm.TopMost = false;
             loadingForm.Hide();
         }
@@ -280,7 +283,7 @@ namespace PlugifyCS
                      {
                          AddMessage(message);
                      }
-                     var groupInfo = ApiGet("https://api.plugify.cf/v2/groups/" + currentGroupID + "/members");
+                     var groupInfo = ApiGet("https://api.impulse.chat/v2/groups/" + currentGroupID + "/members");
 
                      if (!(bool)groupInfo.success)
                      {
@@ -292,7 +295,7 @@ namespace PlugifyCS
                          foreach (var member in groupInfo.data.members)
                          {
                              var ctl2 = new MemberListItem();
-                             ctl2.ApplyProperties((string)member.user, (string)member.nickname, (string)member.avatarURL);
+                             ctl2.ApplyProperties((string)member.username, (string)member.nickname, (string)member.avatarURL);
                              ctl2.Size = new Size(pnlMemberList.Width - 50, ctl2.Height);
                              pnlMemberList.Controls.Add(ctl2);
                          }
@@ -364,7 +367,7 @@ namespace PlugifyCS
             var d = new CreateNewChannel();
             if (d.ShowDialog() == DialogResult.OK)
             {
-                var json = ApiPost("https://api.plugify.cf/v2/channels/" + currentGroupID, "{\"name\": \"" + d.Result + "\", \"description\": null, \"type\": \"text\"}");
+                var json = ApiPost("https://api.impulse.chat/v2/channels/" + currentGroupID, "{\"name\": \"" + d.Result + "\", \"description\": null, \"type\": \"text\"}");
                 if ((bool)json.success)
                 {
                     OpenGroup(currentGroupObj); //refresh group list
@@ -550,7 +553,7 @@ namespace PlugifyCS
             {
                 if (dlg.Result2)
                 {
-                    var result = ApiPost("https://api.plugify.cf/v2/invites/use/" + dlg.Result1, "{\"id\": \"" + dlg.Result1 + "\"}");
+                    var result = ApiPost("https://api.impulse.chat/v2/invites/use/" + dlg.Result1, "{\"id\": \"" + dlg.Result1 + "\"}");
                     if (!(bool)result.success)
                     {
                         MessageBox.Show("Error: " + PlugifyErrorCode.Tostring((int)result.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -558,7 +561,7 @@ namespace PlugifyCS
                 }
                 else
                 {
-                    var result = ApiPost("https://api.plugify.cf/v2/groups/", "{\"name\": \"" + dlg.Result1 + "\"}");
+                    var result = ApiPost("https://api.impulse.chat/v2/groups/", "{\"name\": \"" + dlg.Result1 + "\"}");
                     if (!(bool)result.success)
                     {
                         MessageBox.Show("Error: " + PlugifyErrorCode.Tostring((int)result.error), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -578,7 +581,7 @@ namespace PlugifyCS
             var h = MessageBox.Show("Are you sure you want to leave this group?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (h == DialogResult.Yes)
             {
-                var i = ApiDelete("https://api.plugify.cf/v2/members/" + currentGroupID + "/" + client.CurrentUser?.UserName);
+                var i = ApiDelete("https://api.impulse.chat/v2/members/" + currentGroupID + "/" + client.CurrentUser?.UserName);
                 if (!(bool)i.success)
                 {
                     MessageBox.Show("A error occured while leaving this group. Error Code: " + PlugifyErrorCode.Tostring((int)i.error), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);

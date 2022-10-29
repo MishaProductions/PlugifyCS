@@ -25,7 +25,7 @@ namespace LibPlugifyCS
 
         public List<PlugifyGroup> Groups = new List<PlugifyGroup>();
         private Control? dispatch;
-        public async Task Start(string token)
+        public async Task Start(string token, bool AuthOnlyMode = false)
         {
             this.Token = token;
             ws.OnMessage += Ws_OnMessage;
@@ -33,7 +33,7 @@ namespace LibPlugifyCS
             dispatch.CreateControl();
 
             ws.Start();
-
+            Console.WriteLine("client: begin auth");
             while (true)
             {
                 Application.DoEvents();
@@ -47,9 +47,16 @@ namespace LibPlugifyCS
                     break;
                 }
             }
+            Console.WriteLine("client: authentication success");
 
+            if (AuthOnlyMode)
+                return;
+
+            Console.WriteLine("client: parse user data");
             CurrentUser = UserFromStructure(UserInfo.data);
+            Console.WriteLine("client: refresh groups");
             await RefreshGroupsArray();
+            Console.WriteLine("client: connection success");
         }
 
         internal static PlugifyUser? UserFromStructure(dynamic data)
@@ -101,7 +108,7 @@ namespace LibPlugifyCS
 
         private async void Ws_OnMessage(object? sender, string e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine("rx: "+e);
             var obj = JObject.Parse(e);
             dynamic d = obj;
             var eventID = obj.Value<int>("event");
@@ -111,6 +118,10 @@ namespace LibPlugifyCS
                 case 0: //WELCOME
                     await ws.Send("{\"event\": 1, \"data\": {\"token\": \"" + Token + "\"}}");
                     break;
+                case 1:
+                    //vaild token
+                    UserInfo = d;
+                    break;
                 case 2: //AUTHENTICATE_SUCCESS
                     //vaild token
                     UserInfo = d;
@@ -118,17 +129,23 @@ namespace LibPlugifyCS
                 case 3: //AUTHENTICATE_ERROR
                     LoginError = true;
                     break;
-                case 5: //CHANNEL_JOIN_SUCCESS 
-                    _GetChannelDetails = d;
+                case 5: //Get groups result? 
+                    _GetGroups = d;
+                    break;
+                case 6:
+                    dispatch.Invoke(() => { if (OnGroupJoin != null) OnGroupJoin(d.data); });
                     break;
                 case 12: //GROUP_GET_SUCCESS 
                     _GetGroups = d;
                     break;
-                case 14: //CHANNELS_GET_SUCCESS
+                case 9: //CHANNELS_GET_SUCCESS
                     tmp = d;
                     break;
-                case 15: //JOINED_NEW_GROUP
-                    dispatch.Invoke(() => { if (OnGroupJoin != null) OnGroupJoin(d.data); });
+                case 15: 
+                         //
+
+
+                    _GetChannelDetails = d;
                     break;
                 case 10: //MESSAGE_NEW
                     tmp = d;
@@ -139,8 +156,6 @@ namespace LibPlugifyCS
                     //tmp = d;
                     //ignore for now
                     break;
-                case 9: //MESSAGE_SEND_ERROR 
-                    throw new Exception("Failed to send message");
                 case 22:
                     //Group removed
                     dispatch.Invoke(() => { if (OnGroupRemoved != null) OnGroupRemoved(d.data); });
@@ -163,7 +178,7 @@ namespace LibPlugifyCS
         public async Task<dynamic> GetGroupInfo(string? id)
         {
             tmp = null;
-            await ws.Send("{\"event\":13,\"data\": {\"groupID\": \"" + id + "\"}}");
+            await ws.Send("{\"event\":9,\"data\": {\"groupID\": \"" + id + "\"}}");
 
             while (tmp == null)
             {
@@ -177,7 +192,7 @@ namespace LibPlugifyCS
             _GetChannelDetails = null;
 
             //Get channel details
-            string s3 = "{\"event\":4,\"data\":{\"id\":\"" + id.TrimStart('{').TrimEnd('}') + "\"}}";
+            string s3 = "{\"event\":15,\"data\":{\"id\":\"" + id.TrimStart('{').TrimEnd('}') + "\"}}";
             await ws.Send(s3);
 
             while (_GetChannelDetails == null)
@@ -207,7 +222,7 @@ namespace LibPlugifyCS
             _GetGroups = null;
 
             //Get groups
-            await ws.Send("{\"event\":11,\"data\":null}");
+            await ws.Send("{\"event\":5,\"data\":null}");
 
             while (_GetGroups == null)
             {

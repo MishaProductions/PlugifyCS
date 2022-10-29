@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PlugifyCS.XAML"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              Style="{StaticResource UiPage}">
     <Viewbox VerticalAlignment="Top">
         <Grid VerticalAlignment="Top">

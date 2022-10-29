@@ -38,7 +38,7 @@ namespace PlugifyCS.Dialogs
 
         private void CreateInviteDialog_Shown(object sender, EventArgs e)
         {
-            var invites = frmMain.ApiPost("https://api.plugify.cf/v2/invites/" + groupid,
+            var invites = frmMain.ApiPost("https://api.impulse.chat/v2/invites/" + groupid,
                "{\"uses\": null, \"expires\": null}");
 
             textBox1.Text = (string)invites.data.id;

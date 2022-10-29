@@ -61,20 +61,30 @@ namespace PlugifyCS.Controls
                 return;
             }
 
-            string url2 = "https://cds.plugify.cf/defaultAvatars/" + channelID;
-            if (url != "https://cds.plugify.cf/avatars/default_avatar.png" && url != "" && url!=null)
-                url2 = url;
-            var request = WebRequest.Create(url2);
+            string url2 = "https://cds.impulse.chat/defaultAvatars/" + channelID;
+            //if (url != "https://cds.plugify.cf/avatars/default_avatar.png" && url != "" && url!=null)
+            //    url2 = url;
 
-            using (var response = request.GetResponse())
-            using (var stream = response.GetResponseStream())
+            if (url == "https://cds.impulse.chat/avatars/default_avatar.png")
             {
-                var b = Bitmap.FromStream(stream);
-                BackgroundImage = b;
-                if (!cacheImage.Contains("|"))
-                    b.Save(cacheImage, ImageFormat.Png);
+                //impulse doesn't support https yet
+                url = url2.Replace("https","http");
             }
-            request = null;
+            try
+            {
+                var request = WebRequest.Create(url2);
+
+                using (var response = request.GetResponse())
+                using (var stream = response.GetResponseStream())
+                {
+                    var b = Bitmap.FromStream(stream);
+                    BackgroundImage = b;
+                    if (!cacheImage.Contains("|"))
+                        b.Save(cacheImage, ImageFormat.Png);
+                }
+                request = null;
+            }
+            catch { }
         }
         public void SetURL(string url, string display, int a = 0)
         {
@@ -93,15 +103,22 @@ namespace PlugifyCS.Controls
 
             var request = WebRequest.Create(url);
 
-            using (var response = request.GetResponse())
-            using (var stream = response.GetResponseStream())
+            try
             {
-                var b = Bitmap.FromStream(stream);
-                BackgroundImage = b;
-                if (!cacheImage.Contains("|"))
-                    b.Save(cacheImage, ImageFormat.Png);
+                using (var response = request.GetResponse())
+                using (var stream = response.GetResponseStream())
+                {
+                    var b = Bitmap.FromStream(stream);
+                    BackgroundImage = b;
+                    if (!cacheImage.Contains("|"))
+                        b.Save(cacheImage, ImageFormat.Png);
+                }
+                request = null;
             }
-            request = null;
+            catch
+            {
+
+            }
         }
         protected override void OnPaint(PaintEventArgs e)
         {

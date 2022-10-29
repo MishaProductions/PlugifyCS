@@ -33,8 +33,8 @@ namespace PlugifyCS.Dialogs
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -83,6 +83,16 @@ namespace PlugifyCS.Dialogs
             this.panel1.Size = new System.Drawing.Size(661, 320);
             this.panel1.TabIndex = 5;
             // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.ForeColor = System.Drawing.Color.Red;
+            this.label3.Location = new System.Drawing.Point(38, 114);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(581, 86);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Please note that Plugify-CS may not work due to routine API changes";
+            // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -93,17 +103,6 @@ namespace PlugifyCS.Dialogs
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(38, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(581, 86);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "**PLEASE NOTE THAT PLUGIFY-CS WILL NOT WORK AT THIS TIME DUE TO IMPULSE BEING REB" +
-    "RANDED**";
             // 
             // Loading
             // 

@@ -34,7 +34,7 @@ namespace PlugifyCS.Dialogs
 
         private void ServerSettingsDialog_Shown(object sender, EventArgs e)
         {
-            var invites = frmMain.ApiGet("https://api.plugify.cf/v2/groups/" + groupid+"/invites");
+            var invites = frmMain.ApiGet("https://impulse.chat/v2/groups/" + groupid+"/invites");
             foreach (var item in invites.data.invites)
             {
                 var panel = new Panel();
