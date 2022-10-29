@@ -20,13 +20,13 @@ namespace LibPlugifyCS
             this.URL = url;
 
         }
-        public void Start()
+        public async Task Start()
         {
-            client.ConnectAsync(new Uri(URL), CancellationToken.None);
+            await client.ConnectAsync(new Uri(URL), CancellationToken.None);
             IsOpen = true;
             while (client.State != WebSocketState.Open)
             {
-                //Application.DoEvents();
+                await Task.Delay(1);
             }
             Thread bgThread = new Thread(new ThreadStart(BackgroundThread));
             bgThread.Start();
@@ -61,13 +61,21 @@ namespace LibPlugifyCS
             var buffer = new ArraySegment<byte>(new byte[2048]);
             do
             {
-                WebSocketReceiveResult result;
+                WebSocketReceiveResult result = null;
                 using (var ms = new MemoryStream())
                 {
                     do
                     {
-                        result = await client.ReceiveAsync(buffer, CancellationToken.None);
-                        ms.Write(buffer.Array, buffer.Offset, result.Count);
+                        try
+                        {
+                            result = await client.ReceiveAsync(buffer, CancellationToken.None);
+                            ms.Write(buffer.Array, buffer.Offset, result.Count);
+                        }
+                        catch
+                        {
+                            IsOpen = false;
+                            break;
+                        }
                     } while (!result.EndOfMessage);
 
                     if (result.MessageType == WebSocketMessageType.Close)

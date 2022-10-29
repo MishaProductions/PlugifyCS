@@ -16,14 +16,15 @@
                     <RowDefinition Height="50"></RowDefinition> <!--spacing-->
                     <RowDefinition Height="auto"></RowDefinition> <!--token label-->
                     <RowDefinition Height="auto"></RowDefinition> <!--token textbox-->
+                      <RowDefinition Height="auto"></RowDefinition> <!--login status-->
                     <RowDefinition Height="50"></RowDefinition>  <!--login button-->
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" FontSize="32" Padding="5,5,5,5">ImpulseCS Login</TextBlock>
                 <ProgressRing Grid.Row="1" x:Name="LoadingThingy" Visibility="Collapsed"></ProgressRing>
                 <TextBlock Grid.Row="2">Token: </TextBlock>
                 <TextBox x:Name="txtToken" Grid.Row="3"></TextBox>
-
-                <Grid  Grid.Row="4">
+                <TextBlock x:Name="lblLoginStatus" Foreground="Red" Grid.Row="4"></TextBlock>
+                <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>

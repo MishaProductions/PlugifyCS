@@ -29,7 +29,7 @@ namespace LibPlugifyCS
             this.Token = token;
             ws.OnMessage += Ws_OnMessage;
 
-            ws.Start();
+            await ws.Start();
             Console.WriteLine("client: begin auth");
             while (true)
             {
@@ -43,6 +43,7 @@ namespace LibPlugifyCS
                     //Successful connection
                     break;
                 }
+                await Task.Delay(1);
             }
             Console.WriteLine("client: authentication success");
 
@@ -116,15 +117,15 @@ namespace LibPlugifyCS
                     await ws.Send("{\"event\": 1, \"data\": {\"token\": \"" + Token + "\"}}");
                     break;
                 case 1:
-                    //vaild token
-                    UserInfo = d;
-                    break;
-                case 2: //AUTHENTICATE_SUCCESS
-                    //vaild token
-                    UserInfo = d;
-                    break;
-                case 3: //AUTHENTICATE_ERROR
-                    LoginError = true;
+                    if ((bool)d.success == true)
+                    {
+                        //vaild token
+                        UserInfo = d;
+                    }
+                    else
+                    {
+                        LoginError = true;
+                    }
                     break;
                 case 5: //Get groups result? 
                     _GetGroups = d;
@@ -182,7 +183,7 @@ namespace LibPlugifyCS
 
             while (tmp == null)
             {
-                await Task.Delay(5);
+                await Task.Delay(1);
             }
             return tmp;
         }
@@ -197,7 +198,7 @@ namespace LibPlugifyCS
 
             while (_GetChannelDetails == null)
             {
-                await Task.Delay(5);
+                await Task.Delay(1);
             }
             return _GetChannelDetails;
         }
@@ -212,7 +213,7 @@ namespace LibPlugifyCS
 
             while (tmp == null)
             {
-                await Task.Delay(5);
+                await Task.Delay(1);
             }
             return tmp;
         }
@@ -226,7 +227,7 @@ namespace LibPlugifyCS
 
             while (_GetGroups == null)
             {
-                await Task.Delay(5);
+                await Task.Delay(1);
             }
             return _GetGroups;
         }
