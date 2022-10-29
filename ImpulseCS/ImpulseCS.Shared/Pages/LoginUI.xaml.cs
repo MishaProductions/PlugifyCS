@@ -13,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using LibPlugifyCS;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -38,17 +39,23 @@ namespace ImpulseCS.Pages
             PlugifyCSClient c = new PlugifyCSClient();
             try
             {
-                await c.Start(txtToken.Text, true);
+                await c.Start(txtToken.Password, true);
             }
-            catch
+            catch(Exception ex)
             {
                 LoadingThingy.Visibility = Visibility.Collapsed;
                 txtToken.IsEnabled = true;
                 btnQuit.IsEnabled = true;
                 btnLogin.IsEnabled = true;
-                lblLoginStatus.Text = "Invaild token";
+                lblLoginStatus.Text = ex.ToString();
                 return;
             }
+
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["token"] = lblLoginStatus.Text;
+            c.Close();
+            this.Frame.Navigate(typeof(ShellUI));
+
         }
     }
 }

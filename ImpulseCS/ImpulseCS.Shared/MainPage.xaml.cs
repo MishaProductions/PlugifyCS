@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -26,8 +27,16 @@ namespace ImpulseCS
         public MainPage()
         {
             this.InitializeComponent();
-
-            MainFrame.Navigate(typeof(LoginUI));
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            
+            if (!localSettings.Values.ContainsKey("token"))
+            {
+                MainFrame.Navigate(typeof(LoginUI));
+            }
+            else
+            {
+                MainFrame.Navigate(typeof(ShellUI));
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ namespace LibPlugifyCS
         }
         public async Task Send(string data)
         {
-            Console.WriteLine("TX: "+data);
+            Console.WriteLine("TX: " + data);
             await client.SendAsync(Encoding.UTF8.GetBytes(data), WebSocketMessageType.Text, true, CancellationToken.None);
 
         }
@@ -66,16 +66,8 @@ namespace LibPlugifyCS
                 {
                     do
                     {
-                        try
-                        {
-                            result = await client.ReceiveAsync(buffer, CancellationToken.None);
-                            ms.Write(buffer.Array, buffer.Offset, result.Count);
-                        }
-                        catch
-                        {
-                            IsOpen = false;
-                            break;
-                        }
+                        result = await client.ReceiveAsync(buffer, CancellationToken.None);
+                        ms.Write(buffer.Array, buffer.Offset, result.Count);
                     } while (!result.EndOfMessage);
 
                     if (result.MessageType == WebSocketMessageType.Close)
