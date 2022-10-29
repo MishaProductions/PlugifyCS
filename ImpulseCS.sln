@@ -7,15 +7,17 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ImpulseCS.Shared", "Impulse
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{C4848E7C-231B-4D59-927E-653958B2189E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpulseCS.Wasm", "ImpulseCS\ImpulseCS.Wasm\ImpulseCS.Wasm.csproj", "{8DCC7E1C-DCF6-49E9-A475-8D2581927848}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpulseCS.Wasm", "ImpulseCS\ImpulseCS.Wasm\ImpulseCS.Wasm.csproj", "{8DCC7E1C-DCF6-49E9-A475-8D2581927848}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpulseCS.Mobile", "ImpulseCS\ImpulseCS.Mobile\ImpulseCS.Mobile.csproj", "{8A31AA7E-C9F0-40E0-8951-00866791EF84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpulseCS.Mobile", "ImpulseCS\ImpulseCS.Mobile\ImpulseCS.Mobile.csproj", "{8A31AA7E-C9F0-40E0-8951-00866791EF84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpulseCS.Skia.Gtk", "ImpulseCS\ImpulseCS.Skia.Gtk\ImpulseCS.Skia.Gtk.csproj", "{66286FA4-AA7D-4575-8219-48BA4843D43F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpulseCS.Skia.Gtk", "ImpulseCS\ImpulseCS.Skia.Gtk\ImpulseCS.Skia.Gtk.csproj", "{66286FA4-AA7D-4575-8219-48BA4843D43F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpulseCS.Windows", "ImpulseCS\ImpulseCS.Windows\ImpulseCS.Windows.csproj", "{3AC7E245-D9ED-4B2B-82A1-708A5825C934}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpulseCS.Windows", "ImpulseCS\ImpulseCS.Windows\ImpulseCS.Windows.csproj", "{3AC7E245-D9ED-4B2B-82A1-708A5825C934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpulseCS.Skia.Wpf", "ImpulseCS\ImpulseCS.Skia.Wpf\ImpulseCS.Skia.Wpf.csproj", "{53F2CE75-29FD-4628-AD0F-EB9C02A31B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImpulseCS.Skia.Wpf", "ImpulseCS\ImpulseCS.Skia.Wpf\ImpulseCS.Skia.Wpf.csproj", "{53F2CE75-29FD-4628-AD0F-EB9C02A31B8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibPlugifyCS", "LibPlugifyCS\LibPlugifyCS.csproj", "{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +121,22 @@ Global
 		{53F2CE75-29FD-4628-AD0F-EB9C02A31B8E}.Release|x64.Build.0 = Release|Any CPU
 		{53F2CE75-29FD-4628-AD0F-EB9C02A31B8E}.Release|x86.ActiveCfg = Release|Any CPU
 		{53F2CE75-29FD-4628-AD0F-EB9C02A31B8E}.Release|x86.Build.0 = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|arm64.Build.0 = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|x64.Build.0 = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|arm64.ActiveCfg = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|arm64.Build.0 = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|x64.ActiveCfg = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|x64.Build.0 = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DF48908-C5F9-436A-8D8F-1BB1E7B3EC0C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

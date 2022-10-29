@@ -29,7 +29,10 @@ namespace ImpulseCS.Pages
 
         private void LoginButtonClicked()
         {
-
+            LoadingThingy.Visibility = Visibility.Visible;
+            txtToken.IsEnabled = false;
+            btnQuit.IsEnabled = false;
+            btnLogin.IsEnabled = false;
         }
     }
 }

@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace LibPlugifyCS
 {
@@ -21,16 +20,13 @@ namespace LibPlugifyCS
             this.URL = url;
 
         }
-        Control? dummy;
         public void Start()
         {
             client.ConnectAsync(new Uri(URL), CancellationToken.None);
             IsOpen = true;
-            dummy = new Control();
-            dummy.CreateControl();
             while (client.State != WebSocketState.Open)
             {
-                Application.DoEvents();
+                //Application.DoEvents();
             }
             Thread bgThread = new Thread(new ThreadStart(BackgroundThread));
             bgThread.Start();
@@ -45,7 +41,7 @@ namespace LibPlugifyCS
                     var message = await Receive();
                     if (message != null)
                     {
-                        dummy?.BeginInvoke(new Action(() => OnMessage.Invoke(this, message)));
+                        OnMessage.Invoke(this, message);
                     }
                 }
                 else

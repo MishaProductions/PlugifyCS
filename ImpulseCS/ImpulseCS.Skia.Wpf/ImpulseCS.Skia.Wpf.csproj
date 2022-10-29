@@ -28,5 +28,8 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\uno-fluentui-assets.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LibPlugifyCS\LibPlugifyCS.csproj" />
+  </ItemGroup>
   <Import Project="..\ImpulseCS.Shared\ImpulseCS.Shared.projitems" Label="Shared" />
 </Project>

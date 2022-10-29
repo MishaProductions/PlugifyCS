@@ -24,19 +24,16 @@ namespace LibPlugifyCS
         public PlugifyUser? CurrentUser { get; private set; }
 
         public List<PlugifyGroup> Groups = new List<PlugifyGroup>();
-        private Control? dispatch;
         public async Task Start(string token, bool AuthOnlyMode = false)
         {
             this.Token = token;
             ws.OnMessage += Ws_OnMessage;
-            dispatch = new Control(); //hack to jump back to UI thread
-            dispatch.CreateControl();
 
             ws.Start();
             Console.WriteLine("client: begin auth");
             while (true)
             {
-                Application.DoEvents();
+                //Application.DoEvents();
                 if (LoginError)
                 {
                     throw new Exception("Invaild token.");
@@ -133,7 +130,8 @@ namespace LibPlugifyCS
                     _GetGroups = d;
                     break;
                 case 6:
-                    dispatch.Invoke(() => { if (OnGroupJoin != null) OnGroupJoin(d.data); });
+                   // dispatch.Invoke(() => { if (OnGroupJoin != null) OnGroupJoin(d.data); });
+                    if (OnGroupJoin != null) OnGroupJoin(d.data);
                     break;
                 case 12: //GROUP_GET_SUCCESS 
                     _GetGroups = d;
@@ -158,11 +156,13 @@ namespace LibPlugifyCS
                     break;
                 case 22:
                     //Group removed
-                    dispatch.Invoke(() => { if (OnGroupRemoved != null) OnGroupRemoved(d.data); });
+                    //  dispatch.Invoke(() => { if (OnGroupRemoved != null) OnGroupRemoved(d.data); });
+                    if (OnGroupRemoved != null) OnGroupRemoved(d.data);
                     break;
                 case 30:
                     //New channel
-                    dispatch.Invoke(() => { if (OnChannelCreated != null) OnChannelCreated(d.data); });
+                   // dispatch.Invoke(() => { if (OnChannelCreated != null) OnChannelCreated(d.data); });
+                    if (OnChannelCreated != null) OnChannelCreated(d.data);
                     break;
                 case 31:
                     //When currently joined channel is unavailable
