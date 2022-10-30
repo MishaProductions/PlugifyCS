@@ -10,10 +10,19 @@
     Loaded="ShellUI_Loaded">
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+
+        <ContentDialog x:Name="ContentDialog"
+        Title="Are you sure that you want to logout?"
+        PrimaryButtonText="Yes"
+        CloseButtonText="No"
+        DefaultButton="Primary">
+        </ContentDialog>
+        
         <!--Groups-->
         <Grid Grid.Row="0" Background="#16161d">
             <Grid.ColumnDefinitions>
@@ -43,18 +52,50 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="local:ServerListClass">
                         <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="9999999"/>
-                                </Style>
-                            </Button.Resources>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                       
+                                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
 
-                            <Image Source="{x:Bind ServerImage}"></Image>
+                            <Ellipse Height="75" Width="75">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{x:Bind ServerImage}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </Button>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Click="{x:Bind Logout}" Grid.Column="1">Logout</Button>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="UserProfilePicture" Grid.Column="0">
+                    
+                </Image>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="Username" Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="1"></TextBlock>
+                    <Button Click="{x:Bind Logout}" Grid.Row="1"  Grid.Column="0">
+                        <SymbolIcon Symbol="Cancel" />
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="1">
+                        <SymbolIcon Symbol="Setting" />
+                    </Button>
+                </Grid>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1" Background="#22222c">

@@ -14,6 +14,8 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Windows.Storage;
 using LibPlugifyCS;
+using Microsoft.UI.Xaml.Media.Imaging;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -37,20 +39,26 @@ namespace ImpulseCS.Pages
             {
                 await client.Start((string)localSettings.Values["token"]);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //invaild token
-                Logout();
+                DoLogout();
             }
 
             var x = new DispatcherTimer();
             x.Interval = TimeSpan.FromSeconds(25);
             x.Tick += Timer_Tick;
             x.Start();
-
-            foreach(var item in client.Groups)
+            Username.Text = client.CurrentUser.UserName;
+            foreach (var item in client.Groups)
             {
-                ServersList.Items.Add(new ServerListClass() { ServerName=item.Name});
+                var image = new Image();
+                var fullFilePath = @"http://cds.impulse.chat/defaultAvatars/" + item.ID;
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
+
+                ServersList.Items.Add(new ServerListClass() { ServerName = item.Name, ServerImage = bitmap });
             }
             LoadingSplash.Visibility = Visibility.Collapsed;
         }
@@ -59,13 +67,26 @@ namespace ImpulseCS.Pages
         {
             await client.SendPing();
         }
+        //Logout button logic
+        private async Task Logout()
+        {
+            await this.ContentDialog.ShowAsync();
+            ContentDialog.PrimaryButtonClick += ContentDialog_CloseButtonClick;
+        }
+        private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            DoLogout();
+        }
 
-        private void Logout()
+
+        private void DoLogout()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             localSettings.Values.Remove("token");
             Frame.Navigate(typeof(LoginUI));
         }
+
+        
     }
     public class ServerListClass
     {
