@@ -52,7 +52,7 @@ namespace ImpulseCS.Pages
             }
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["token"] = lblLoginStatus.Text;
+            localSettings.Values["token"] = txtToken.Password;
             c.Close();
             this.Frame.Navigate(typeof(ShellUI));
 

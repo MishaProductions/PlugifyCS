@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="ShellUI_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -15,11 +16,53 @@
         </Grid.RowDefinitions>
         <!--Groups-->
         <Grid Grid.Row="0" Background="#16161d">
-            <Button Click="{x:Bind Logout}">Logout</Button>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+
+            <ListBox x:Name="ServersList" Grid.Column="0">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Height" Value="{Binding ActualHeight, ElementName=lb}"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0,0,0,0"/>
+                        <Setter Property="Margin" Value="3,0,3,3"/>
+
+                        <Setter Property="Height" Value="75"/>
+                        <Setter Property="Width" Value="75"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="local:ServerListClass">
+                        <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="9999999"/>
+                                </Style>
+                            </Button.Resources>
+
+                            <Image Source="{x:Bind ServerImage}"></Image>
+                        </Button>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Click="{x:Bind Logout}" Grid.Column="1">Logout</Button>
         </Grid>
 
         <Grid Grid.Row="1" Background="#22222c">
 
+        </Grid>
+
+        <Grid x:Name="LoadingSplash" Background="#22222c" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <TextBlock>Loading...</TextBlock>
         </Grid>
     </Grid>
 </Page>
