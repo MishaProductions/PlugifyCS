@@ -37,9 +37,19 @@ namespace ImpulseCS.Pages
             btnLogin.IsEnabled = false;
             lblLoginStatus.Text = "";
             PlugifyCSClient c = new PlugifyCSClient();
+            string password = txtToken.Password;
+            if (string.IsNullOrEmpty(password))
+            {
+                await ContentDialog.ShowAsync();
+                LoadingThingy.Visibility = Visibility.Collapsed;
+                txtToken.IsEnabled = true;
+                btnQuit.IsEnabled = true;
+                btnLogin.IsEnabled = true;
+                return;
+            }
             try
             {
-                await c.Start(txtToken.Password, true);
+                await c.Start(password, true);
             }
             catch(Exception ex)
             {
@@ -52,10 +62,15 @@ namespace ImpulseCS.Pages
             }
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["token"] = txtToken.Password;
+            localSettings.Values["token"] = password;
             c.Close();
             this.Frame.Navigate(typeof(ShellUI));
 
+        }
+
+        private void QuitButton()
+        {
+            Application.Current.Exit();
         }
     }
 }

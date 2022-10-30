@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using Uno.Wasm.WebSockets;
 
 namespace LibPlugifyCS
 {
@@ -13,7 +14,7 @@ namespace LibPlugifyCS
         private string URL;
         public bool IsOpen { get; set; }
         private ClientWebSocket client = new ClientWebSocket();
-        public event EventHandler<string> OnMessage;
+        public event EventHandler<string>? OnMessage;
 
         public PlugifyWebSocketClient(string url)
         {
@@ -24,10 +25,6 @@ namespace LibPlugifyCS
         {
             await client.ConnectAsync(new Uri(URL), CancellationToken.None);
             IsOpen = true;
-            while (client.State != WebSocketState.Open)
-            {
-                await Task.Delay(1);
-            }
             Thread bgThread = new Thread(new ThreadStart(BackgroundThread));
             bgThread.Start();
         }
@@ -36,16 +33,21 @@ namespace LibPlugifyCS
         {
             while (true)
             {
+                Console.WriteLine("tick");
                 if (client.State == WebSocketState.Open | client.State == WebSocketState.CloseSent)
                 {
                     var message = await Receive();
+                    Console.WriteLine("a");
                     if (message != null)
                     {
-                        OnMessage.Invoke(this, message);
+                        if (OnMessage != null)
+                            OnMessage.Invoke(this, message);
+                        Console.WriteLine("b");
                     }
                 }
                 else
                 {
+                    Console.WriteLine("web socket closed");
                     break;
                 }
             }
@@ -61,23 +63,29 @@ namespace LibPlugifyCS
             var buffer = new ArraySegment<byte>(new byte[2048]);
             do
             {
-                WebSocketReceiveResult result = null;
+                Console.WriteLine("1");
+                WebSocketReceiveResult? result = null;
                 using (var ms = new MemoryStream())
                 {
                     do
                     {
+                        Console.WriteLine("2");
                         result = await client.ReceiveAsync(buffer, CancellationToken.None);
+                        Console.WriteLine("2.5");
                         ms.Write(buffer.Array, buffer.Offset, result.Count);
+                        Console.WriteLine("3");
                     } while (!result.EndOfMessage);
-
+                    Console.WriteLine("4");
                     if (result.MessageType == WebSocketMessageType.Close)
                         break;
-
+                    Console.WriteLine("5");
                     ms.Seek(0, SeekOrigin.Begin);
+                    Console.WriteLine("6");
                     using (var reader = new StreamReader(ms, Encoding.UTF8))
                         return await reader.ReadToEndAsync();
                 }
             } while (true);
+            Console.WriteLine("websocket closed");
             IsOpen = false;
             return null;
         }

@@ -16,6 +16,7 @@ using Windows.Storage;
 using LibPlugifyCS;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,6 +31,7 @@ namespace ImpulseCS.Pages
         public ShellUI()
         {
             this.InitializeComponent();
+            this.ContentDialog.PrimaryButtonClick += ContentDialog_CloseButtonClick;
         }
 
         private async void ShellUI_Loaded(object sender, RoutedEventArgs e)
@@ -43,6 +45,7 @@ namespace ImpulseCS.Pages
             {
                 //invaild token
                 DoLogout();
+                return;
             }
 
             var x = new DispatcherTimer();
@@ -57,9 +60,16 @@ namespace ImpulseCS.Pages
 
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.UriSource = new Uri(fullFilePath, UriKind.Absolute);
+                Console.WriteLine("image: w="+bitmap.PixelWidth+",h="+bitmap.PixelHeight);
 
                 ServersList.Items.Add(new ServerListClass() { ServerName = item.Name, ServerImage = bitmap });
             }
+
+            var fullfFilePath = @"http://cds.impulse.chat/defaultAvatars/" + client.CurrentUser.PFPUrl;
+
+            BitmapImage bitmap2 = new BitmapImage();
+            bitmap2.UriSource = new Uri(fullfFilePath, UriKind.Absolute);
+            UserProfilePicture.ImageSource = bitmap2;
             LoadingSplash.Visibility = Visibility.Collapsed;
         }
 
@@ -71,7 +81,6 @@ namespace ImpulseCS.Pages
         private async Task Logout()
         {
             await this.ContentDialog.ShowAsync();
-            ContentDialog.PrimaryButtonClick += ContentDialog_CloseButtonClick;
         }
         private void ContentDialog_CloseButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -86,11 +95,14 @@ namespace ImpulseCS.Pages
             Frame.Navigate(typeof(LoginUI));
         }
 
-        
+        private void OpenSettings()
+        {
+            Frame.Navigate(typeof(Settings), null, new DrillInNavigationTransitionInfo());
+        }
     }
     public class ServerListClass
     {
-        public ImageSource ServerImage;
-        public string ServerName;
+        public ImageSource ServerImage { get; set; }
+        public string ServerName { get; set; }
     }
 }

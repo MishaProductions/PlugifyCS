@@ -9,7 +9,18 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Border BorderBrush="#FF000000" BorderThickness="1" CornerRadius="8" Background="Gray" VerticalAlignment="Center" HorizontalAlignment="Center"> 
+        <Grid.Background>
+            <ImageBrush ImageSource="/TranscodedWallpaper.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        
+        <ContentDialog x:Name="ContentDialog"
+        Title="Please enter a token."
+        PrimaryButtonText="OK"
+        CloseButtonText=""
+        DefaultButton="Primary">
+        </ContentDialog>
+
+        <Border BorderBrush="#7F000000" Background="#7F000000"  BorderThickness="1" CornerRadius="8"  VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid Padding="50,50,50,50">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition> <!--logo-->
@@ -31,10 +42,9 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btnQuit" Grid.Column="0">Quit</Button>
+                    <Button x:Name="btnQuit" Grid.Column="0" Click="{x:Bind QuitButton}">Quit</Button>
                     <Button x:Name="btnLogin" Grid.Column="2" Click="{x:Bind LoginButtonClicked}">Login</Button>
                 </Grid>
-                
             </Grid>
         </Border>
     </Grid>

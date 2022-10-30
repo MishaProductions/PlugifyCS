@@ -39,7 +39,7 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
-                        <Setter Property="Height" Value="{Binding ActualHeight, ElementName=lb}"/>
+                      
                         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         <Setter Property="Padding" Value="0,0,0,0"/>
@@ -75,9 +75,12 @@
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="UserProfilePicture" Grid.Column="0">
-                    
-                </Image>
+
+                <Ellipse Height="75" Width="75" Grid.Column="0">
+                    <Ellipse.Fill>
+                        <ImageBrush x:Name="UserProfilePicture"/>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
@@ -91,7 +94,7 @@
                     <Button Click="{x:Bind Logout}" Grid.Row="1"  Grid.Column="0">
                         <SymbolIcon Symbol="Cancel" />
                     </Button>
-                    <Button Grid.Row="1" Grid.Column="1">
+                    <Button Click="{x:Bind OpenSettings}" Grid.Row="1" Grid.Column="1">
                         <SymbolIcon Symbol="Setting" />
                     </Button>
                 </Grid>

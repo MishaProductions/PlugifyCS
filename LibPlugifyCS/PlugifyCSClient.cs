@@ -31,9 +31,9 @@ namespace LibPlugifyCS
 
             await ws.Start();
             Console.WriteLine("client: begin auth");
+            int timeout = 0;
             while (true)
             {
-                //Application.DoEvents();
                 if (LoginError)
                 {
                     throw new Exception("Invaild token.");
@@ -44,6 +44,12 @@ namespace LibPlugifyCS
                     break;
                 }
                 await Task.Delay(1);
+                //timeout++;
+                //Console.WriteLine("t: " + timeout);
+                //if (timeout == 1220)
+                //{
+                //    throw new Exception("Timeout reached while waiting for user message");
+                //}
             }
             Console.WriteLine("client: authentication success");
 

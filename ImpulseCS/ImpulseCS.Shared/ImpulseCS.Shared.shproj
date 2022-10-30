@@ -12,10 +12,12 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\LoginUI.xaml" />
+    <UpToDateCheckInput Remove="Pages\Settings.xaml" />
     <UpToDateCheckInput Remove="Pages\ShellUI.xaml" />
   </ItemGroup>
   <ItemGroup>
     <_Globbed_Compile Remove="Pages\LoginUI.xaml.cs" />
+    <_Globbed_Compile Remove="Pages\Settings.xaml.cs" />
     <_Globbed_Compile Remove="Pages\ShellUI.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
