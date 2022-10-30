@@ -11,17 +11,18 @@
   <Import Project="ImpulseCS.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\LoginUI.xaml" />
-    <UpToDateCheckInput Remove="Pages\Settings.xaml" />
-    <UpToDateCheckInput Remove="Pages\ShellUI.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <_Globbed_Compile Remove="Pages\LoginUI.xaml.cs" />
+    <_Globbed_Compile Remove="LibPlugifyCS\PlugifyCSClient.cs" />
+    <_Globbed_Compile Remove="LibPlugifyCS\PlugifyErrorCode.cs" />
+    <_Globbed_Compile Remove="LibPlugifyCS\PlugifyGroup.cs" />
+    <_Globbed_Compile Remove="LibPlugifyCS\PlugifyUser.cs" />
+    <_Globbed_Compile Remove="LibPlugifyCS\PlugifyWebSocketClient.cs" />
+    <_Globbed_Compile Remove="Pages\LogonUI.xaml.cs" />
     <_Globbed_Compile Remove="Pages\Settings.xaml.cs" />
     <_Globbed_Compile Remove="Pages\ShellUI.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <_Globbled_Page Remove="Pages\LoginUI.xaml" />
+    <_Globbled_Page Remove="Pages\LogonUI.xaml" />
+    <_Globbled_Page Remove="Pages\Settings.xaml" />
     <_Globbled_Page Remove="Pages\ShellUI.xaml" />
   </ItemGroup>
 </Project>

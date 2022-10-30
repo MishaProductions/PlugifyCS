@@ -1,5 +1,5 @@
-﻿using Microsoft.UI.Xaml;
-using System;
+﻿using System;
+using Windows.UI.Xaml;
 
 namespace ImpulseCS.Wasm
 {
@@ -9,7 +9,7 @@ namespace ImpulseCS.Wasm
 
         static int Main(string[] args)
         {
-            Microsoft.UI.Xaml.Application.Start(_ => _app = new App());
+            Windows.UI.Xaml.Application.Start(_ => _app = new App());
 
             return 0;
         }
