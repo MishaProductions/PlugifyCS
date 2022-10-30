@@ -22,7 +22,7 @@ namespace ImpulseCS.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LogonUI : Page
+    public sealed partial class LogonUI : Windows.UI.Xaml.Controls.Page
     {
         public LogonUI()
         {
@@ -40,6 +40,7 @@ namespace ImpulseCS.Pages
             string password = txtToken.Password;
             if (string.IsNullOrEmpty(password))
             {
+                ContentDialog.Visibility = Visibility.Visible;
                 await this.ContentDialog.ShowAsync();
                 LoadingThingy.Visibility = Visibility.Collapsed;
                 txtToken.IsEnabled = true;

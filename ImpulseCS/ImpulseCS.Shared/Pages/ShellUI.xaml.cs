@@ -92,7 +92,7 @@ namespace ImpulseCS.Pages
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             localSettings.Values.Remove("token");
-            Frame.Navigate(typeof(LoginUI));
+            Frame.Navigate(typeof(LogonUI));
         }
 
         private void OpenSettings()

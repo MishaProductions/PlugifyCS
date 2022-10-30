@@ -29,7 +29,7 @@ namespace ImpulseCS.Pages
 
         private void BackButton()
         {
-
+            Frame.GoBack();
         }
     }
 }

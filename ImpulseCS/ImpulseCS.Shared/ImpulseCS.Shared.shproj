@@ -17,6 +17,7 @@
     <_Globbed_Compile Remove="LibPlugifyCS\PlugifyUser.cs" />
     <_Globbed_Compile Remove="LibPlugifyCS\PlugifyWebSocketClient.cs" />
     <_Globbed_Compile Remove="Pages\LogonUI.xaml.cs" />
+    <_Globbed_Compile Remove="Pages\LogonUIS.xaml.cs" />
     <_Globbed_Compile Remove="Pages\Settings.xaml.cs" />
     <_Globbed_Compile Remove="Pages\ShellUI.xaml.cs" />
   </ItemGroup>

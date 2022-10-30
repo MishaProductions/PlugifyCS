@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImpulseCS.Pages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace ImpulseCS
 
             if (!localSettings.Values.ContainsKey("token"))
             {
-                MainFrame.Navigate(typeof(LoginUI));
+                MainFrame.Navigate(typeof(LogonUI));
             }
             else
             {
