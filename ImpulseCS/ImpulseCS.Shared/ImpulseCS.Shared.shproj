@@ -20,10 +20,12 @@
     <_Globbed_Compile Remove="Pages\LogonUIS.xaml.cs" />
     <_Globbed_Compile Remove="Pages\Settings.xaml.cs" />
     <_Globbed_Compile Remove="Pages\ShellUI.xaml.cs" />
+    <_Globbed_Compile Remove="ServerItem.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <_Globbled_Page Remove="Pages\LogonUI.xaml" />
     <_Globbled_Page Remove="Pages\Settings.xaml" />
     <_Globbled_Page Remove="Pages\ShellUI.xaml" />
+    <_Globbled_Page Remove="ServerItem.xaml" />
   </ItemGroup>
 </Project>

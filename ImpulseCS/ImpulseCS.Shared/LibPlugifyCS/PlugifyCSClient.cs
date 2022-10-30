@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using WebSocketSharp;
 
@@ -19,8 +22,9 @@ namespace LibPlugifyCS
         private bool LoginError = false;
 
         public delegate void PlugifyEvent(dynamic data);
+        public delegate void PlugifyGroupEvent(PlugifyGroup gc);
 
-        public event PlugifyEvent OnGroupJoin;
+        public event PlugifyGroupEvent OnGroupJoin;
         public event PlugifyEvent OnChannelCreated;
         public event PlugifyEvent OnGroupRemoved;
 
@@ -115,17 +119,17 @@ namespace LibPlugifyCS
 
         private async void Ws_OnMessage(object sender, string e)
         {
-            Console.WriteLine("rx: "+e);
+            Console.WriteLine("rx: " + e);
             var obj = JObject.Parse(e);
             dynamic d = obj;
-            var eventID = obj.Value<int>("event");
-
+            var eventID = (PlugifyGatewayMessages)obj.Value<int>("event");
+            Console.WriteLine("gateway: got: "+eventID);
             switch (eventID)
             {
-                case 0: //WELCOME
+                case PlugifyGatewayMessages.WELCOME:
                     await ws.Send("{\"event\": 1, \"data\": {\"token\": \"" + Token + "\"}}");
                     break;
-                case 1:
+                case PlugifyGatewayMessages.AUTHENTICATE:
                     if ((bool)d.success == true)
                     {
                         //vaild token
@@ -136,52 +140,71 @@ namespace LibPlugifyCS
                         LoginError = true;
                     }
                     break;
-                case 5: //Get groups result? 
+                case PlugifyGatewayMessages.APP_LOGIN_AUTHENTICATE:
+                    break;
+                case PlugifyGatewayMessages.APP_LOGIN:
+                    break;
+                case PlugifyGatewayMessages.SYSTEM_ANNOUNCEMENT:
+                    break;
+                case PlugifyGatewayMessages.GROUPS_GET:
                     _GetGroups = d;
                     break;
-                case 6:
-                   // dispatch.Invoke(() => { if (OnGroupJoin != null) OnGroupJoin(d.data); });
-                    if (OnGroupJoin != null) OnGroupJoin(d.data);
+                case PlugifyGatewayMessages.GROUP_NEW:
+                    var gc = GroupFromStructure(d.data);
+                    Groups.Add(gc);
+                    if (OnGroupJoin != null) OnGroupJoin(gc);
                     break;
-                case 12: //GROUP_GET_SUCCESS 
-                    _GetGroups = d;
+                case PlugifyGatewayMessages.GROUP_UPDATE:
                     break;
-                case 9: //CHANNELS_GET_SUCCESS
-                    tmp = d;
-                    break;
-                case 15: 
-                         //
-
-
-                    _GetChannelDetails = d;
-                    break;
-                case 10: //MESSAGE_NEW
-                    tmp = d;
-
-
-                    break;
-                case 8: //MESSAGE_SEND_SUCCESS 
-                    //tmp = d;
-                    //ignore for now
-                    break;
-                case 22:
-                    //Group removed
-                    //  dispatch.Invoke(() => { if (OnGroupRemoved != null) OnGroupRemoved(d.data); });
+                case PlugifyGatewayMessages.GROUP_REMOVE:
                     if (OnGroupRemoved != null) OnGroupRemoved(d.data);
                     break;
-                case 30:
-                    //New channel
-                   // dispatch.Invoke(() => { if (OnChannelCreated != null) OnChannelCreated(d.data); });
-                    if (OnChannelCreated != null) OnChannelCreated(d.data);
+                case PlugifyGatewayMessages.CHANNELS_GET:
                     break;
-                case 31:
-                    //When currently joined channel is unavailable
+                case PlugifyGatewayMessages.CHANNEL_CREATE:
                     break;
-                case 9001:
-                    //ping responce
+                case PlugifyGatewayMessages.CHANNEL_UPDATE:
+                    break;
+                case PlugifyGatewayMessages.CHANNEL_REMOVE:
+                    break;
+                case PlugifyGatewayMessages.CHANNEL_DISCONNECT:
+                    break;
+                case PlugifyGatewayMessages.CHANNEL_HISTORY:
+                    break;
+                case PlugifyGatewayMessages.CHANNEL_JOIN:
+                    break;
+                case PlugifyGatewayMessages.MEMBER_CREATE:
+                    break;
+                case PlugifyGatewayMessages.MEMBER_UPDATE:
+                    break;
+                case PlugifyGatewayMessages.MEMBER_REMOVE:
+                    break;
+                case PlugifyGatewayMessages.GROUP_BAN_CREATE:
+                    break;
+                case PlugifyGatewayMessages.GROUP_BAN_UPDATE:
+                    break;
+                case PlugifyGatewayMessages.MESSAGE_SEND:
+                    break;
+                case PlugifyGatewayMessages.MESSAGE_CREATE:
+                    break;
+                case PlugifyGatewayMessages.MESSAGE_UPDATE:
+                    break;
+                case PlugifyGatewayMessages.MESSAGE_REMOVE:
+                    break;
+                case PlugifyGatewayMessages.ROLE_UPDATE:
+                    break;
+                case PlugifyGatewayMessages.ROLE_REMOVE:
+                    break;
+                case PlugifyGatewayMessages.MEMBER_LIST:
+                    break;
+                case PlugifyGatewayMessages.MEMBER_LIST_UPDATE:
+                    break;
+                case PlugifyGatewayMessages.PING:
+
                     break;
                 default:
-                    throw new NotImplementedException("Message ID: " + eventID);
+                    Console.WriteLine("gateway: Message ID: " + (int)eventID + " not implemented");
+                    break;
             }
         }
 
@@ -254,6 +277,130 @@ namespace LibPlugifyCS
             {
                 Groups.Add(GroupFromStructure(group));
             }
+        }
+
+        public PlugifyApiResult LeaveServer(string id)
+        {
+            return ToResult(DoApi("https://api.impulse.chat/v2/members/" + id + "/" + CurrentUser.UserName, "DELETE"));
+        }
+        private PlugifyApiResult ToResult(dynamic x)
+        {
+            if (x == null)
+            {
+                return new PlugifyApiResult((bool)x.success, "<internal client error: object provided is null>");
+            }
+            if ((bool)x.success)
+            {
+                return new PlugifyApiResult((bool)x.success, 0);
+            }
+            else
+            {
+                return new PlugifyApiResult((bool)x.success, (int)x.error);
+            }
+        }
+        private dynamic DoApi(string url, string method, string content = "")
+        {
+            var webRequest = System.Net.WebRequest.Create(url);
+            webRequest.Method = method;
+            webRequest.ContentType = "application/json";
+            webRequest.Headers.Add("Authorization", Token);
+
+            if (method == "GET" || method == "POST")
+            {
+                //write the input data (aka post) to a byte array
+                byte[] requestBytes = new ASCIIEncoding().GetBytes(content);
+                //get the request stream to write the post to
+                Stream requestStream = webRequest.GetRequestStream();
+                //write the post to the request stream
+                requestStream.Write(requestBytes, 0, requestBytes.Length);
+            }
+            WebResponse r;
+            try
+            {
+                r = webRequest.GetResponse();
+            }
+            catch (WebException e)
+            {
+                r = e.Response;
+            }
+
+            using (Stream s = r.GetResponseStream())
+            {
+                using (StreamReader sr = new StreamReader(s))
+                {
+                    var jsonResponse = sr.ReadToEnd();
+                    return JObject.Parse(jsonResponse);
+                }
+            }
+        }
+    }
+
+    public enum PlugifyGatewayMessages
+    {
+        WELCOME,
+
+        AUTHENTICATE,
+
+        APP_LOGIN_AUTHENTICATE,
+        APP_LOGIN,
+
+        SYSTEM_ANNOUNCEMENT,
+
+        GROUPS_GET,
+        GROUP_NEW,
+        GROUP_UPDATE,
+        GROUP_REMOVE,
+
+        CHANNELS_GET,
+        CHANNEL_CREATE,
+        CHANNEL_UPDATE,
+        CHANNEL_REMOVE,
+        CHANNEL_DISCONNECT,
+        CHANNEL_HISTORY,
+        CHANNEL_JOIN,
+
+        MEMBER_CREATE,
+        MEMBER_UPDATE,
+        MEMBER_REMOVE,
+
+        GROUP_BAN_CREATE,
+        GROUP_BAN_UPDATE,
+
+        MESSAGE_SEND,
+        MESSAGE_CREATE,
+        MESSAGE_UPDATE,
+        MESSAGE_REMOVE,
+
+        ROLE_UPDATE,
+        ROLE_REMOVE,
+
+        MEMBER_LIST,
+        MEMBER_LIST_UPDATE,
+
+        PING = 9001
+    }
+
+    public class PlugifyApiResult
+    {
+        public bool Success { get; set; } = false;
+        public string ErrorMessage { get; set; }
+        public int ErrorCode { get; set; }
+
+        public PlugifyApiResult(bool Success, int ErrorCode)
+        {
+            this.Success = Success;
+            this.ErrorCode = ErrorCode;
+
+            ErrorMessage = PlugifyErrorCode.Tostring(ErrorCode);
+        }
+
+        public PlugifyApiResult(bool Success, string error)
+        {
+            this.Success = Success;
+            this.ErrorCode = -1;
+
+
+            ErrorMessage = error;
         }
     }
 }

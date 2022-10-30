@@ -26,8 +26,12 @@ namespace LibPlugifyCS
         {
             await client.ConnectAsync(new Uri(URL), CancellationToken.None);
             IsOpen = true;
+#if CROSSPLATDORM
+            await Task.Run(BackgroundThread);
+#else
             Thread bgThread = new Thread(new ThreadStart(BackgroundThread));
             bgThread.Start();
+#endif
         }
 
         private async void BackgroundThread()

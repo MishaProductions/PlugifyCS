@@ -139,7 +139,7 @@ namespace ImpulseCS
 #endif
 
                 // Exclude logs below this level
-                builder.SetMinimumLevel(LogLevel.Information);
+                builder.SetMinimumLevel(LogLevel.Trace);
 
                 // Default filters for Uno Platform namespaces
                 builder.AddFilter("Uno", LogLevel.Warning);

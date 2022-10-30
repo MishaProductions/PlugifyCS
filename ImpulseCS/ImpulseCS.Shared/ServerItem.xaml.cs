@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImpulseCS.Pages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,25 +14,23 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace ImpulseCS.Pages
+namespace ImpulseCS
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class Settings : Page
+    public sealed partial class ServerItem : UserControl
     {
-        public Settings()
+        public event EventHandler OnClick;
+        public ServerItem(ImageSource ImageBrushing)
         {
             this.InitializeComponent();
+            this.ImageBrushing.ImageSource = ImageBrushing;
         }
 
-        private void BackButton()
+        private void HandleClicking()
         {
-            Frame.GoBack();
+            if (OnClick != null)
+                OnClick.Invoke(this, new EventArgs());
         }
-
-
     }
 }

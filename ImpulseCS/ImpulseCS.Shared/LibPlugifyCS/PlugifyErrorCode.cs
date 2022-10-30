@@ -13,7 +13,7 @@ namespace LibPlugifyCS
             switch (error)
             {
                 case 0:
-                    return "Unknown backend error";
+                    return "The operation completed without errors.";
                 case 1:
                     return "API error: missing token in Authorization header";
                 case 2:
