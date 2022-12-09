@@ -10,7 +10,6 @@
     Loaded="ShellUI_Loaded">
 
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -22,12 +21,13 @@
         CloseButtonText="No"
         DefaultButton="Primary">
         </ContentDialog>
+        
         <ContentDialog x:Name="LeaveServerDialog"
         Title="Are you sure that you want to leave this server?"
         PrimaryButtonText="Yes"
         CloseButtonText="No"
         DefaultButton="Primary"
-                       PrimaryButtonClick="{x:Bind DoLeaveServer}">
+        PrimaryButtonClick="{x:Bind DoLeaveServer}">
         </ContentDialog>
 
         <!--Groups-->
@@ -38,7 +38,7 @@
             </Grid.ColumnDefinitions>
 
             <VariableSizedWrapGrid x:Name="ServersList" Orientation="Horizontal">
-                
+
             </VariableSizedWrapGrid>
 
             <Grid Grid.Column="1">
@@ -129,7 +129,7 @@
         </Grid>
 
         <Grid x:Name="LoadingSplash" Background="#22222c" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Collapsed">
-            <TextBlock>Loading...</TextBlock>
+            <TextBlock FontSize="74">Loading...</TextBlock>
         </Grid>
     </Grid>
 </Page>

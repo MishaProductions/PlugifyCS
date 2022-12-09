@@ -31,10 +31,12 @@ namespace ImpulseCS
 
             if (!localSettings.Values.ContainsKey("token"))
             {
+                Console.WriteLine("client: navigate to logonui");
                 MainFrame.Navigate(typeof(LogonUI));
             }
             else
             {
+                Console.WriteLine("client: navigate to shell");
                 MainFrame.Navigate(typeof(ShellUI));
             }
         }

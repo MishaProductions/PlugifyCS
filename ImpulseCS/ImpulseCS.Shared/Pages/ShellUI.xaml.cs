@@ -31,9 +31,11 @@ namespace ImpulseCS.Pages
         PlugifyCSClient client = new PlugifyCSClient();
         public ShellUI()
         {
+            Console.WriteLine("client: shell cctor");
             this.InitializeComponent();
             this.ContentDialog.PrimaryButtonClick += ContentDialog_CloseButtonClick;
             client.OnGroupJoin += Client_OnGroupJoin;
+            Console.WriteLine("client: shell cctor exit");
         }
 
         private void Client_OnGroupJoin(PlugifyGroup gc)
@@ -44,6 +46,7 @@ namespace ImpulseCS.Pages
         private async void ShellUI_Loaded(object sender, RoutedEventArgs e)
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            Console.WriteLine("client: start websocket");
             try
             {
                 await client.Start((string)localSettings.Values["token"]);
@@ -54,19 +57,20 @@ namespace ImpulseCS.Pages
                 DoLogout();
                 return;
             }
-
+            Console.WriteLine("client: start ping loop");
             var x = new DispatcherTimer();
-            x.Interval = TimeSpan.FromSeconds(25);
+            x.Interval = TimeSpan.FromSeconds(15);
             x.Tick += Timer_Tick;
             x.Start();
             Username.Text = client.CurrentUser.UserName;
+            Console.WriteLine("client: populate groups");
             foreach (var item in client.Groups)
             {
                 AddGroup(item);
             }
 
             var fullfFilePath = @"http://cds.impulse.chat/defaultAvatars/" + client.CurrentUser.PFPUrl;
-
+            Console.WriteLine("client: display user profile picture");
             BitmapImage bitmap2 = new BitmapImage();
             bitmap2.UriSource = new Uri(fullfFilePath, UriKind.Absolute);
             UserProfilePicture.ImageSource = bitmap2;
